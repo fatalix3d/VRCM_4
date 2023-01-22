@@ -9,6 +9,7 @@ using VRCM.Network.Lobby;
 
 public class Bootstrapper : MonoBehaviour
 {
+    // add git ver.
     [SerializeField] private bool isServer = false;
 
     public static Bootstrapper Instance { get; private set; } = null;
