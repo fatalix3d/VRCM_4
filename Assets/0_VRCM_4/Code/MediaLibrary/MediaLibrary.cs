@@ -15,7 +15,9 @@ namespace VRCM.Media
         private string _localContentPath;
 
         public Dictionary<string, MediaFile> Videos => _videos;
-        public static event Action<Dictionary<string, MediaFile>> MediaLibraryLoaded; 
+        public static event Action<Dictionary<string, MediaFile>> MediaLibraryLoaded;
+
+        [SerializeField] private DemoTest _test;
 
 
         private void Awake()
@@ -79,6 +81,8 @@ namespace VRCM.Media
             }
 
             MediaLibraryLoaded?.Invoke(Videos);
+
+            _test.Init();
             yield return null;
         }
 

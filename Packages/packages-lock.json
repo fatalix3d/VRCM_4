@@ -236,7 +236,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.picoxr": {
-      "version": "file:C:\\MyGitProjects\\PICO_SDK",
+      "version": "file:D:\\UnityProjects\\VRCM\\PICO_SDK",
       "depth": 0,
       "source": "local",
       "dependencies": {

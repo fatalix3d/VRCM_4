@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/0_VRCM_4/Scenes/Demo.unity
+    guid: 01bd831e22a37df4fb4d22cb212ed063
   m_configObjects:
     Unity.XR.PXR.Settings: {fileID: 11400000, guid: 1a7ae4c957635ef40b617de59a17baee, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 80e2bf24b798aa84ab492eac23544746, type: 2}
