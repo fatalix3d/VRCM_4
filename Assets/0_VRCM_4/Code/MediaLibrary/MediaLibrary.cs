@@ -30,6 +30,11 @@ namespace VRCM.Media
             }
         }
 
+        private void Start()
+        {
+            Init();
+        }
+
         public void Init()
         {
             StartCoroutine(CheckVideoDirectory());
@@ -38,9 +43,9 @@ namespace VRCM.Media
         IEnumerator CheckVideoDirectory()
         {
 #if UNITY_EDITOR
-            _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+            _localContentPath = Path.Combine("C:/", "360Content");
 #else
-            //_localContentPath = Path.Combine("C:/", "360Content");
+            _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
 #endif
 
             DirectoryInfo di = new DirectoryInfo(_localContentPath);

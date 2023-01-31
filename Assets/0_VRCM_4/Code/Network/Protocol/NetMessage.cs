@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using VRCM.Network.Player;
 namespace VRCM.Network.Messages
 {
     [Serializable]
@@ -11,10 +11,13 @@ namespace VRCM.Network.Messages
         public enum Command
         {
             AutorizeRequest = 0,
-            AutorizeResponce = 1,
-            Setup = 2,
-            Ready = 3,
-            Status = 4,
+            AutorizeSucces = 1,
+            AutorizeError = 2,
+
+
+            Setup = 10,
+            Ready = 11,
+            Status = 12,
 
             Play = 20,
             Pause = 21,
@@ -33,6 +36,14 @@ namespace VRCM.Network.Messages
         {
             this.command = _command;
             this.id = "test_01";
+            this.mediaName = string.Empty;
+            this.seekTime = 0;
+        }
+
+        public NetMessage(NetPlayer player, Command _command)
+        {
+            this.command = _command;
+            this.id = player.Id;
             this.mediaName = string.Empty;
             this.seekTime = 0;
         }
