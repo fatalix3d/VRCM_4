@@ -8,7 +8,7 @@ namespace VRCM.Network.Lobby
     public class NetworkLobby
     {
         private Dictionary<string, NetPlayer> _players;
-        private NetPlayer _currentPlayer;
+        private NetPlayer _currentPlayer = null;
 
         public NetworkLobby()
         {

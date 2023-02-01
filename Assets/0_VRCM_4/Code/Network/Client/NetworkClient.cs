@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Text;
 using NativeWebSocket;
 using UnityEngine;
+using VRCM.Network.Messages;
 
 namespace VRCM.Network.Client
 {
     public class NetworkClient : MonoBehaviour
     {
         public static NetworkClient Instance { get; private set; } = null;
+        private NetMessageDispatcher _networkMessageDispatcher;
 
         private bool _isConnected = false;
         private WebSocket _websocket;
@@ -35,6 +37,7 @@ namespace VRCM.Network.Client
             if(!string.IsNullOrEmpty(sp.ip) && sp.port > 0)
             {
                 _serverAdress = sp;
+                _networkMessageDispatcher = new NetMessageDispatcher(this);
                 Connect();
             }
         }

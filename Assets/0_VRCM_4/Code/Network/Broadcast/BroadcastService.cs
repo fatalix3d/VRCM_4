@@ -28,7 +28,7 @@ namespace VRCM.Network.Broadcast
 
         public BroadcastService()
         {
-
+            Debug.Log("[Broadcast Service] - Created");
         }
 
         public void StartSendBroadcast(string ip, int port)
@@ -148,8 +148,6 @@ namespace VRCM.Network.Broadcast
             _udpClient.Close();
             _udpClient.Dispose();
         }
-
-
 
         public void StopBroadcast()
         {

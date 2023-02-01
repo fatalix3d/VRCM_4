@@ -10,8 +10,7 @@ using VRCM.Network.Player;
 
 public class Bootstrapper : MonoBehaviour
 {
-    // add git ver.
-    [SerializeField] private bool isServer = false;
+    [SerializeField] private bool isServer;
 
     public static Bootstrapper Instance { get; private set; } = null;
 
@@ -37,7 +36,7 @@ public class Bootstrapper : MonoBehaviour
 
     void Start()
     {
-        _config = new NetConfiguration();
+        _config = new NetConfiguration(isServer);
 
         if (_config.AllOk)
         {

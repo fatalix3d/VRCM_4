@@ -1,1 +1,0 @@
-{"client_id":"VRCM_TEST_CLIENT_1","server_port":7853}

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 using UnityEngine;
 
 namespace VRCM.Network.Configuration
@@ -21,12 +23,11 @@ namespace VRCM.Network.Configuration
         public int Port => _port;
         public bool AllOk => _allOk;
 
-        public NetConfiguration()
+        public NetConfiguration(bool isServer)
         {
 #if UNITY_EDITOR
             _isEditor = true;
 #endif
-
             if (_isEditor)
             {
                 _dataPath = Path.Combine(Application.dataPath, "360Content");
@@ -57,7 +58,7 @@ namespace VRCM.Network.Configuration
 
                         if (netId != null)
                         {
-                            _id = netId.client_id;
+                            _id = netId.id;
                             _ip = IPManager.GetLocalIPAddress();
                             _port = netId.server_port;
                             _allOk = true;
@@ -72,7 +73,7 @@ namespace VRCM.Network.Configuration
                     {
                         Debug.Log($"[Configuration] id file NOT found, creating new file");
 
-                        WriteIdFile(idFilePath);
+                        WriteIdFile(idFilePath, isServer);
                     }
                 }
                 else
@@ -81,7 +82,7 @@ namespace VRCM.Network.Configuration
                     Directory.CreateDirectory(_dataPath);
 
                     string idFilePath = Path.Combine(_dataPath, "id.txt");
-                    WriteIdFile(idFilePath);
+                    WriteIdFile(idFilePath, isServer);
                 }
             }
             catch (Exception e)
@@ -90,16 +91,37 @@ namespace VRCM.Network.Configuration
             }
         }
 
-
-        private void WriteIdFile(string filePath)
+        private void WriteIdFile(string filePath, bool isServer)
         {
             string idJson = string.Empty;
 
-            NetId netId = new NetId("VRCM_TEST_CLIENT_ID", 7853);
+            NetId netId;
+
+            if (isServer)
+            {
+                netId = new NetId("VRCM_SERVER", GetAvailablePort());
+            }
+            else
+            {
+                netId = new NetId("VRCM_CLIENT_ID", 11000);
+            }
+
             idJson = JsonUtility.ToJson(netId);
 
             File.WriteAllText(filePath, idJson);
+
             Debug.Log($"[Configuration] id file created...Ok");
+        }
+
+        private static int GetAvailablePort()
+        {
+            int port = 0;
+            using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+            {
+                socket.Bind(new IPEndPoint(IPAddress.Any, 0));
+                port = ((IPEndPoint)socket.LocalEndPoint).Port;
+            }
+            return port;
         }
     }
 }
