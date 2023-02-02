@@ -5,6 +5,7 @@ using UnityToolbag;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 using VRCM.Network.Messages;
+using VRCM.Network.Lobby;
 
 public class Echo : WebSocketBehavior
 {
@@ -19,9 +20,9 @@ public class Echo : WebSocketBehavior
 
     protected override void OnClose(CloseEventArgs e)
     {
-        Debug.Log("/Echo Close");
-        //string uniqueId = this.ID;
-        //Dispatcher.InvokeAsync(() => NetLobby.RemovePlayer(uniqueId));
+        string uniqueId = this.ID;
+        Debug.Log($"/Echo - Close connection [{uniqueId}]");
+        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Lobby.RemovePlayer(uniqueId));
     }
 
     protected override void OnMessage(MessageEventArgs e)

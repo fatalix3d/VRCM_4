@@ -45,7 +45,7 @@ namespace VRCM.Network.Messages
             {
                 case NetMessage.Command.AutorizeSucces:
                     Debug.Log($"[Message Dispatcher] - Connection [{uniqueId}], id [{message.id}] - Authorization [Processing]");
-                    if (_lobby.AddPlayer(message.id, uniqueId))
+                    if (_lobby.AddPlayer(uniqueId, message.id))
                     {
                         // TODO : add server side binary serialization and cmd input;
                         NetMessage resp = new NetMessage(NetMessage.Command.AutorizeSucces);

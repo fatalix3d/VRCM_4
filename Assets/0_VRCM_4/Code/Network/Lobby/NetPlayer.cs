@@ -13,5 +13,6 @@ namespace VRCM.Network.Player
         public string UniqueId;
         public Texture2D PlayerPreviewTex;
         private NetMessage _state;
+        public NetMessage State => _state;
     }
 }

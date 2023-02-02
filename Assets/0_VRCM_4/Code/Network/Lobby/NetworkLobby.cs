@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using VRCM.Network.Player;
+using VRCM.Lobby.UI;
 
 namespace VRCM.Network.Lobby
 {
@@ -9,56 +11,59 @@ namespace VRCM.Network.Lobby
     {
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
+        private LobbyUI _lobbyUI;
+
+        public event Action<NetPlayer> AddPlayerEvent;
+        public event Action<string> SelectPlayerEvent;
+        public event Action<NetPlayer> UpdatePlayerEvent;
+        public event Action<string> RemovePlayerEvent;
 
         public NetworkLobby()
         {
             _players = new Dictionary<string, NetPlayer>();
+            _lobbyUI = GameObject.FindObjectOfType<LobbyUI>();
+            _lobbyUI.Init(this);
             Debug.Log($"[Lobby] - Created");
         }
 
-        public bool AddPlayer(string playerId, string uniqueId)
+        public bool AddPlayer(string uniqueId, string playerId)
         {
             bool res = false;
-            if (!_players.ContainsKey(playerId))
+            if (!_players.ContainsKey(uniqueId))
             {
                 NetPlayer lb = new NetPlayer();
                 lb.Id = playerId;
                 lb.UniqueId = uniqueId;
-                _players.Add(playerId, lb);
-
+                _players.Add(uniqueId, lb);
                 res = true;
-            }
 
-            if (_players.Count > 0)
-            {
-                string lobyList = string.Empty;
-                foreach (KeyValuePair<string, NetPlayer> player in _players)
-                    lobyList += $"{player.Value.Id} / {player.Value.UniqueId} \n";
-
-                Debug.Log($"[Lobby] - player list : \n {lobyList}");
+                AddPlayerEvent?.Invoke(lb);
             }
 
             return res;
         }
 
-        public bool RemovePlayer(string playerId)
+        public bool RemovePlayer(string uniqueId)
         {
             bool res = false;
-
-            if (_players.ContainsKey(playerId))
+            
+            if (_players.ContainsKey(uniqueId))
             {
-                _players.Remove(playerId);
+                Debug.Log("[Remove player] playerId - removed");
+                _players.Remove(uniqueId);
                 res = true;
+
+                RemovePlayerEvent?.Invoke(uniqueId);
             }
 
             return res;
         }
 
-        public void SelectPlayer(string playerId)
+        public void SelectPlayer(string uniqueId)
         {
-            if (_players.ContainsKey(playerId))
+            if (_players.ContainsKey(uniqueId))
             {
-                _currentPlayer = _players[playerId];
+                _currentPlayer = _players[uniqueId];
             }
         }
 
