@@ -99,6 +99,13 @@ namespace VRCM.Media
             //_test.Init();
             yield return null;
         }
+
+        public string GetVideoUrl(string videoId)
+        {
+            return _videos[videoId].path;
+        }
+
+
         bool CheckThumbnail()
         {
             return (ThumbnailReady);
