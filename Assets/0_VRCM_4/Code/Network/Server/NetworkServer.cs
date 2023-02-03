@@ -28,10 +28,13 @@ namespace VRCM.Network.Server
             Debug.Log($"[NetworkServer] - Started at : ws://{ip}:{port}/Echo");
         }  
 
-        public void SendMessage(string id, byte[] bytes)
+        public void SendMessage(string id, NetMessage.Command cmd)
         {
             try
             {
+                NetMessage netMessage = new NetMessage(cmd);
+                byte[] bytes = BinarySerializer.Serialize(netMessage);
+
                 if (bytes != null)
                 {
                     NetMessage jMessage = BinarySerializer.Deserialize(bytes);

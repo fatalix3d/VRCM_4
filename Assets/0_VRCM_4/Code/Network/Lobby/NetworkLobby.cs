@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRCM.Network.Player;
 using VRCM.Lobby.UI;
+using VRCM.Network.Messages;
 
 namespace VRCM.Network.Lobby
 {
@@ -15,7 +16,7 @@ namespace VRCM.Network.Lobby
 
         public event Action<NetPlayer> AddPlayerEvent;
         public event Action<string> SelectPlayerEvent;
-        public event Action<NetPlayer> UpdatePlayerEvent;
+        public event Action<string, NetMessage> UpdatePlayerEvent;
         public event Action<string> RemovePlayerEvent;
 
         public NetworkLobby()
@@ -65,6 +66,11 @@ namespace VRCM.Network.Lobby
             {
                 _currentPlayer = _players[uniqueId];
             }
+        }
+
+        public void UpdatePlayer(string uniqueId, NetMessage message)
+        {
+            UpdatePlayerEvent?.Invoke(uniqueId, message);
         }
 
         public void Deselect()

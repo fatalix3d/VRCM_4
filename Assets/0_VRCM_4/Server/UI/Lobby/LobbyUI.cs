@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using VRCM.Network.Lobby;
 using VRCM.Network.Player;
+using VRCM.Network.Lobby;
+using VRCM.Network.Messages;
 
 namespace VRCM.Lobby.UI
 {
@@ -31,8 +32,8 @@ namespace VRCM.Lobby.UI
             var netPlayerUI = playerGo.GetComponent<NetPlayerUI>();
             netPlayerUI.GO = playerGo;
             _players.Add(player.UniqueId, netPlayerUI);
-            netPlayerUI.UpdateUI(player);
         }
+
         public void RemovePlayer(string uniqueId)
         {
             if (!_players.ContainsKey(uniqueId))
@@ -47,9 +48,10 @@ namespace VRCM.Lobby.UI
 
         }
 
-        public void UpdatePlayer(NetPlayer player)
+        public void UpdatePlayer(string uniqueId, NetMessage message)
         {
-            
+            if (_players.ContainsKey(uniqueId))
+                _players[uniqueId].UpdateUI(message);
         }
 
 

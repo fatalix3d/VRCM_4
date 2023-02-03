@@ -13,9 +13,7 @@ public class Echo : WebSocketBehavior
     {
         string uniqueId = this.ID;
         Debug.Log($"/Echo - [{uniqueId}] New connection, send autorize request message");
-        NetMessage message = new NetMessage(NetMessage.Command.AutorizeRequest);
-        byte[] bytes = BinarySerializer.Serialize(message);
-        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Server.SendMessage(uniqueId, bytes));
+        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Server.SendMessage(uniqueId, NetMessage.Command.AutorizeRequest));
     }
 
     protected override void OnClose(CloseEventArgs e)

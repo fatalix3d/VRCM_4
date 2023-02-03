@@ -14,7 +14,6 @@ namespace VRCM.Network.Messages
             AutorizeSucces = 1,
             AutorizeError = 2,
 
-
             Setup = 10,
             Ready = 11,
             Status = 12,
@@ -29,7 +28,10 @@ namespace VRCM.Network.Messages
 
         public Command command;
         public string id;
+        public string uid;
         public string mediaName;
+        public long mediaCurrentTime;
+        public long mediaAllTime;
         public long seekTime;
 
         public NetMessage(Command _command)

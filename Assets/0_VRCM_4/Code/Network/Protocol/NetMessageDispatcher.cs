@@ -41,30 +41,34 @@ namespace VRCM.Network.Messages
                 return;
             }
 
+            message.uid = uniqueId;
+
             switch (message.command)
             {
+                // Autorize procedure
                 case NetMessage.Command.AutorizeSucces:
+
                     Debug.Log($"[Message Dispatcher] - Connection [{uniqueId}], id [{message.id}] - Authorization [Processing]");
                     if (_lobby.AddPlayer(uniqueId, message.id))
                     {
-                        // TODO : add server side binary serialization and cmd input;
-                        NetMessage resp = new NetMessage(NetMessage.Command.AutorizeSucces);
-                        byte[] respBytes = BinarySerializer.Serialize(resp);
-                        _server.SendMessage(uniqueId, respBytes);
+                        _server.SendMessage(uniqueId, NetMessage.Command.AutorizeSucces);
+
+                        _lobby.UpdatePlayer(uniqueId, message);
 
                         Debug.Log($"[Message Dispatcher] - Player with id [{message.id}][{uniqueId}] - Authorization [Succes]");
                     }
                     else
                     {
-                        NetMessage resp = new NetMessage(NetMessage.Command.AutorizeError);
-                        byte[] respBytes = BinarySerializer.Serialize(resp);
-                        _server.SendMessage(uniqueId, respBytes);
+                        _server.SendMessage(uniqueId, NetMessage.Command.AutorizeError);
 
                         Debug.Log($"[Message Dispatcher] - Player with id [{message.id}][{uniqueId}] - Authorization [Error]");
                     }
                     break;
 
+                // Setup device
                 case NetMessage.Command.Setup:
+                    _lobby.UpdatePlayer(uniqueId, message);
+                    break;
                 case NetMessage.Command.Ready:
                 case NetMessage.Command.Status:
                 case NetMessage.Command.Play:
