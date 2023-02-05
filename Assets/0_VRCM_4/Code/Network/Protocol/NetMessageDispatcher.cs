@@ -143,6 +143,10 @@ namespace VRCM.Network.Messages
                         resp = new NetMessage(NetMessage.Command.Pause);
                         _client.SendMessage(resp);
                         break;
+                    case NetMessage.Command.Resume:
+                        resp = new NetMessage(NetMessage.Command.Play);
+                        _client.SendMessage(resp);
+                        break;
                     case NetMessage.Command.Stop:
                         resp = new NetMessage(NetMessage.Command.Stop);
                         _client.SendMessage(resp);

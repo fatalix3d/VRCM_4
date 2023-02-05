@@ -53,6 +53,9 @@ namespace VRCM.Lobby.UI
                 case NetMessage.Command.Pause:
                     _outline.effectColor = _outlineColors[2];
                     break;
+                case NetMessage.Command.Resume:
+                    _outline.effectColor = _outlineColors[1];
+                    break;
                 case NetMessage.Command.Stop:
                     break;
             }
