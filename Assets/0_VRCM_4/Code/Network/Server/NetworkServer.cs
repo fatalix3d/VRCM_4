@@ -45,13 +45,9 @@ namespace VRCM.Network.Server
 
                 if (bytes != null)
                 {
-                    NetMessage jMessage = BinarySerializer.Deserialize(bytes);
-                    string json = JsonUtility.ToJson(jMessage);
-
-                    Debug.Log("!!!" + json + "!!!");
-
-                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(json);
-                    Debug.Log($"[NetworkServer] - Sended to [{id}]: bytes {bytes.Length}");
+                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
+                    string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+                    Debug.Log($"[NetworkServer] - Sended to [{id}]: message {msg}");
                     OnSendMessage?.Invoke(id, bytes);
                 }
 

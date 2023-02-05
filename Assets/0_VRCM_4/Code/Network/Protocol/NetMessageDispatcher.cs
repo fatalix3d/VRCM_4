@@ -30,10 +30,7 @@ namespace VRCM.Network.Messages
 
         public void Server_MessageIn(string uniqueId, byte[] bytes)
         {
-            //NetMessage message = BinarySerializer.Deserialize(bytes);
-
-            string json= Encoding.ASCII.GetString(bytes, 0, bytes.Length);
-            NetMessage message = JsonUtility.FromJson<NetMessage>(json);
+            NetMessage message = BinarySerializer.Deserialize(bytes);
 
             if (message == null)
             {
@@ -100,6 +97,8 @@ namespace VRCM.Network.Messages
 
         public void Client_MessageIn(byte[] bytes)
         {
+            string json = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+
             NetMessage message = BinarySerializer.Deserialize(bytes);
 
             if (message == null)
