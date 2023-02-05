@@ -110,6 +110,7 @@ namespace VRCM.Network.Broadcast
         {
             try
             {
+                Debug.Log("[Broadcast Service] - Listening ...");
                 while (_listen)
                 {
                     byte[] bytes = _udpClient.Receive(ref _groupEP);
@@ -126,8 +127,8 @@ namespace VRCM.Network.Broadcast
                             {
                                 Debug.Log($"[Broadcast Service] - Server found [{sp},{sp.port}]");
                                 _remoteServerParameters = sp;
-                                StopBroadcast();
                                 ServerFound?.Invoke(sp);
+                                StopBroadcast();
                             }
                         }
                     }

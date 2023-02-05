@@ -101,6 +101,7 @@ namespace VRCM.Network.Messages
         public void Client_MessageIn(byte[] bytes)
         {
             NetMessage message = BinarySerializer.Deserialize(bytes);
+
             if (message == null)
                 return;
 

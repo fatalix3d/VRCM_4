@@ -20,7 +20,6 @@ namespace VRCM.Media
 
         [SerializeField] private VideoPlayer ptvp;
         private bool ThumbnailReady = false;
-        //[SerializeField] private DemoTest _test;
 
 
         private void Awake()
@@ -90,13 +89,12 @@ namespace VRCM.Media
                         mediaFile.videoPrev = Resize(ptvp.texture, 256, 256);
 
                         _videos.Add(files[i].Name, mediaFile);
-                        Debug.Log($"[MediaLibrary] : Add {mediaFile.name}");
+                        //Debug.Log($"[MediaLibrary] : Add {mediaFile.name}");
                     }
                 }
             }
 
             MediaLibraryLoaded?.Invoke(Videos);
-            //_test.Init();
             yield return null;
         }
 
