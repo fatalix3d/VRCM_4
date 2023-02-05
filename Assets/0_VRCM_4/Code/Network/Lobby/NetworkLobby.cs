@@ -38,7 +38,7 @@ namespace VRCM.Network.Lobby
                 res = true;
             }
             
-            return false;
+            return res;
         }
 
         public bool AddPlayer(string uniqueId, string playerId)

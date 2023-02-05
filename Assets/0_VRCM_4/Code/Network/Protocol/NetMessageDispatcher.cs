@@ -75,9 +75,11 @@ namespace VRCM.Network.Messages
                     break;
 
                 case NetMessage.Command.Ready:
+
                     break;
 
                 case NetMessage.Command.Status:
+
                     break;
 
                 // Play
@@ -107,7 +109,6 @@ namespace VRCM.Network.Messages
         {
             try
             {
-                Debug.Log("Client 1");
                 NetMessage message = BinarySerializer.Deserialize(bytes);
 
                 if (message == null)
@@ -135,15 +136,20 @@ namespace VRCM.Network.Messages
                         _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Play:
+                        resp = new NetMessage(NetMessage.Command.Play);
+                        _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Pause:
+                        resp = new NetMessage(NetMessage.Command.Pause);
+                        _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Stop:
+                        resp = new NetMessage(NetMessage.Command.Stop);
+                        _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Seek:
-                        break;
-                    case NetMessage.Command.VideoNotFound:
-                        Debug.Log($"[Message Dispatcher] - Income cmd {message.command}");
+                        resp = new NetMessage(NetMessage.Command.Seek);
+                        _client.SendMessage(resp);
                         break;
                 }
             }
