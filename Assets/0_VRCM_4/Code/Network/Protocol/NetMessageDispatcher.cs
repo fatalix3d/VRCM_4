@@ -108,7 +108,7 @@ namespace VRCM.Network.Messages
             switch (message.command)
             {
                 case NetMessage.Command.AutorizeRequest:
-
+                    _client.SendMessage(NetMessage.Command.AutorizeSucces);
                     break;
 
                 case NetMessage.Command.AutorizeSucces:

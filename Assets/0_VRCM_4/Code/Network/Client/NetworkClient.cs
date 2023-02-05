@@ -100,8 +100,15 @@ namespace VRCM.Network.Client
             }
         }
 
-        public void SendMessage(byte[] bytes)
+        public void SendMessage(NetMessage.Command cmd, string mediaId = null)
         {
+            NetMessage netMessage = new NetMessage(cmd);
+
+            if (!string.IsNullOrEmpty(mediaId))
+                netMessage.mediaName = mediaId;
+
+            byte[] bytes = BinarySerializer.Serialize(netMessage);
+
             if (bytes != null)
             {
                 string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
