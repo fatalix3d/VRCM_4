@@ -20,6 +20,9 @@ namespace VRCM.Network.Client
         public event Action<byte[]> OnRecieveMessage;
         public event Action<byte[]> OnSendMessage;
 
+        [SerializeField] private NetMessage.Command _status = NetMessage.Command.VideoNotFound;
+        public NetMessage.Command Status { get => _status; set => _status = value; }
+
         private void Awake()
         {
             if (Instance == null)
@@ -100,12 +103,10 @@ namespace VRCM.Network.Client
             }
         }
 
-        public void SendMessage(NetMessage.Command cmd, string mediaId = null)
+        public void SendMessage(NetMessage netMessage)
         {
-            NetMessage netMessage = new NetMessage(cmd);
-
-            if (!string.IsNullOrEmpty(mediaId))
-                netMessage.mediaName = mediaId;
+            if (netMessage == null)
+                return;
 
             byte[] bytes = BinarySerializer.Serialize(netMessage);
 

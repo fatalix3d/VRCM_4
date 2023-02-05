@@ -66,19 +66,22 @@ namespace VRCM.Network.Messages
             if (!_lobby.IsAuthorized(uniqueId))
                 return;
 
+            _lobby.UpdatePlayer(uniqueId, message);
+
             switch (message.command)
             {
                 // Setup device
                 case NetMessage.Command.Setup:
-                    _lobby.UpdatePlayer(uniqueId, message);
                     break;
 
                 case NetMessage.Command.Ready:
+                    break;
+
                 case NetMessage.Command.Status:
+                    break;
 
                 // Play
                 case NetMessage.Command.Play:
-                    _lobby.UpdatePlayer(uniqueId, message);
                     break;
 
                 // Pause
@@ -87,10 +90,14 @@ namespace VRCM.Network.Messages
 
                 // Resume
                 case NetMessage.Command.Resume:
-                    _lobby.UpdatePlayer(uniqueId, message);
                     break;
+
                 case NetMessage.Command.Stop:
+                    break;
+
                 case NetMessage.Command.Seek:
+                    break;
+
                 case NetMessage.Command.VideoNotFound:
                     break;
             }
@@ -106,20 +113,35 @@ namespace VRCM.Network.Messages
                 if (message == null)
                     return;
 
+                NetMessage resp;
+
                 switch (message.command)
                 {
                     case NetMessage.Command.AutorizeRequest:
-                        _client.SendMessage(NetMessage.Command.AutorizeSucces);
+                        resp = new NetMessage(NetMessage.Command.AutorizeSucces);
+                        _client.SendMessage(resp);
                         break;
 
                     case NetMessage.Command.AutorizeSucces:
+                        resp = new NetMessage(NetMessage.Command.Ready);
+                        _client.SendMessage(resp);
+                        break;
+
                     case NetMessage.Command.Setup:
-                    case NetMessage.Command.Ready:
+                        break;
+
                     case NetMessage.Command.Status:
+                        resp = new NetMessage(_client.Status);
+                        _client.SendMessage(resp);
+                        break;
                     case NetMessage.Command.Play:
+                        break;
                     case NetMessage.Command.Pause:
+                        break;
                     case NetMessage.Command.Stop:
+                        break;
                     case NetMessage.Command.Seek:
+                        break;
                     case NetMessage.Command.VideoNotFound:
                         Debug.Log($"[Message Dispatcher] - Income cmd {message.command}");
                         break;
