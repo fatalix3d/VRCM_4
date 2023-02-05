@@ -90,7 +90,7 @@ namespace VRCM.Network.Client
         {
             try
             {
-                string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+                string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
                 Debug.Log($"[NetworkClient] - Incoming msg : {msg}");
 
                 OnRecieveMessage?.Invoke(bytes);
@@ -111,7 +111,7 @@ namespace VRCM.Network.Client
 
             if (bytes != null)
             {
-                string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+                string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
                 Debug.Log($"[NetworkClient] - Sending msg : {msg}");
 
                 _websocket.Send(bytes);

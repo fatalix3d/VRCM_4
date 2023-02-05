@@ -56,7 +56,7 @@ namespace VRCM.Network.Messages
             }
             catch (Exception e)
             {
-                //Debug.Log(e.ToString());
+                Debug.Log(e.ToString());
                 return null;
             }
         }

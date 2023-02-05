@@ -6,6 +6,7 @@ using VRCM.Network.Client;
 using VRCM.Network.Server;
 using VRCM.Network.Lobby;
 using VRCM.Network.Player;
+using System;
 
 namespace VRCM.Network.Messages
 {
@@ -97,30 +98,36 @@ namespace VRCM.Network.Messages
 
         public void Client_MessageIn(byte[] bytes)
         {
-            string json = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
-
-            NetMessage message = BinarySerializer.Deserialize(bytes);
-
-            if (message == null)
-                return;
-
-            switch (message.command)
+            try
             {
-                case NetMessage.Command.AutorizeRequest:
-                    _client.SendMessage(NetMessage.Command.AutorizeSucces);
-                    break;
+                Debug.Log("Client 1");
+                NetMessage message = BinarySerializer.Deserialize(bytes);
 
-                case NetMessage.Command.AutorizeSucces:
-                case NetMessage.Command.Setup:
-                case NetMessage.Command.Ready:
-                case NetMessage.Command.Status:
-                case NetMessage.Command.Play:
-                case NetMessage.Command.Pause:
-                case NetMessage.Command.Stop:
-                case NetMessage.Command.Seek:
-                case NetMessage.Command.VideoNotFound:
-                    Debug.Log($"[Message Dispatcher] - Income cmd {message.command}");
-                    break;
+                if (message == null)
+                    return;
+
+                switch (message.command)
+                {
+                    case NetMessage.Command.AutorizeRequest:
+                        _client.SendMessage(NetMessage.Command.AutorizeSucces);
+                        break;
+
+                    case NetMessage.Command.AutorizeSucces:
+                    case NetMessage.Command.Setup:
+                    case NetMessage.Command.Ready:
+                    case NetMessage.Command.Status:
+                    case NetMessage.Command.Play:
+                    case NetMessage.Command.Pause:
+                    case NetMessage.Command.Stop:
+                    case NetMessage.Command.Seek:
+                    case NetMessage.Command.VideoNotFound:
+                        Debug.Log($"[Message Dispatcher] - Income cmd {message.command}");
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.ToString());
             }
         }
 

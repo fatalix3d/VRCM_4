@@ -46,7 +46,7 @@ namespace VRCM.Network.Server
                 if (bytes != null)
                 {
                     _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
-                    string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+                    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
                     Debug.Log($"[NetworkServer] - Sended to [{id}]: message {msg}");
                     OnSendMessage?.Invoke(id, bytes);
                 }
