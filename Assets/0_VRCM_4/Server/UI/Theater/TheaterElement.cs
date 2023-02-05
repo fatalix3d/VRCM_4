@@ -21,6 +21,10 @@ namespace VRCM.Media.Theater.UI
         [SerializeField] private Image _playIcon;
         [SerializeField] private Sprite[] _playStateSprite;
 
+        // video preview
+        [SerializeField] private Slider _videoPreviewProgress;
+        private bool _videoPreview = false;
+
         private void Awake()
         {
             _button.onClick.AddListener(PlayVideoTrigger);
@@ -31,10 +35,13 @@ namespace VRCM.Media.Theater.UI
             _button.onClick.RemoveListener(PlayVideoTrigger);
         }
 
-        public void RestorePreviewTexture()
+        public void ResetPreview()
         {
             _prevImage.texture = _mediaFile.videoPrev;
             _playIcon.sprite = _playStateSprite[1];
+
+            _videoPreview = false;
+            _videoPreviewProgress.value = 0f;
         }
 
         public void CreateElement(TheaterUI theater, MediaFile media)
@@ -52,11 +59,36 @@ namespace VRCM.Media.Theater.UI
             if (_theater == null)
                 return;
 
-            if (_theater.PlayVideo(_mediaFile.name))
+            _theater.PlayVideo(_mediaFile.name);
+        }
+
+        public void PlayPreviewVideo(float videoLength)
+        {
+            _prevImage.texture = _theater.PreviewRT;
+            _playIcon.sprite = _playStateSprite[0];
+
+            _videoPreviewProgress.maxValue = videoLength;
+            _videoPreview = true;
+        }
+
+        public void PausePreview(bool isPaused)
+        {
+            if (isPaused)
             {
-                _prevImage.texture = _theater.PreviewRT;
+                _playIcon.sprite = _playStateSprite[1];
+            }
+            else
+            {
                 _playIcon.sprite = _playStateSprite[0];
             }
+        }
+
+        private void Update()
+        {
+            if (!_videoPreview)
+                return;
+
+            _videoPreviewProgress.value = (float)_theater.PreviewPlayer.time;
         }
     }
 }

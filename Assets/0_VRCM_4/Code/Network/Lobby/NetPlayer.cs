@@ -11,6 +11,7 @@ namespace VRCM.Network.Player
     {
         public string Id;
         public string UniqueId;
+        public bool Authorized = false;
         public Texture2D PlayerPreviewTex;
         public NetMessage _state;
     }

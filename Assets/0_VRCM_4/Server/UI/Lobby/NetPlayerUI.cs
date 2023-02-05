@@ -15,6 +15,10 @@ namespace VRCM.Lobby.UI
         [SerializeField] private TextMeshProUGUI _uniqueId;
         [SerializeField] private TextMeshProUGUI _status;
         [SerializeField] private TextMeshProUGUI _mediaName;
+
+        [SerializeField] private Outline _outline;
+        [SerializeField] private Color[] _outlineColors;
+
         private GameObject _gameObject;
 
         public GameObject GO { get => _gameObject; set => _gameObject = value; }
@@ -32,6 +36,25 @@ namespace VRCM.Lobby.UI
                 TimeSpan curTime = TimeSpan.FromMilliseconds(message.mediaCurrentTime);
                 string time_string = $"{curTime.ToString(@"mm\:ss")} / {allTime.ToString(@"mm\:ss")}";
                 _mediaName.text = $"{message.mediaName} {time_string}";
+            }
+
+            switch (message.command)
+            {
+                case NetMessage.Command.AutorizeError:
+                    _outline.effectColor = _outlineColors[3];
+                    break;
+                case NetMessage.Command.AutorizeRequest:
+                case NetMessage.Command.AutorizeSucces:
+                    _outline.effectColor = _outlineColors[1];
+                    break;
+                case NetMessage.Command.Play:
+                    _outline.effectColor = _outlineColors[1];
+                    break;
+                case NetMessage.Command.Pause:
+                    _outline.effectColor = _outlineColors[2];
+                    break;
+                case NetMessage.Command.Stop:
+                    break;
             }
         }
     }

@@ -6,6 +6,8 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 using System.Text;
 using VRCM.Network;
+using VRCM.Network.Lobby;
+using VRCM.Network.Player;
 using VRCM.Network.Messages;
 
 namespace VRCM.Network.Server
@@ -14,6 +16,7 @@ namespace VRCM.Network.Server
     {
         private WebSocketServer _ws;
         private NetMessageDispatcher _networkMessageDispatcher;
+        private NetworkLobby _lobby;
 
         public event Action<string, byte[]> OnRecieveMessage;
         public event Action<string, byte[]> OnSendMessage;
@@ -21,6 +24,7 @@ namespace VRCM.Network.Server
         public NetworkServer(string ip, int port)
         {
             _networkMessageDispatcher = new NetMessageDispatcher(this);
+            _lobby = Bootstrapper.Instance.Lobby;
 
             _ws = new WebSocketServer($"ws://{ip}:{port}");
             _ws.AddWebSocketService<Echo>("/Echo");
@@ -28,11 +32,15 @@ namespace VRCM.Network.Server
             Debug.Log($"[NetworkServer] - Started at : ws://{ip}:{port}/Echo");
         }  
 
-        public void SendMessage(string id, NetMessage.Command cmd)
+        public void SendMessage(string id, NetMessage.Command cmd, string mediaId = null)
         {
             try
             {
                 NetMessage netMessage = new NetMessage(cmd);
+
+                if (!string.IsNullOrEmpty(mediaId))
+                    netMessage.mediaName = mediaId;
+
                 byte[] bytes = BinarySerializer.Serialize(netMessage);
 
                 if (bytes != null)
@@ -51,6 +59,17 @@ namespace VRCM.Network.Server
             catch (Exception e)
             {
                 Debug.Log($"[NetworkServer] - Error on send : {e}");
+            }
+        }
+
+        public void SendMessageAll(NetMessage.Command cmd, string mediaId = null)
+        {
+            if (_lobby.Players.Count == 0)
+                return;
+
+            foreach (KeyValuePair<string, NetPlayer> player in _lobby.Players)
+            {
+                SendMessage(player.Value.UniqueId, cmd, mediaId);
             }
         }
 
@@ -83,5 +102,7 @@ namespace VRCM.Network.Server
                 _networkMessageDispatcher.Stop();
 
         }
+
+        
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 using VRCM.Network.Client;
 using VRCM.Network.Server;
 using VRCM.Network.Lobby;
+using VRCM.Network.Player;
 
 namespace VRCM.Network.Messages
 {
@@ -18,7 +19,6 @@ namespace VRCM.Network.Messages
         {
             _server = server;
             _server.OnRecieveMessage += Server_MessageIn;
-
             _lobby = Bootstrapper.Instance.Lobby;
         }
 
@@ -52,7 +52,6 @@ namespace VRCM.Network.Messages
                     if (_lobby.AddPlayer(uniqueId, message.id))
                     {
                         _server.SendMessage(uniqueId, NetMessage.Command.AutorizeSucces);
-
                         _lobby.UpdatePlayer(uniqueId, message);
 
                         Debug.Log($"[Message Dispatcher] - Player with id [{message.id}][{uniqueId}] - Authorization [Succes]");
@@ -64,15 +63,34 @@ namespace VRCM.Network.Messages
                         Debug.Log($"[Message Dispatcher] - Player with id [{message.id}][{uniqueId}] - Authorization [Error]");
                     }
                     break;
+            }
 
+            if (!_lobby.IsAuthorized(uniqueId))
+                return;
+
+            switch (message.command)
+            {
                 // Setup device
                 case NetMessage.Command.Setup:
                     _lobby.UpdatePlayer(uniqueId, message);
                     break;
+
                 case NetMessage.Command.Ready:
                 case NetMessage.Command.Status:
+
+                // Play
                 case NetMessage.Command.Play:
+                    _lobby.UpdatePlayer(uniqueId, message);
+                    break;
+
+                // Pause
                 case NetMessage.Command.Pause:
+                    break;
+
+                // Resume
+                case NetMessage.Command.Resume:
+                    _lobby.UpdatePlayer(uniqueId, message);
+                    break;
                 case NetMessage.Command.Stop:
                 case NetMessage.Command.Seek:
                 case NetMessage.Command.VideoNotFound:

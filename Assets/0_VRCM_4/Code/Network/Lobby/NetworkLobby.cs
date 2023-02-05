@@ -14,10 +14,13 @@ namespace VRCM.Network.Lobby
         private NetPlayer _currentPlayer = null;
         private LobbyUI _lobbyUI;
 
+        public Dictionary<string, NetPlayer> Players => _players;
+
         public event Action<NetPlayer> AddPlayerEvent;
         public event Action<string> SelectPlayerEvent;
         public event Action<string, NetMessage> UpdatePlayerEvent;
         public event Action<string> RemovePlayerEvent;
+        public event Action NoActivePlayerEvent;
 
         public NetworkLobby()
         {
@@ -25,6 +28,17 @@ namespace VRCM.Network.Lobby
             _lobbyUI = GameObject.FindObjectOfType<LobbyUI>();
             _lobbyUI.Init(this);
             Debug.Log($"[Lobby] - Created");
+        }
+
+        public bool IsAuthorized(string uid)
+        {
+            bool res = false;
+            if (_players.ContainsKey(uid))
+            {
+                res = true;
+            }
+            
+            return false;
         }
 
         public bool AddPlayer(string uniqueId, string playerId)
@@ -35,6 +49,7 @@ namespace VRCM.Network.Lobby
                 NetPlayer lb = new NetPlayer();
                 lb.Id = playerId;
                 lb.UniqueId = uniqueId;
+                lb.Authorized = true;
                 _players.Add(uniqueId, lb);
                 res = true;
 
@@ -57,6 +72,9 @@ namespace VRCM.Network.Lobby
                 RemovePlayerEvent?.Invoke(uniqueId);
             }
 
+            if (_players.Count == 0)
+                NoActivePlayerEvent?.Invoke();
+
             return res;
         }
 
@@ -77,5 +95,8 @@ namespace VRCM.Network.Lobby
         {
             _currentPlayer = null;
         }
+
+        
+
     }
 }

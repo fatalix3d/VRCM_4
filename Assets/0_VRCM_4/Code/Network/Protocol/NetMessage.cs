@@ -20,8 +20,9 @@ namespace VRCM.Network.Messages
 
             Play = 20,
             Pause = 21,
-            Stop = 22,
-            Seek = 23,
+            Resume = 22,
+            Stop = 23,
+            Seek = 24,
 
             VideoNotFound = 30
         }

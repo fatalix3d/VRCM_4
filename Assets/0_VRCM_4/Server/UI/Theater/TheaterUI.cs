@@ -13,22 +13,34 @@ namespace VRCM.Media.Theater.UI
         private Dictionary<string, TheaterElement> _elements;
         [SerializeField] private RectTransform _root;
         [SerializeField] private GameObject _elementPrefab;
+
+        // video preview player
+        private string _curVideoId = string.Empty;
         [SerializeField] private VideoPlayer _previewPlayer;
         [SerializeField] private RenderTexture _previewRT;
+
+        public VideoPlayer PreviewPlayer => _previewPlayer;
         public RenderTexture PreviewRT => _previewRT;
 
         private void Awake()
         {
             MediaLibrary.MediaLibraryLoaded += OnMediaLibraryLoaded;
+            _previewPlayer.prepareCompleted += prepareCompleted;
+            _previewPlayer.loopPointReached += loopPointReached;
         }
 
         private void OnDisable()
         {
             MediaLibrary.MediaLibraryLoaded -= OnMediaLibraryLoaded;
+            _previewPlayer.prepareCompleted -= prepareCompleted;
+            _previewPlayer.loopPointReached -= loopPointReached;
+            Bootstrapper.Instance.Lobby.NoActivePlayerEvent -= StopPreviewPlayer;
         }
 
         private void OnMediaLibraryLoaded(Dictionary<string, MediaFile> videos)
         {
+            Bootstrapper.Instance.Lobby.NoActivePlayerEvent += StopPreviewPlayer;
+
             _elements = new Dictionary<string, TheaterElement>();
 
             foreach (KeyValuePair<string, MediaFile> video in videos)
@@ -40,25 +52,75 @@ namespace VRCM.Media.Theater.UI
             }
         }
 
-        public bool PlayVideo(string videoID)
+        public void PlayVideo(string videoID)
         {
-            bool res = false;
             if (!_elements.ContainsKey(videoID))
-                return res;
+                return;
+
+            if (_previewPlayer.isPlaying && videoID == _curVideoId)
+            {
+                // send to server pause command.
+                //...
+                Bootstrapper.Instance.Server.SendMessageAll(Network.Messages.NetMessage.Command.Pause);
+
+                _previewPlayer.Pause();
+                _elements[_curVideoId].PausePreview(true);
+                return;
+            }
+
+            if (_previewPlayer.isPaused && videoID == _curVideoId)
+            {
+                // send to server play command.
+                //...
+                Bootstrapper.Instance.Server.SendMessageAll(Network.Messages.NetMessage.Command.Resume, videoID);
+
+                _previewPlayer.Play();
+                _elements[_curVideoId].PausePreview(false);
+                return;
+            }
+
+
+            _curVideoId = videoID;
+            _previewPlayer.Stop();
+            _previewPlayer.targetTexture.Release();
 
             // send to server play command.
+            //...
+            Bootstrapper.Instance.Server.SendMessageAll(Network.Messages.NetMessage.Command.Play, videoID);
+
+            foreach (KeyValuePair<string, TheaterElement> element in _elements)
+                element.Value.ResetPreview();
+
+            _previewPlayer.url = MediaLibrary.Instance.GetVideoUrl(videoID);
+            _previewPlayer.Prepare();
+        }
+
+        private void prepareCompleted(VideoPlayer vp)
+        {
+            if (!_elements.ContainsKey(_curVideoId))
+                return;
+
+            vp.Play();
+
+            _elements[_curVideoId].PlayPreviewVideo((float)_previewPlayer.length);
+            Debug.Log(_previewPlayer.length);
+
+        }
+
+        private void loopPointReached(VideoPlayer source)
+        {
+            StopPreviewPlayer();
+        }
+
+        private void StopPreviewPlayer()
+        {
+            _curVideoId = string.Empty;
 
             _previewPlayer.Stop();
             _previewPlayer.targetTexture.Release();
 
             foreach (KeyValuePair<string, TheaterElement> element in _elements)
-                element.Value.RestorePreviewTexture();
-
-            _previewPlayer.url = MediaLibrary.Instance.GetVideoUrl(videoID);
-            _previewPlayer.Play();
-
-            res = true;
-            return res;
+                element.Value.ResetPreview();
         }
     }
 }
