@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using VRCM.Media.Theater.UI;
+using RenderHeads.Media.AVProVideo;
+using DG.Tweening;
 
 namespace VRCM.Media.Theater.UI
 {
@@ -11,19 +13,17 @@ namespace VRCM.Media.Theater.UI
     {
         private TheaterUI _theater = null;
         private MediaFile _mediaFile;
+        private GameObject _gameObject;
 
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private RawImage _prevImage;
-        private GameObject _gameObject;
-
+        [SerializeField] private DisplayUGUI _prevVideo;
+        [SerializeField] private CanvasGroup _previewVideoCanvas;
+        [SerializeField] private Outline _outline;
         [SerializeField] private CanvasGroup _cnv;
         [SerializeField] private Button _button;
         [SerializeField] private Image _playIcon;
         [SerializeField] private Sprite[] _playStateSprite;
-
-        // video preview
-        [SerializeField] private Slider _videoPreviewProgress;
-        private bool _videoPreview = false;
 
         private void Awake()
         {
@@ -37,11 +37,11 @@ namespace VRCM.Media.Theater.UI
 
         public void ResetPreview()
         {
-            _prevImage.texture = _mediaFile.videoPrev;
+            _previewVideoCanvas.alpha = 0;
+            _prevVideo.enabled = false;
+            _prevVideo.CurrentMediaPlayer = null;
             _playIcon.sprite = _playStateSprite[1];
-
-            _videoPreview = false;
-            _videoPreviewProgress.value = 0f;
+            _outline.enabled = false;
         }
 
         public void CreateElement(TheaterUI theater, MediaFile media)
@@ -52,6 +52,7 @@ namespace VRCM.Media.Theater.UI
             _name.text = media.name;
             _prevImage.texture = media.videoPrev;
             _gameObject = gameObject;
+            _prevVideo.DefaultTexture = media.videoPrev;
         }
 
         public void PlayVideoTrigger()
@@ -64,11 +65,13 @@ namespace VRCM.Media.Theater.UI
 
         public void PlayPreviewVideo(float videoLength)
         {
-            _prevImage.texture = _theater.PreviewRT;
-            _playIcon.sprite = _playStateSprite[0];
+            _prevVideo.CurrentMediaPlayer = _theater.PreviewPlayer;
+            _prevVideo.enabled = true;
 
-            _videoPreviewProgress.maxValue = videoLength;
-            _videoPreview = true;
+            _playIcon.sprite = _playStateSprite[0];
+            _previewVideoCanvas.DOFade(1f, 0.35f);
+
+            _outline.enabled = true;
         }
 
         public void PausePreview(bool isPaused)
@@ -81,14 +84,6 @@ namespace VRCM.Media.Theater.UI
             {
                 _playIcon.sprite = _playStateSprite[0];
             }
-        }
-
-        private void Update()
-        {
-            if (!_videoPreview)
-                return;
-
-            _videoPreviewProgress.value = (float)_theater.PreviewPlayer.time;
         }
     }
 }
