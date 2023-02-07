@@ -36,26 +36,20 @@ namespace VRCM.Network.Client.VideoPlayer {
 
         public bool PauseVideo(string mediaName)
         {
-            string path = MediaLibrary.Instance.GetVideoUrl(mediaName);
-
-            if (string.IsNullOrEmpty(path))
+            if (_mediaName != mediaName)
                 return false;
 
-            if (!_mediaPlayer.Control.IsPlaying())
+            if (_mediaPlayer.Control.IsPlaying())
             {
-                return false;
+                _mediaPlayer.Control.Pause();
             }
-
-            _mediaPlayer.Control.Pause();
 
             return true;
         }
 
         public bool ResumeVideo(string mediaName)
         {
-            string path = MediaLibrary.Instance.GetVideoUrl(mediaName);
-
-            if (string.IsNullOrEmpty(path))
+            if (_mediaName != mediaName)
                 return false;
 
             if (!_mediaPlayer.Control.IsPaused())
