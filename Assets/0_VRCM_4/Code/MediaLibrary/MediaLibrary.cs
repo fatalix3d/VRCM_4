@@ -100,7 +100,14 @@ namespace VRCM.Media
 
         public string GetVideoUrl(string videoId)
         {
-            return _videos[videoId].path;
+            if (_videos.ContainsKey(videoId))
+            {
+                return _videos[videoId].path;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
 

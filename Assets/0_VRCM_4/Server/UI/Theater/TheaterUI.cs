@@ -106,6 +106,12 @@ namespace VRCM.Media.Theater.UI
                 return;
 
             string path = MediaLibrary.Instance.GetVideoUrl(videoID);
+            if (string.IsNullOrEmpty(path))
+            {
+                Debug.Log("Invalid / Empty path");
+                return;
+            }
+
             _previewPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
 
             _elements[_curVideoId].PlayPreviewVideo((float)_previewPlayer.Info.GetDuration());

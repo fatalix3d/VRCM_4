@@ -32,10 +32,10 @@ namespace VRCM.Lobby.UI
             if (!string.IsNullOrEmpty(message.mediaName))
             {
                 // to do, remove to client side;
-                TimeSpan allTime = TimeSpan.FromMilliseconds(message.mediaAllTime);
-                TimeSpan curTime = TimeSpan.FromMilliseconds(message.mediaCurrentTime);
-                string time_string = $"{curTime.ToString(@"mm\:ss")} / {allTime.ToString(@"mm\:ss")}";
-                _mediaName.text = $"{message.mediaName} {time_string}";
+                //TimeSpan allTime = TimeSpan.FromMilliseconds(message.mediaAllTime);
+                //TimeSpan curTime = TimeSpan.FromMilliseconds(message.mediaCurrentTime);
+                //string time_string = $"{curTime.ToString(@"mm\:ss")} / {allTime.ToString(@"mm\:ss")}";
+                _mediaName.text = $"{message.mediaName}";
             }
 
             switch (message.command)

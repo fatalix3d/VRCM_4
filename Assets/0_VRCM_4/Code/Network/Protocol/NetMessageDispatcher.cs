@@ -100,6 +100,9 @@ namespace VRCM.Network.Messages
                 case NetMessage.Command.Seek:
                     break;
 
+                case NetMessage.Command.SeekError:
+                    break;
+
                 case NetMessage.Command.VideoNotFound:
                     break;
             }
@@ -135,10 +138,20 @@ namespace VRCM.Network.Messages
                         resp = new NetMessage(_client.Status);
                         _client.SendMessage(resp);
                         break;
+
                     case NetMessage.Command.Play:
-                        resp = new NetMessage(NetMessage.Command.Play);
+
+                        if (_client.MediaPlayer.PlayVideo(message.mediaName))
+                        {
+                            resp = new NetMessage(NetMessage.Command.Play);
+                        }
+                        else
+                        {
+                            resp = new NetMessage(NetMessage.Command.VideoNotFound);
+                        }
                         _client.SendMessage(resp);
                         break;
+
                     case NetMessage.Command.Pause:
                         resp = new NetMessage(NetMessage.Command.Pause);
                         _client.SendMessage(resp);
@@ -152,8 +165,15 @@ namespace VRCM.Network.Messages
                         _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Seek:
-                        Debug.Log($"Seeking {message.mediaName} to {message.seekTime}");
-                        resp = new NetMessage(NetMessage.Command.Seek);
+                        if (_client.MediaPlayer.SeekVideo(message.mediaName,message.seekTime))
+                        {
+                            Debug.Log($"Seeking {message.mediaName} to {message.seekTime}");
+                            resp = new NetMessage(NetMessage.Command.Seek);
+                        }
+                        else
+                        {
+                            resp = new NetMessage(NetMessage.Command.SeekError);
+                        }
                         _client.SendMessage(resp);
                         break;
                 }

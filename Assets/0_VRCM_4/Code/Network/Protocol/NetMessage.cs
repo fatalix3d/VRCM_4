@@ -23,6 +23,7 @@ namespace VRCM.Network.Messages
             Resume = 22,
             Stop = 23,
             Seek = 24,
+            SeekError = 25,
 
             VideoNotFound = 30
         }
@@ -31,8 +32,7 @@ namespace VRCM.Network.Messages
         public string id;
         public string uid;
         public string mediaName;
-        public double mediaCurrentTime;
-        public double mediaAllTime;
+        public string mediaDuration;
         public double seekTime;
 
         public NetMessage(Command _command)

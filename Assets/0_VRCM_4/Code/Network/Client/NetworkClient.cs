@@ -5,6 +5,7 @@ using System.Text;
 using NativeWebSocket;
 using UnityEngine;
 using VRCM.Network.Messages;
+using VRCM.Network.Client.VideoPlayer; 
 
 namespace VRCM.Network.Client
 {
@@ -22,6 +23,9 @@ namespace VRCM.Network.Client
 
         [SerializeField] private NetMessage.Command _status = NetMessage.Command.VideoNotFound;
         public NetMessage.Command Status { get => _status; set => _status = value; }
+
+        [SerializeField] private ClientMediaPlayer _mediaPlayer;
+        public ClientMediaPlayer MediaPlayer => _mediaPlayer;
 
         private void Awake()
         {
@@ -129,6 +133,7 @@ namespace VRCM.Network.Client
             _websocket.DispatchMessageQueue();
 #endif
         }
+
         private void OnApplicationPause(bool pause)
         {
             if (_serverAdress == null)
