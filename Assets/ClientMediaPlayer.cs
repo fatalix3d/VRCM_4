@@ -3,15 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using RenderHeads.Media.AVProVideo;
 using VRCM.Media;
+using VRCM.Network.Messages;
 
 namespace VRCM.Network.Client.VideoPlayer {
     public class ClientMediaPlayer : MonoBehaviour
     {
         // Media player
         [SerializeField] private MediaPlayer _mediaPlayer;
+        [SerializeField] private NetworkClient _client;
 
         private string _mediaName;
         private string _mediaDuration;
+
+        private void Awake()
+        {
+            _mediaPlayer.Events.AddListener(HandleEvent);
+        }
+
+        private void OnDisable()
+        {
+            _mediaPlayer.Events.RemoveAllListeners();
+        }
+
+        void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
+        {
+            if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
+            {
+                StopVideo();
+            }
+        }
 
         public bool PlayVideo(string mediaName)
         {
@@ -77,6 +97,13 @@ namespace VRCM.Network.Client.VideoPlayer {
             _mediaPlayer.Control.Play();
 
             return true;
+        }
+
+        public void StopVideo()
+        {
+            _mediaPlayer.Control.Stop();
+            var resp = new NetMessage(NetMessage.Command.Stop);
+            _client.SendMessage(resp);
         }
 
         private void Update()

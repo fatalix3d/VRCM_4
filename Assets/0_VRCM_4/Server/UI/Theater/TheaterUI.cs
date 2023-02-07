@@ -254,18 +254,18 @@ namespace VRCM.Media.Theater.UI
                 if (_wasPlayingBeforeTimelineDrag)
                 {
                     _previewPlayer.Play();
-                    _wasPlayingBeforeTimelineDrag = false;
-
-                    TimeRange timelineRange = GetTimelineRange();
-                    double time = timelineRange.startTime + (_sliderTime.value * timelineRange.duration);
-
-                    // send to server play command.
-                    //...
-                    NetMessage netMessage = new NetMessage(NetMessage.Command.Seek);
-                    netMessage.seekTime = time;
-                    netMessage.mediaName = _curVideoId;
-                    Bootstrapper.Instance.Server.SendMessageAll(netMessage);
+                    _wasPlayingBeforeTimelineDrag = false;                   
                 }
+
+                TimeRange timelineRange = GetTimelineRange();
+                double time = timelineRange.startTime + (_sliderTime.value * timelineRange.duration);
+
+                // send to server play command.
+                //...
+                NetMessage netMessage = new NetMessage(NetMessage.Command.Seek);
+                netMessage.seekTime = time;
+                netMessage.mediaName = _curVideoId;
+                Bootstrapper.Instance.Server.SendMessageAll(netMessage);
             }
         }
 
