@@ -15,6 +15,8 @@ namespace VRCM.Network.Client.VideoPlayer {
         private string _mediaName;
         private string _mediaDuration;
 
+        public string MediaName => _mediaName;
+
         private void Awake()
         {
             _mediaPlayer.Events.AddListener(HandleEvent);
@@ -35,19 +37,17 @@ namespace VRCM.Network.Client.VideoPlayer {
 
         public bool PlayVideo(string mediaName)
         {
+            if (_mediaName != mediaName)
+            {
+                _mediaPlayer.Control.Stop();
+                _mediaPlayer.CloseMedia();
+                _mediaName = mediaName;
+            }
+
             string path = MediaLibrary.Instance.GetVideoUrl(mediaName);
 
             if (string.IsNullOrEmpty(path))
                 return false;
-
-            if (_mediaName != mediaName)
-                _mediaName = mediaName;
-
-            if (_mediaPlayer.Control.IsPlaying() || _mediaPlayer.Control.IsPaused())
-            {
-                _mediaPlayer.Control.Stop();
-                _mediaPlayer.CloseMedia();
-            }
 
             _mediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
 
@@ -86,7 +86,7 @@ namespace VRCM.Network.Client.VideoPlayer {
         {
             if (_mediaName != mediaName)
                 return false;
-
+            bool isPlayed = _mediaPlayer.Control.IsPlaying();
             if (_mediaPlayer.Control.IsPlaying())
             {
                 _mediaPlayer.Control.Pause();
@@ -94,6 +94,7 @@ namespace VRCM.Network.Client.VideoPlayer {
 
             _mediaPlayer.Control.Seek(time);
 
+            if(isPlayed)
             _mediaPlayer.Control.Play();
 
             return true;
@@ -102,6 +103,9 @@ namespace VRCM.Network.Client.VideoPlayer {
         public void StopVideo()
         {
             _mediaPlayer.Control.Stop();
+            _mediaPlayer.CloseMedia();
+            _mediaName = string.Empty;
+
             var resp = new NetMessage(NetMessage.Command.Stop);
             _client.SendMessage(resp);
         }

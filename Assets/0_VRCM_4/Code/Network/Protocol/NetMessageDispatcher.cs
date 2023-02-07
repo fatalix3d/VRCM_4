@@ -149,6 +149,7 @@ namespace VRCM.Network.Messages
                         {
                             resp = new NetMessage(NetMessage.Command.VideoNotFound);
                         }
+                        resp.mediaName = _client.MediaPlayer.MediaName;
                         _client.SendMessage(resp);
                         break;
 
@@ -161,9 +162,10 @@ namespace VRCM.Network.Messages
                         {
                             resp = new NetMessage(NetMessage.Command.VideoNotFound);
                         }
-
+                        resp.mediaName = _client.MediaPlayer.MediaName;
                         _client.SendMessage(resp);
                         break;
+
                     case NetMessage.Command.Resume:
                         if (_client.MediaPlayer.ResumeVideo(message.mediaName))
                         {
@@ -173,13 +175,16 @@ namespace VRCM.Network.Messages
                         {
                             resp = new NetMessage(NetMessage.Command.VideoNotFound);
                         }
-
+                        resp.mediaName = _client.MediaPlayer.MediaName;
                         _client.SendMessage(resp);
                         break;
+
                     case NetMessage.Command.Stop:
                         resp = new NetMessage(NetMessage.Command.Stop);
                         _client.SendMessage(resp);
+                        resp.mediaName = _client.MediaPlayer.MediaName;
                         break;
+
                     case NetMessage.Command.Seek:
                         if (_client.MediaPlayer.SeekVideo(message.mediaName,message.seekTime))
                         {
@@ -190,6 +195,8 @@ namespace VRCM.Network.Messages
                         {
                             resp = new NetMessage(NetMessage.Command.SeekError);
                         }
+
+                        resp.mediaName = _client.MediaPlayer.MediaName;
                         _client.SendMessage(resp);
                         break;
                 }
