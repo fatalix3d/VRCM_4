@@ -16,6 +16,7 @@ namespace VRCM.Network.Client.VideoPlayer {
         private string _mediaDuration;
 
         public string MediaName => _mediaName;
+        public string MediaDuration => _mediaDuration;
 
         private void Awake()
         {
@@ -50,7 +51,7 @@ namespace VRCM.Network.Client.VideoPlayer {
                 return false;
 
             _mediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
-
+            _client.Status = NetMessage.Command.Play;
             return true;
         }
 
@@ -62,6 +63,7 @@ namespace VRCM.Network.Client.VideoPlayer {
             if (_mediaPlayer.Control.IsPlaying())
             {
                 _mediaPlayer.Control.Pause();
+                _client.Status = NetMessage.Command.Pause;
             }
 
             return true;
@@ -78,7 +80,7 @@ namespace VRCM.Network.Client.VideoPlayer {
             }
 
             _mediaPlayer.Control.Play();
-
+            _client.Status = NetMessage.Command.Play;
             return true;
         }
 
@@ -86,7 +88,10 @@ namespace VRCM.Network.Client.VideoPlayer {
         {
             if (_mediaName != mediaName)
                 return false;
+            _client.Status = NetMessage.Command.Seek;
+
             bool isPlayed = _mediaPlayer.Control.IsPlaying();
+
             if (_mediaPlayer.Control.IsPlaying())
             {
                 _mediaPlayer.Control.Pause();
@@ -96,6 +101,7 @@ namespace VRCM.Network.Client.VideoPlayer {
 
             if(isPlayed)
             _mediaPlayer.Control.Play();
+            _client.Status = NetMessage.Command.Play;
 
             return true;
         }
@@ -105,6 +111,8 @@ namespace VRCM.Network.Client.VideoPlayer {
             _mediaPlayer.Control.Stop();
             _mediaPlayer.CloseMedia();
             _mediaName = string.Empty;
+
+            _client.Status = NetMessage.Command.Stop;
 
             var resp = new NetMessage(NetMessage.Command.Stop);
             _client.SendMessage(resp);

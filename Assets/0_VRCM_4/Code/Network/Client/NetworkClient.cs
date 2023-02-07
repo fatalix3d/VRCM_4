@@ -24,8 +24,13 @@ namespace VRCM.Network.Client
         [SerializeField] private NetMessage.Command _status = NetMessage.Command.VideoNotFound;
         public NetMessage.Command Status { get => _status; set => _status = value; }
 
+        public bool IsConnected => _isConnected;
+
         [SerializeField] private ClientMediaPlayer _mediaPlayer;
         public ClientMediaPlayer MediaPlayer => _mediaPlayer;
+
+        private Coroutine _autoPingRoutine = null;
+
 
         private void Awake()
         {
@@ -71,18 +76,21 @@ namespace VRCM.Network.Client
             {
                 Debug.Log("[NetworkClient] - Connection open!");
                 _isConnected = true;
+                StartSendData();
             };
 
             _websocket.OnError += (e) =>
             {
                 Debug.Log("[NetworkClient] - Error! : " + e);
                 _isConnected = false;
+                StopSendData();
             };
 
             _websocket.OnClose += (e) =>
             {
                 Debug.Log("[NetworkClient] - Connection closed!");
                 _isConnected = false;
+                StopSendData();
             };
 
             _websocket.OnMessage += (bytes) =>
@@ -121,6 +129,41 @@ namespace VRCM.Network.Client
 
                 _websocket.Send(bytes);
                 OnSendMessage?.Invoke(bytes);
+            }
+        }
+
+        // Auto sender
+        private void StartSendData()
+        {
+            if (_autoPingRoutine != null)
+            {
+                StopCoroutine(_autoPingRoutine);
+            }
+
+            _autoPingRoutine = StartCoroutine(ClientAutoPing());
+        }
+
+        private void StopSendData()
+        {
+            if (_autoPingRoutine != null)
+            {
+                StopCoroutine(_autoPingRoutine);
+            }
+        }
+
+        private IEnumerator ClientAutoPing()
+        {
+            while (true)
+            {
+                Debug.Log("Something sended ...");
+                if (IsConnected)
+                {
+                    var resp = new NetMessage(NetMessage.Command.Status);
+                    resp.mediaName = MediaPlayer.MediaName;
+                    resp.mediaDuration = MediaPlayer.MediaDuration;
+                    SendMessage(resp);
+                }
+                yield return new WaitForSeconds(0.5f);
             }
         }
 
