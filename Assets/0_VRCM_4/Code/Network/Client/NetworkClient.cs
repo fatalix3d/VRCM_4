@@ -43,14 +43,18 @@ namespace VRCM.Network.Client
                 Destroy(gameObject);
             }
         }
-
+        private void Start()
+        {
+            StartSendData();
+        }
         public void Setup(ServerParams sp)
         {
-            if(!string.IsNullOrEmpty(sp.ip) && sp.port > 0)
+            if (!string.IsNullOrEmpty(sp.ip) && sp.port > 0)
             {
                 _serverAdress = sp;
                 _networkMessageDispatcher = new NetMessageDispatcher(this);
                 Connect();
+
             }
         }
 
@@ -76,21 +80,18 @@ namespace VRCM.Network.Client
             {
                 Debug.Log("[NetworkClient] - Connection open!");
                 _isConnected = true;
-                StartSendData();
             };
 
             _websocket.OnError += (e) =>
             {
                 Debug.Log("[NetworkClient] - Error! : " + e);
                 _isConnected = false;
-                StopSendData();
             };
 
             _websocket.OnClose += (e) =>
             {
                 Debug.Log("[NetworkClient] - Connection closed!");
                 _isConnected = false;
-                StopSendData();
             };
 
             _websocket.OnMessage += (bytes) =>
@@ -139,7 +140,6 @@ namespace VRCM.Network.Client
             {
                 StopCoroutine(_autoPingRoutine);
             }
-
             _autoPingRoutine = StartCoroutine(ClientAutoPing());
         }
 
@@ -155,7 +155,6 @@ namespace VRCM.Network.Client
         {
             while (true)
             {
-                Debug.Log("Something sended ...");
                 if (IsConnected)
                 {
                     var resp = new NetMessage(NetMessage.Command.Status);
