@@ -73,7 +73,7 @@ namespace VRCM.Media.Theater.UI
             {
                 // send to server pause command.
                 //...
-                Bootstrapper.Instance.Server.SendMessageAll(Network.Messages.NetMessage.Command.Pause);
+                Bootstrapper.Instance.Server.SendMessageAll(Network.Messages.NetMessage.Command.Pause, videoID);
 
                 _previewPlayer.Pause();
                 _elements[_curVideoId].PausePreview(true);
