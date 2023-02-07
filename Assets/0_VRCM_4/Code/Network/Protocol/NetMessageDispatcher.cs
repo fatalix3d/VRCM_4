@@ -180,9 +180,9 @@ namespace VRCM.Network.Messages
                         break;
 
                     case NetMessage.Command.Stop:
+                        _client.MediaPlayer.StopVideo();
                         resp = new NetMessage(NetMessage.Command.Stop);
                         _client.SendMessage(resp);
-                        resp.mediaName = _client.MediaPlayer.MediaName;
                         break;
 
                     case NetMessage.Command.Seek:

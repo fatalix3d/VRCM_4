@@ -10,6 +10,7 @@ namespace VRCM.Media
 {
     public class MediaLibrary : MonoBehaviour
     {
+        [SerializeField] private bool _server = false;
         public static MediaLibrary Instance { get; private set; }
 
         private Dictionary<string, MediaFile> _videos = new Dictionary<string, MediaFile>();
@@ -79,17 +80,22 @@ namespace VRCM.Media
                     if (files[i].Extension == ".avi" || files[i].Extension == ".mp4" || files[i].Extension == ".webm" || files[i].Extension == ".mkv")
                     {
                         MediaFile mediaFile = new MediaFile();
-                        mediaFile.name = files[i].Name;
+                        //mediaFile.name = files[i].Name;
+                        string nameNoExt = Path.GetFileNameWithoutExtension(files[i].FullName);
+                        mediaFile.name = nameNoExt;
                         mediaFile.path = files[i].FullName;
 
-                        ThumbnailReady = false;
-                        ptvp.url = files[i].FullName;
-                        ptvp.Prepare();
-                        yield return new WaitUntil(CheckThumbnail);
-                        mediaFile.videoPrev = Resize(ptvp.texture, 256, 256);
+                        if (_server)
+                        {
+                            ThumbnailReady = false;
+                            ptvp.url = files[i].FullName;
+                            ptvp.Prepare();
+                            yield return new WaitUntil(CheckThumbnail);
+                            mediaFile.videoPrev = Resize(ptvp.texture, 256, 256);
+                        }
 
-                        _videos.Add(files[i].Name, mediaFile);
-                        //Debug.Log($"[MediaLibrary] : Add {mediaFile.name}");
+                        _videos.Add(nameNoExt, mediaFile);
+                        Debug.Log($"[MediaLibrary] : Add {mediaFile.name}");
                     }
                 }
             }
