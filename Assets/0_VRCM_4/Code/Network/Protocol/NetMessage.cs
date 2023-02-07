@@ -38,7 +38,7 @@ namespace VRCM.Network.Messages
         public NetMessage(Command _command)
         {
             this.command = _command;
-            this.id = "test_01";
+            this.id = Bootstrapper.Instance.NetConfig.Id;
             this.mediaName = string.Empty;
             this.seekTime = 0;
         }
