@@ -88,6 +88,7 @@ namespace VRCM.Network.Client.VideoPlayer {
         {
             if (_mediaName != mediaName)
                 return false;
+
             _client.Status = NetMessage.Command.Seek;
 
             bool isPlayed = _mediaPlayer.Control.IsPlaying();

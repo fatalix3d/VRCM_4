@@ -35,7 +35,7 @@ namespace VRCM.Lobby.UI
                 //TimeSpan allTime = TimeSpan.FromMilliseconds(message.mediaAllTime);
                 //TimeSpan curTime = TimeSpan.FromMilliseconds(message.mediaCurrentTime);
                 //string time_string = $"{curTime.ToString(@"mm\:ss")} / {allTime.ToString(@"mm\:ss")}";
-                _mediaName.text = $"{message.mediaName}";
+                _mediaName.text = $"{message.mediaName} ({message.mediaDuration})";
             }
 
             switch (message.command)

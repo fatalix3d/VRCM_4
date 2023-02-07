@@ -157,12 +157,12 @@ namespace VRCM.Network.Client
             {
                 if (IsConnected)
                 {
-                    var resp = new NetMessage(NetMessage.Command.Status);
+                    var resp = new NetMessage(_status);
                     resp.mediaName = MediaPlayer.MediaName;
                     resp.mediaDuration = MediaPlayer.MediaDuration;
                     SendMessage(resp);
                 }
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(1.0f);
             }
         }
 
