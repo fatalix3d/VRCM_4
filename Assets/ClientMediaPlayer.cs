@@ -34,6 +34,40 @@ namespace VRCM.Network.Client.VideoPlayer {
             return true;
         }
 
+        public bool PauseVideo(string mediaName)
+        {
+            string path = MediaLibrary.Instance.GetVideoUrl(mediaName);
+
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            if (!_mediaPlayer.Control.IsPlaying())
+            {
+                return false;
+            }
+
+            _mediaPlayer.Control.Pause();
+
+            return true;
+        }
+
+        public bool ResumeVideo(string mediaName)
+        {
+            string path = MediaLibrary.Instance.GetVideoUrl(mediaName);
+
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            if (!_mediaPlayer.Control.IsPaused())
+            {
+                return false;
+            }
+
+            _mediaPlayer.Control.Play();
+
+            return true;
+        }
+
         public bool SeekVideo(string mediaName, double time)
         {
             if (_mediaName != mediaName)
@@ -45,6 +79,8 @@ namespace VRCM.Network.Client.VideoPlayer {
             }
 
             _mediaPlayer.Control.Seek(time);
+
+            _mediaPlayer.Control.Play();
 
             return true;
         }

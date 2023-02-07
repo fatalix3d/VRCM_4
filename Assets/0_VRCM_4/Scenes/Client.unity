@@ -183,8 +183,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mediaPlayer: {fileID: 3809990589091986739}
-  _mediaName: 
-  _mediaDuration: 
 --- !u!1 &1588882633
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,7 +1456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6d1977a52888584496b1acc7e998011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _media: {fileID: 0}
+  _media: {fileID: 3809990589091986739}
   _automaticStereoPacking: 1
   _overrideStereoPacking: 0
   _stereoRedGreenTint: 0

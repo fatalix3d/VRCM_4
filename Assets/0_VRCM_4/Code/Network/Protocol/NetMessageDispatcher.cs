@@ -153,11 +153,27 @@ namespace VRCM.Network.Messages
                         break;
 
                     case NetMessage.Command.Pause:
-                        resp = new NetMessage(NetMessage.Command.Pause);
+                        if (_client.MediaPlayer.PauseVideo(message.mediaName))
+                        {
+                            resp = new NetMessage(NetMessage.Command.Pause);
+                        }
+                        else
+                        {
+                            resp = new NetMessage(NetMessage.Command.VideoNotFound);
+                        }
+
                         _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Resume:
-                        resp = new NetMessage(NetMessage.Command.Play);
+                        if (_client.MediaPlayer.ResumeVideo(message.mediaName))
+                        {
+                            resp = new NetMessage(NetMessage.Command.Resume);
+                        }
+                        else
+                        {
+                            resp = new NetMessage(NetMessage.Command.VideoNotFound);
+                        }
+
                         _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Stop:
