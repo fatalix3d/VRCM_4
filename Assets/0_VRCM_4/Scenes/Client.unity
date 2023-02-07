@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f085159f33d745d439a7aa778e7b3f6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _status: 30
+  _status: 10
   _mediaPlayer: {fileID: 152795701}
 --- !u!114 &152795701
 MonoBehaviour:
@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b650ddf45e543864c9572c831fa52d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _server: 0
   ptvp: {fileID: 1588882635}
 --- !u!1 &2009741972
 GameObject:
@@ -1236,7 +1237,7 @@ MonoBehaviour:
     stereoPacking: 0
   _autoOpen: 0
   _autoPlayOnStart: 0
-  _loop: 1
+  _loop: 0
   _audioVolume: 1
   _audioBalance: 0
   _audioMuted: 0

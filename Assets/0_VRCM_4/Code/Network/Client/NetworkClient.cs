@@ -93,6 +93,7 @@ namespace VRCM.Network.Client
                 Debug.Log("[NetworkClient] - Connection closed!");
                 _isConnected = false;
                 _mediaPlayer.StopVideo();
+                _status = NetMessage.Command.Setup;
             };
 
             _websocket.OnMessage += (bytes) =>
