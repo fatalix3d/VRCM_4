@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mediaPlayer: {fileID: 3809990589091986739}
+  _client: {fileID: 152795700}
 --- !u!1 &1588882633
 GameObject:
   m_ObjectHideFlags: 0
