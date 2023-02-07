@@ -17,7 +17,7 @@ namespace VRCM.Media.Theater.UI
         private Dictionary<string, TheaterElement> _elements;
         [SerializeField] private RectTransform _root;
         [SerializeField] private GameObject _elementPrefab;
-
+        [SerializeField] private Button _forceStopButton;
         // video preview player
         private string _curVideoId = string.Empty;
         private bool _isHoveringOverTimeline;
@@ -30,6 +30,7 @@ namespace VRCM.Media.Theater.UI
         public MediaPlayer PreviewPlayer => _previewPlayer;
         public TextMeshProUGUI MediaNameLabel=> _mediaNameLabel;
 
+
         private void Awake()
         {
             MediaLibrary.MediaLibraryLoaded += OnMediaLibraryLoaded;
@@ -41,11 +42,13 @@ namespace VRCM.Media.Theater.UI
             MediaLibrary.MediaLibraryLoaded -= OnMediaLibraryLoaded;
             Bootstrapper.Instance.Lobby.NoActivePlayerEvent -= StopPreviewPlayer;
             _previewPlayer.Events.RemoveAllListeners();
+            _forceStopButton.onClick.RemoveAllListeners();
         }
 
         private void Start()
         {
             CreateTimelineDragEvents();
+            _forceStopButton.onClick.AddListener(StopVideo);
         }
                
 
@@ -118,6 +121,14 @@ namespace VRCM.Media.Theater.UI
 
             _mediaNameLabel.text = videoID;
 
+        }
+
+        public void StopVideo()
+        {
+            // send to server play command.
+            //...
+            Bootstrapper.Instance.Server.SendMessageAll(NetMessage.Command.Stop);
+            StopPreviewPlayer();
         }
 
         private void StopPreviewPlayer()
