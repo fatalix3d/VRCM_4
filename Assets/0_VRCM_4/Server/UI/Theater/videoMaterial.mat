@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: f32079bbb2560394abb63e40e1d53da7, type: 3}
   m_ValidKeywords:
   - ALPHAPACK_NONE
+  - APPLY_GAMMA
   - FORCEEYE_NONE
   - MONOSCOPIC
   m_InvalidKeywords:

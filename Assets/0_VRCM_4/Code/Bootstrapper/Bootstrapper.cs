@@ -22,6 +22,8 @@ public class Bootstrapper : MonoBehaviour
     public NetworkServer Server => _networkServer;
     public NetworkLobby Lobby => _networkLobby;
 
+    public NetConfiguration NetConfig => _config;
+
     private void Awake()
     {
         if (Instance == null)

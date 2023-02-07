@@ -123,11 +123,13 @@ namespace VRCM.Network.Messages
                 {
                     case NetMessage.Command.AutorizeRequest:
                         resp = new NetMessage(NetMessage.Command.AutorizeSucces);
+                        resp.id = Bootstrapper.Instance.NetConfig.Id;
                         _client.SendMessage(resp);
                         break;
 
                     case NetMessage.Command.AutorizeSucces:
                         resp = new NetMessage(NetMessage.Command.Ready);
+                        resp.id = Bootstrapper.Instance.NetConfig.Id;
                         _client.SendMessage(resp);
                         break;
 
