@@ -2,8 +2,8 @@
     "m_SelectedDeviceId": "PA81X0MGGB111787G",
     "m_SelectedPackage": {
         "deviceId": "PA81X0MGGB111787G",
-        "name": "com.fatalix3d.VRCM_4_DEMO_TOP_BOTTOM",
-        "processId": 7194,
+        "name": "com.GreatGonzo.VRCM4PicoClient",
+        "processId": 11148,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -24,6 +24,18 @@
             "deviceId": "PA81X0MGGB111787G",
             "name": "com.fatalix3d.VRCM_4_DEMO_TOP_BOTTOM",
             "processId": 7194,
+            "exited": true
+        },
+        {
+            "deviceId": "PA81X0MGGB111787G",
+            "name": "com.GreatGonzo.VRCM4PicoClient",
+            "processId": 8037,
+            "exited": true
+        },
+        {
+            "deviceId": "PA81X0MGGB111787G",
+            "name": "com.GreatGonzo.VRCM4PicoClient",
+            "processId": 11148,
             "exited": false
         }
     ],
@@ -35,7 +47,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -51,7 +63,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",
@@ -80,7 +92,7 @@
     "m_FilterOptions": {
         "m_Filter": "",
         "m_UseRegularExpressions": false,
-        "m_MatchCase": false
+        "m_MatchCase": true
     },
     "m_SymbolPaths": [],
     "m_CaptureVideoSettings": {

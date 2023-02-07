@@ -30,7 +30,7 @@ namespace VRCM.Network.Client
         public ClientMediaPlayer MediaPlayer => _mediaPlayer;
 
         private Coroutine _autoPingRoutine = null;
-
+        
 
         private void Awake()
         {
@@ -45,7 +45,12 @@ namespace VRCM.Network.Client
         }
         private void Start()
         {
-            //StartSendData();
+#if UNITY_EDITOR
+            Debug.unityLogger.logEnabled = true;
+#else
+  Debug.logger.logEnabled = false;
+#endif
+            StartSendData();
         }
         public void Setup(ServerParams sp)
         {
