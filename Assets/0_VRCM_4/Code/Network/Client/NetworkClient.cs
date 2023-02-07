@@ -45,7 +45,7 @@ namespace VRCM.Network.Client
         }
         private void Start()
         {
-            StartSendData();
+            //StartSendData();
         }
         public void Setup(ServerParams sp)
         {

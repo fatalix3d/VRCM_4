@@ -32,6 +32,9 @@ public class Bootstrapper : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Application.targetFrameRate = 72;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
     void Start()
