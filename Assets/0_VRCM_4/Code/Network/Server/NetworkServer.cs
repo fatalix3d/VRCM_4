@@ -30,8 +30,9 @@ namespace VRCM.Network.Server
             _ws.AddWebSocketService<Echo>("/Echo");
             _ws.Start();
             Debug.Log($"[NetworkServer] - Started at : ws://{ip}:{port}/Echo");
-        }  
+        }
 
+        // Send message <NetMessage.Command>
         public void SendMessage(string id, NetMessage.Command cmd, string mediaId = null)
         {
             try
@@ -58,6 +59,34 @@ namespace VRCM.Network.Server
             }
         }
 
+        // Send message <NetMessage>
+        public void SendMessage(string id, NetMessage netMessage)
+        {
+            try
+            {
+                if (netMessage == null)
+                    return;
+
+                //if (!string.IsNullOrEmpty(message.me))
+                //    netMessage.mediaName = mediaId;
+
+                byte[] bytes = BinarySerializer.Serialize(netMessage);
+
+                if (bytes != null)
+                {
+                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
+                    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                    Debug.Log($"[NetworkServer] - Sended to [{id}]: message {msg}");
+                    OnSendMessage?.Invoke(id, bytes);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Debug.Log($"[NetworkServer] - Error on send : {e}");
+            }
+        }
+
         public void SendMessageAll(NetMessage.Command cmd, string mediaId = null)
         {
             if (_lobby.Players.Count == 0)
@@ -66,6 +95,18 @@ namespace VRCM.Network.Server
             foreach (KeyValuePair<string, NetPlayer> player in _lobby.Players)
             {
                 SendMessage(player.Value.UniqueId, cmd, mediaId);
+            }
+        }
+
+        // Send message all <NetMessage>
+        public void SendMessageAll(NetMessage netMessage, string mediaId = null)
+        {
+            if (_lobby.Players.Count == 0)
+                return;
+
+            foreach (KeyValuePair<string, NetPlayer> player in _lobby.Players)
+            {
+                SendMessage(player.Value.UniqueId, netMessage);
             }
         }
 

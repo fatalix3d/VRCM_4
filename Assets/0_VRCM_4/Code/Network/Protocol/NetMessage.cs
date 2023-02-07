@@ -31,9 +31,9 @@ namespace VRCM.Network.Messages
         public string id;
         public string uid;
         public string mediaName;
-        public long mediaCurrentTime;
-        public long mediaAllTime;
-        public long seekTime;
+        public double mediaCurrentTime;
+        public double mediaAllTime;
+        public double seekTime;
 
         public NetMessage(Command _command)
         {

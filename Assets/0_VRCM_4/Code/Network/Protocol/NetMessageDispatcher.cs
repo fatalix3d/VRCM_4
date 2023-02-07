@@ -152,6 +152,7 @@ namespace VRCM.Network.Messages
                         _client.SendMessage(resp);
                         break;
                     case NetMessage.Command.Seek:
+                        Debug.Log($"Seeking {message.mediaName} to {message.seekTime}");
                         resp = new NetMessage(NetMessage.Command.Seek);
                         _client.SendMessage(resp);
                         break;
