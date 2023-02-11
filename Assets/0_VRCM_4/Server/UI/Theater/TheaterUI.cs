@@ -115,6 +115,12 @@ namespace VRCM.Media.Theater.UI
                 return;
             }
 
+            Debug.Log($"[Preview Player] - {path}");
+            Debug.Log($"[Preview Player] - {path}");
+            Debug.Log($"[Preview Player] - {path}");
+
+            System.GC.Collect();
+
             _previewPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
 
             _elements[_curVideoId].PlayPreviewVideo((float)_previewPlayer.Info.GetDuration());

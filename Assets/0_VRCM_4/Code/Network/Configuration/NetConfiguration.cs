@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
+using UnityEngine.Android;
 
 namespace VRCM.Network.Configuration
 {
@@ -25,6 +26,20 @@ namespace VRCM.Network.Configuration
 
         public NetConfiguration(bool isServer)
         {
+
+            Debug.Log("[Configuration] Checking permissions ...");
+
+            if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
+            {
+                Debug.Log($"[Configuration] HasUserAuthorizedPermission : false");
+                Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+            }
+            else
+            {
+                Debug.Log($"[Configuration] HasUserAuthorizedPermission : true");
+            }
+
+
 #if UNITY_EDITOR
             _isEditor = true;
 #endif
@@ -35,7 +50,8 @@ namespace VRCM.Network.Configuration
             }
             else
             {
-                _dataPath = Path.Combine("/storage/emulated/0", "360Content");
+                //_dataPath = Path.Combine("/storage/emulated/0", "360Content");
+                _dataPath = Path.Combine(Application.persistentDataPath, "360Content");
                 Debug.Log($"[Configuration] DEVICE -> {_dataPath}");
             }
 

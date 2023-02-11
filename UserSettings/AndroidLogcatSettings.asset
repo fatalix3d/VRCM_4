@@ -1,9 +1,9 @@
 {
-    "m_SelectedDeviceId": "PA81X0MGGB111787G",
+    "m_SelectedDeviceId": "c4602572",
     "m_SelectedPackage": {
-        "deviceId": "PA81X0MGGB111787G",
-        "name": "com.GreatGonzo.VRCM4PicoClient",
-        "processId": 11148,
+        "deviceId": "c4602572",
+        "name": "com.GreatGonzo.VRCM4Server",
+        "processId": 8971,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,66 @@
             "deviceId": "PA81X0MGGB111787G",
             "name": "com.GreatGonzo.VRCM4PicoClient",
             "processId": 11148,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.sec.android.app.launcher",
+            "processId": 3304,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 23824,
+            "exited": true
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 24050,
+            "exited": true
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 25036,
+            "exited": true
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 25842,
+            "exited": true
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 26752,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 27531,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 5456,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 7237,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 8971,
             "exited": false
         }
     ],

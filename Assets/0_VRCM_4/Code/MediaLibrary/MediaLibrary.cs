@@ -22,6 +22,8 @@ namespace VRCM.Media
         [SerializeField] private VideoPlayer ptvp;
         private bool ThumbnailReady = false;
 
+        private bool isEditor = false;
+
 
         private void Awake()
         {
@@ -53,10 +55,20 @@ namespace VRCM.Media
         IEnumerator CheckVideoDirectory()
         {
 #if UNITY_EDITOR
-            _localContentPath = Path.Combine("C:/", "360Content");
-#else
-            _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+            isEditor = true;
 #endif
+            if (!isEditor)
+            {
+                //_localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+                _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
+            }
+            else
+            {
+                _localContentPath = Path.Combine("C:/", "360Content");
+
+            }
+
+            Debug.Log($"[MediaLibrary] data path : {_localContentPath}");
 
             DirectoryInfo di = new DirectoryInfo(_localContentPath);
 
