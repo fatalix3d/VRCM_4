@@ -7,11 +7,12 @@ using VRCM.Network.Broadcast;
 using VRCM.Network.Server;
 using VRCM.Network.Lobby;
 using VRCM.Network.Player;
+using TMPro;
 
 public class Bootstrapper : MonoBehaviour
 {
     [SerializeField] private bool isServer;
-
+    [SerializeField] private TextMeshProUGUI _serverParams;
     public static Bootstrapper Instance { get; private set; } = null;
 
     private NetConfiguration _config;
@@ -21,7 +22,6 @@ public class Bootstrapper : MonoBehaviour
 
     public NetworkServer Server => _networkServer;
     public NetworkLobby Lobby => _networkLobby;
-
     public NetConfiguration NetConfig => _config;
 
     private void Awake()
@@ -52,6 +52,9 @@ public class Bootstrapper : MonoBehaviour
                 _networkLobby = new NetworkLobby();
                 _networkServer = new NetworkServer(_config.Ip, _config.Port);
                 _broadcastService.StartSendBroadcast(_config.Ip, _config.Port);
+
+                if (_serverParams != null)
+                    _serverParams.text = $"VRCM : ws://{_config.Ip}:{_config.Port}/Echo";
             }
             else
             {

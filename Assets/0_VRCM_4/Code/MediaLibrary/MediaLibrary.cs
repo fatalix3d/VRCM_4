@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -21,6 +23,7 @@ namespace VRCM.Media
 
         [SerializeField] private VideoPlayer ptvp;
         private bool ThumbnailReady = false;
+        private CancellationTokenSource _cts;
 
         private bool isEditor = false;
 
@@ -39,6 +42,9 @@ namespace VRCM.Media
 
         private void Start()
         {
+#if UNITY_EDITOR
+            isEditor = true;
+#endif
             Init();
         }
 
@@ -54,9 +60,7 @@ namespace VRCM.Media
 
         IEnumerator CheckVideoDirectory()
         {
-#if UNITY_EDITOR
-            isEditor = true;
-#endif
+
             if (!isEditor)
             {
                 //_localContentPath = Path.Combine("/storage/emulated/0", "360Content");

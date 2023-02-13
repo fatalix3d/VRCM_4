@@ -18,6 +18,7 @@ namespace VRCM.Media.Theater.UI
         [SerializeField] private RectTransform _root;
         [SerializeField] private GameObject _elementPrefab;
         [SerializeField] private Button _forceStopButton;
+
         // video preview player
         private string _curVideoId = string.Empty;
         private bool _isHoveringOverTimeline;
@@ -115,10 +116,6 @@ namespace VRCM.Media.Theater.UI
                 return;
             }
 
-            Debug.Log($"[Preview Player] - {path}");
-            Debug.Log($"[Preview Player] - {path}");
-            Debug.Log($"[Preview Player] - {path}");
-
             System.GC.Collect();
 
             _previewPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
@@ -140,10 +137,15 @@ namespace VRCM.Media.Theater.UI
         private void StopPreviewPlayer()
         {
             _curVideoId = string.Empty;
+
+            if(_mediaNameLabel!=null)
             _mediaNameLabel.text = string.Empty;
 
-            _previewPlayer.Control.Stop();
-            _previewPlayer.CloseMedia();
+            if (_previewPlayer != null && _previewPlayer.Control != null)
+            {
+                _previewPlayer.Control.Stop();
+                _previewPlayer.CloseMedia();
+            }
 
             foreach (KeyValuePair<string, TheaterElement> element in _elements)
                 element.Value.ResetPreview();
@@ -151,9 +153,6 @@ namespace VRCM.Media.Theater.UI
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
-                StopPreviewPlayer();
-
             if (_previewPlayer.Info != null)
             {
                 TimeRange timelineRange = GetTimelineRange();

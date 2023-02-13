@@ -24,6 +24,9 @@ namespace VRCM.Network.Configuration
         public int Port => _port;
         public bool AllOk => _allOk;
 
+        private Texture2D _bgTexture;
+        public Texture2D BackgroundTexture;
+
         public NetConfiguration(bool isServer)
         {
 
@@ -31,7 +34,7 @@ namespace VRCM.Network.Configuration
 
             if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
             {
-                Debug.Log($"[Configuration] HasUserAuthorizedPermission : false");
+                Debug.Log($"[Configuration] HasUserAuthorizedPermission : false, request permissions");
                 Permission.RequestUserPermission(Permission.ExternalStorageWrite);
             }
             else
@@ -58,6 +61,7 @@ namespace VRCM.Network.Configuration
             try
             {
                 DirectoryInfo di = new DirectoryInfo(_dataPath);
+
                 if (di.Exists)
                 {
                     Debug.Log($"[Configuration] Data folder found");
@@ -90,6 +94,24 @@ namespace VRCM.Network.Configuration
                         Debug.Log($"[Configuration] id file NOT found, creating new file");
 
                         WriteIdFile(idFilePath, isServer);
+                    }
+
+                    // background loader
+                    string bgFilePath = Path.Combine(_dataPath, "bg.png");
+                    FileInfo bg_fi = new FileInfo(bgFilePath);
+
+                    Debug.Log($"[Configuration] Checking background textire file in folder {bg_fi.Name}");
+
+                    if (bg_fi.Exists)
+                    {
+                        var rawData = System.IO.File.ReadAllBytes(bgFilePath);
+                        _bgTexture = new Texture2D(2, 2);
+                        _bgTexture.LoadImage(rawData);
+                        Debug.Log($"[Configuration] Background texture loaded"); 
+                    }
+                    else
+                    {
+                        Debug.Log($"[Configuration] Background texture file NOT found");
                     }
                 }
                 else

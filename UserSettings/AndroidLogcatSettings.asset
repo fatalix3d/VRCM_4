@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "c4602572",
         "name": "com.GreatGonzo.VRCM4Server",
-        "processId": 8971,
+        "processId": 13222,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -96,6 +96,12 @@
             "deviceId": "c4602572",
             "name": "com.GreatGonzo.VRCM4Server",
             "processId": 8971,
+            "exited": false
+        },
+        {
+            "deviceId": "c4602572",
+            "name": "com.GreatGonzo.VRCM4Server",
+            "processId": 13222,
             "exited": false
         }
     ],

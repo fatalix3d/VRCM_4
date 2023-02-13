@@ -361,7 +361,7 @@ namespace MobileConsole
 
 		void OnFPSVisibilityChanged()
 		{
-			_fpsText.SetActive(LogConsoleSettings.Instance.showFPS);
+			//_fpsText.SetActive(LogConsoleSettings.Instance.showFPS);
 		}
 
 		public static void Show(bool isShow = true)
