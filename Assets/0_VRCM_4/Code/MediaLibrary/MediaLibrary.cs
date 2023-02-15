@@ -37,13 +37,14 @@ namespace VRCM.Media
             {
                 Destroy(gameObject);
             }
+
+#if UNITY_EDITOR
+            isEditor = true;
+#endif
         }
 
         private void Start()
         {
-#if UNITY_EDITOR
-            isEditor = true;
-#endif
             Init();
         }
 
@@ -59,11 +60,10 @@ namespace VRCM.Media
 
         IEnumerator CheckVideoDirectory()
         {
-
             if (!isEditor)
             {
-                _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
-                //_localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
+                //_localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+                _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
             }
             else
             {
@@ -113,7 +113,7 @@ namespace VRCM.Media
                     }
                 }
             }
-
+            Debug.Log($"[MediaLibrary] : Load complete");
             MediaLibraryLoaded?.Invoke(Videos);
             yield return null;
         }

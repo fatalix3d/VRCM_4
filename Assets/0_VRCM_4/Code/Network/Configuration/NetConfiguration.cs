@@ -53,8 +53,8 @@ namespace VRCM.Network.Configuration
             }
             else
             {
-                _dataPath = Path.Combine("/storage/emulated/0", "360Content");
-                //_dataPath = Path.Combine(Application.persistentDataPath, "360Content");
+                //_dataPath = Path.Combine("/storage/emulated/0", "360Content");
+                _dataPath = Path.Combine(Application.persistentDataPath, "360Content");
                 Debug.Log($"[Configuration] DEVICE -> {_dataPath}");
             }
 
