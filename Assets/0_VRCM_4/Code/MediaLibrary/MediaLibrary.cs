@@ -27,7 +27,6 @@ namespace VRCM.Media
 
         private bool isEditor = false;
 
-
         private void Awake()
         {
             if (Instance == null)
@@ -63,8 +62,8 @@ namespace VRCM.Media
 
             if (!isEditor)
             {
-                //_localContentPath = Path.Combine("/storage/emulated/0", "360Content");
-                _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
+                _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+                //_localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
             }
             else
             {
@@ -96,7 +95,6 @@ namespace VRCM.Media
                     if (files[i].Extension == ".avi" || files[i].Extension == ".mp4" || files[i].Extension == ".webm" || files[i].Extension == ".mkv")
                     {
                         MediaFile mediaFile = new MediaFile();
-                        //mediaFile.name = files[i].Name;
                         string nameNoExt = Path.GetFileNameWithoutExtension(files[i].FullName);
                         mediaFile.name = nameNoExt;
                         mediaFile.path = files[i].FullName;
@@ -131,7 +129,6 @@ namespace VRCM.Media
                 return string.Empty;
             }
         }
-
 
         bool CheckThumbnail()
         {

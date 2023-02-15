@@ -11,6 +11,7 @@ namespace VRCM.Network.Client.VideoPlayer {
         // Media player
         [SerializeField] private MediaPlayer _mediaPlayer;
         [SerializeField] private NetworkClient _client;
+        [SerializeField] private MeshRenderer _videoSphereRenderer;
 
         private string _mediaName;
         private string _mediaDuration;
@@ -50,6 +51,7 @@ namespace VRCM.Network.Client.VideoPlayer {
             if (string.IsNullOrEmpty(path))
                 return false;
 
+            _videoSphereRenderer.enabled = true;
             _mediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
             _client.Status = NetMessage.Command.Play;
             return true;
@@ -112,6 +114,7 @@ namespace VRCM.Network.Client.VideoPlayer {
             _mediaPlayer.Control.Stop();
             _mediaPlayer.CloseMedia();
             _mediaName = string.Empty;
+            _videoSphereRenderer.enabled = false;
 
             _client.Status = NetMessage.Command.Stop;
 

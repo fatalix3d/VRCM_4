@@ -59,7 +59,6 @@ namespace VRCM.Network.Client
                 _serverAdress = sp;
                 _networkMessageDispatcher = new NetMessageDispatcher(this);
                 Connect();
-
             }
         }
 
@@ -141,6 +140,7 @@ namespace VRCM.Network.Client
         }
 
         // Auto sender
+        // to do remove to server side
         private void StartSendData()
         {
             if (_autoPingRoutine != null)

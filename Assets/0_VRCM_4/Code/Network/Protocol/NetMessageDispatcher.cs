@@ -127,6 +127,7 @@ namespace VRCM.Network.Messages
                         break;
 
                     case NetMessage.Command.AutorizeSucces:
+                        _client.Status = NetMessage.Command.Ready;
                         resp = new NetMessage(NetMessage.Command.Ready);
                         _client.SendMessage(resp);
                         break;

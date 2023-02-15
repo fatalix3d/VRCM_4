@@ -53,8 +53,8 @@ namespace VRCM.Network.Configuration
             }
             else
             {
-                //_dataPath = Path.Combine("/storage/emulated/0", "360Content");
-                _dataPath = Path.Combine(Application.persistentDataPath, "360Content");
+                _dataPath = Path.Combine("/storage/emulated/0", "360Content");
+                //_dataPath = Path.Combine(Application.persistentDataPath, "360Content");
                 Debug.Log($"[Configuration] DEVICE -> {_dataPath}");
             }
 
@@ -112,6 +112,12 @@ namespace VRCM.Network.Configuration
                     else
                     {
                         Debug.Log($"[Configuration] Background texture file NOT found");
+                    }
+
+                    if(_bgTexture!=null && BackgroundHelper.Instance != null)
+                    {
+                        BackgroundHelper.Instance.SetTexture(_bgTexture);
+                        Debug.Log($"[Configuration] Background texture SET");
                     }
                 }
                 else
