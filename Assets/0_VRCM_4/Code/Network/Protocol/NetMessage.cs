@@ -24,6 +24,7 @@ namespace VRCM.Network.Messages
             Stop = 23,
             Seek = 24,
             SeekError = 25,
+            VideoComplete = 26,
 
             VideoNotFound = 30
         }

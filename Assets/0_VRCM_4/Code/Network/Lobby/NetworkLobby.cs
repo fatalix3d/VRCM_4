@@ -118,6 +118,14 @@ namespace VRCM.Network.Lobby
         public void UpdatePlayer(string uniqueId, NetMessage message)
         {
             UpdatePlayerEvent?.Invoke(uniqueId, message);
+
+            if (_currentPlayer == null)
+                return;
+
+            if (_currentPlayer.UniqueId == uniqueId)
+                _currentPlayer._state = message;
+
+            
         }
 
 

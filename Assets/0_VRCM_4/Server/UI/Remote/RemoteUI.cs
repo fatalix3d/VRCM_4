@@ -64,8 +64,27 @@ namespace VRCM.Media.Remote.UI
         {
             if (_lobby.CurrentPlayer != null && !string.IsNullOrEmpty(_lobby.CurrentPlayer.UniqueId))
             {
-                Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
-                Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Play, videoID);
+                if (_lobby.CurrentPlayer._state != null)
+                {
+                    if(_lobby.CurrentPlayer._state.command == Network.Messages.NetMessage.Command.Pause && _lobby.CurrentPlayer._state.mediaName == videoID)
+                    {
+                        Debug.Log($"[Remote UI] Send (Resume), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
+                        Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Resume, videoID);
+                    }
+                    else
+                    {
+                        Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
+                        Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Play, videoID);
+                    }
+                }
+                else
+                {
+                    Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
+                    Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Play, videoID);
+                }
+
+
+                
             }
             else
             {
@@ -81,7 +100,9 @@ namespace VRCM.Media.Remote.UI
                 if (_lobby.CurrentPlayer._state != null)
                 {
                     if (_lobby.CurrentPlayer._state.mediaName != videoID)
+                    {
                         return;
+                    }
 
                     Debug.Log($"[Remote UI] Send (Pause), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Pause, videoID);
@@ -100,7 +121,9 @@ namespace VRCM.Media.Remote.UI
                 if (_lobby.CurrentPlayer._state != null)
                 {
                     if (_lobby.CurrentPlayer._state.mediaName != videoID)
+                    {
                         return;
+                    }
 
                     Debug.Log($"[Remote UI] Send (Stop) to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Stop);

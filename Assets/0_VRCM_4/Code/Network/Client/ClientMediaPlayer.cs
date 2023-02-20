@@ -34,6 +34,7 @@ namespace VRCM.Network.Client.VideoPlayer {
             if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
             {
                 StopVideo();
+                _client.Status = NetMessage.Command.VideoComplete;
             }
         }
 
