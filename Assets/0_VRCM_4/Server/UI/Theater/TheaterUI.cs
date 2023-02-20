@@ -15,6 +15,8 @@ namespace VRCM.Media.Theater.UI
     public class TheaterUI : MonoBehaviour
     {
         private Dictionary<string, TheaterElement> _elements;
+
+        [SerializeField] private CanvasGroup _window;
         [SerializeField] private RectTransform _root;
         [SerializeField] private GameObject _elementPrefab;
         [SerializeField] private Button _forceStopButton;
@@ -37,21 +39,22 @@ namespace VRCM.Media.Theater.UI
             MediaLibrary.MediaLibraryLoaded += OnMediaLibraryLoaded;
             _previewPlayer.Events.AddListener(HandleEvent);
         }
+        public void Setup()
+        {
+            Bootstrapper.Instance.Lobby.RemoteModeChangeEvent += OnRemoteModeChangeEvent;
+            CreateTimelineDragEvents();
+            _forceStopButton.onClick.AddListener(StopVideo);
+        }
 
         private void OnDisable()
         {
             MediaLibrary.MediaLibraryLoaded -= OnMediaLibraryLoaded;
             Bootstrapper.Instance.Lobby.NoActivePlayerEvent -= StopPreviewPlayer;
+            Bootstrapper.Instance.Lobby.RemoteModeChangeEvent -= OnRemoteModeChangeEvent;
+
             _previewPlayer.Events.RemoveAllListeners();
             _forceStopButton.onClick.RemoveAllListeners();
         }
-
-        private void Start()
-        {
-            CreateTimelineDragEvents();
-            _forceStopButton.onClick.AddListener(StopVideo);
-        }
-               
 
         private void OnMediaLibraryLoaded(Dictionary<string, MediaFile> videos)
         {
@@ -300,6 +303,20 @@ namespace VRCM.Media.Theater.UI
                 return Helper.GetTimelineRange(_previewPlayer.Info.GetDuration(), _previewPlayer.Control.GetSeekableTimes());
             }
             return new TimeRange();
+        }
+
+        private void OnRemoteModeChangeEvent(bool remote)
+        {
+            if (remote)
+            {
+                _window.alpha = 0;
+                _window.blocksRaycasts = false;
+            }
+            else
+            {
+                _window.alpha = 1;
+                _window.blocksRaycasts = true;
+            }
         }
     }
 }

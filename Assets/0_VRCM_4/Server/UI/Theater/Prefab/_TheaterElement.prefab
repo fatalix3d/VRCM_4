@@ -508,9 +508,8 @@ GameObject:
   - component: {fileID: 4722519695976998305}
   - component: {fileID: 4722519695976998310}
   - component: {fileID: 4722519695976998311}
-  - component: {fileID: 4835908613391024269}
   - component: {fileID: 573494459614029278}
-  - component: {fileID: 4227669071317436334}
+  - component: {fileID: 4835908613391024269}
   m_Layer: 5
   m_Name: _TheaterElement
   m_TagString: Untagged
@@ -580,6 +579,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &573494459614029278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722519695976998306}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 1
 --- !u!114 &4835908613391024269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -597,36 +611,8 @@ MonoBehaviour:
   _prevVideo: {fileID: 7003164217956176453}
   _previewVideoCanvas: {fileID: 3506517112109250869}
   _outline: {fileID: 573494459614029278}
-  _cnv: {fileID: 4227669071317436334}
   _button: {fileID: 1764208940142754082}
   _playIcon: {fileID: 1563794566772775431}
   _playStateSprite:
   - {fileID: 21300000, guid: 2c01dab394f424e409e9f7f95bdab48f, type: 3}
   - {fileID: 21300000, guid: 9fd6bcc82a932a747bfb023f18397b84, type: 3}
---- !u!114 &573494459614029278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4722519695976998306}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
-  m_EffectDistance: {x: 3, y: 3}
-  m_UseGraphicAlpha: 1
---- !u!225 &4227669071317436334
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4722519695976998306}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0

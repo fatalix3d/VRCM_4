@@ -20,7 +20,6 @@ namespace VRCM.Media.Theater.UI
         [SerializeField] private DisplayUGUI _prevVideo;
         [SerializeField] private CanvasGroup _previewVideoCanvas;
         [SerializeField] private Outline _outline;
-        [SerializeField] private CanvasGroup _cnv;
         [SerializeField] private Button _button;
         [SerializeField] private Image _playIcon;
         [SerializeField] private Sprite[] _playStateSprite;
@@ -35,14 +34,6 @@ namespace VRCM.Media.Theater.UI
             _button.onClick.RemoveListener(PlayVideoTrigger);
         }
 
-        public void ResetPreview()
-        {
-            _previewVideoCanvas.alpha = 0;
-            _prevVideo.enabled = false;
-            _prevVideo.CurrentMediaPlayer = null;
-            _playIcon.sprite = _playStateSprite[1];
-            _outline.enabled = false;
-        }
 
         public void CreateElement(TheaterUI theater, MediaFile media)
         {
@@ -84,6 +75,15 @@ namespace VRCM.Media.Theater.UI
             {
                 _playIcon.sprite = _playStateSprite[0];
             }
+        }
+
+        public void ResetPreview()
+        {
+            _previewVideoCanvas.alpha = 0;
+            _prevVideo.enabled = false;
+            _prevVideo.CurrentMediaPlayer = null;
+            _playIcon.sprite = _playStateSprite[1];
+            _outline.enabled = false;
         }
     }
 }

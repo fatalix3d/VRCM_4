@@ -7,6 +7,9 @@ using VRCM.Network.Broadcast;
 using VRCM.Network.Server;
 using VRCM.Network.Lobby;
 using VRCM.Network.Player;
+using VRCM.Media.Theater.UI;
+using VRCM.Media.Remote.UI;
+
 using TMPro;
 
 public class Bootstrapper : MonoBehaviour
@@ -19,6 +22,8 @@ public class Bootstrapper : MonoBehaviour
     private BroadcastService _broadcastService;
     private NetworkServer _networkServer;
     private NetworkLobby _networkLobby;
+    [SerializeField] private TheaterUI _theaterUI;
+    [SerializeField] private RemoteUI _remoteUI;
 
     public NetworkServer Server => _networkServer;
     public NetworkLobby Lobby => _networkLobby;
@@ -55,6 +60,9 @@ public class Bootstrapper : MonoBehaviour
 
                 if (_serverParams != null)
                     _serverParams.text = $"VRCM : ws://{_config.Ip}:{_config.Port}/Echo";
+
+                _theaterUI.Setup();
+                _remoteUI.Setup();
             }
             else
             {

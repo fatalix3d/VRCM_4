@@ -10,6 +10,7 @@ namespace VRCM.Network.Lobby
 {
     public class NetworkLobby
     {
+
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
         private LobbyUI _lobbyUI;
@@ -18,9 +19,13 @@ namespace VRCM.Network.Lobby
 
         public event Action<NetPlayer> AddPlayerEvent;
         public event Action<string> SelectPlayerEvent;
+        public event Action DeselectPlayerEvent;
         public event Action<string, NetMessage> UpdatePlayerEvent;
         public event Action<string> RemovePlayerEvent;
         public event Action NoActivePlayerEvent;
+
+        private bool _remoteMode = false;
+        public event Action<bool> RemoteModeChangeEvent;
 
         public NetworkLobby()
         {
@@ -28,6 +33,12 @@ namespace VRCM.Network.Lobby
             _lobbyUI = GameObject.FindObjectOfType<LobbyUI>();
             _lobbyUI.Init(this);
             Debug.Log($"[Lobby] - Created");
+
+            // dev
+            for (int i = 0; i < 12; i++)
+            {
+                AddPlayer($"1254{i}", $"Pico Emul-{i}");
+            }
         }
 
         public bool IsAuthorized(string uid)
@@ -37,7 +48,7 @@ namespace VRCM.Network.Lobby
             {
                 res = true;
             }
-            
+
             return res;
         }
 
@@ -62,7 +73,7 @@ namespace VRCM.Network.Lobby
         public bool RemovePlayer(string uniqueId)
         {
             bool res = false;
-            
+
             if (_players.ContainsKey(uniqueId))
             {
                 Debug.Log("[Remove player] playerId - removed");
@@ -80,10 +91,26 @@ namespace VRCM.Network.Lobby
 
         public void SelectPlayer(string uniqueId)
         {
+            if (!_remoteMode)
+                return;
+
+            if(_currentPlayer!=null && _currentPlayer.UniqueId == uniqueId)
+            {
+                Deselect();
+                return;
+            }
+
             if (_players.ContainsKey(uniqueId))
             {
                 _currentPlayer = _players[uniqueId];
+                SelectPlayerEvent?.Invoke(_currentPlayer.UniqueId);
             }
+
+        }
+        public void Deselect()
+        {
+            _currentPlayer = null;
+            DeselectPlayerEvent?.Invoke();
         }
 
         public void UpdatePlayer(string uniqueId, NetMessage message)
@@ -91,12 +118,22 @@ namespace VRCM.Network.Lobby
             UpdatePlayerEvent?.Invoke(uniqueId, message);
         }
 
-        public void Deselect()
+
+        public void SelectRemote(bool val)
         {
-            _currentPlayer = null;
+            _remoteMode = val;
+
+            if (_remoteMode)
+            {
+                Debug.Log("[Remove player] Set mode -> Remote");
+            }
+            else
+            {
+                Deselect();
+                Debug.Log("[Remove player] Set mode -> Theater");
+            }
+
+            RemoteModeChangeEvent?.Invoke(_remoteMode);
         }
-
-        
-
     }
 }
