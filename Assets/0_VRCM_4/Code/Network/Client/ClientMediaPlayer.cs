@@ -15,9 +15,13 @@ namespace VRCM.Network.Client.VideoPlayer {
 
         private string _mediaName;
         private string _mediaDuration;
+        private double _currentTime;
+        private double _totalTime;
 
         public string MediaName => _mediaName;
         public string MediaDuration => _mediaDuration;
+        public double CurrentTime => _currentTime;
+        public double TotalTime => _totalTime;
 
         private void Awake()
         {
@@ -131,6 +135,9 @@ namespace VRCM.Network.Client.VideoPlayer {
                 string t1 = Helper.GetTimeString((_mediaPlayer.Control.GetCurrentTime() - timelineRange.startTime), false);
                 string d1 = Helper.GetTimeString(timelineRange.duration, false);
                 _mediaDuration = string.Format("{0} / {1}", t1, d1);
+
+                _currentTime = _mediaPlayer.Control.GetCurrentTime();
+                _totalTime = _mediaPlayer.Info.GetDuration();
             }
         }
 

@@ -11,6 +11,7 @@ namespace VRCM.Media.Remote.UI
     {
         private Dictionary<string, RemoteElement> _elements;
         private NetworkLobby _lobby;
+        private Coroutine _linkRoutine = null;
 
         [SerializeField] private CanvasGroup _window;
         [SerializeField] private RectTransform _root;
@@ -25,12 +26,41 @@ namespace VRCM.Media.Remote.UI
         {
             _lobby = Bootstrapper.Instance.Lobby;
             _lobby.RemoteModeChangeEvent += OnRemoteModeChangeEvent;
+            _linkRoutine = StartCoroutine(Link());
         }
 
         private void OnDisable()
         {
             MediaLibrary.MediaLibraryLoaded -= OnMediaLibraryLoaded;
             _lobby.RemoteModeChangeEvent -= OnRemoteModeChangeEvent;
+        }
+
+        private IEnumerator Link()
+        {
+            while (true)
+            {
+                if (_elements!=null)
+                {
+                    foreach (KeyValuePair<string, RemoteElement> element in _elements)
+                        element.Value.Deselect();
+
+                    if (_lobby.CurrentPlayer != null)
+                    {
+                        if (_lobby.CurrentPlayer._state != null)
+                        {
+                            string mediaNameIndex = _lobby.CurrentPlayer._state.mediaName;
+                            if (!string.IsNullOrEmpty(mediaNameIndex))
+                            {
+                                if (_elements.ContainsKey(mediaNameIndex))
+                                {
+                                    _elements[mediaNameIndex].Select(_lobby.CurrentPlayer._state);
+                                }
+                            }
+                        }
+                    }
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
         }
 
         private void OnRemoteModeChangeEvent(bool remote)
@@ -82,9 +112,6 @@ namespace VRCM.Media.Remote.UI
                     Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Play, videoID);
                 }
-
-
-                
             }
             else
             {

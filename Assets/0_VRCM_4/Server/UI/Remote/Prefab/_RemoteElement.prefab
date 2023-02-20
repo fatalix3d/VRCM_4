@@ -1183,6 +1183,7 @@ MonoBehaviour:
   _name: {fileID: 3743103196218393128}
   _prevImage: {fileID: 3743103196325760215}
   _outline: {fileID: 573494459614029278}
+  _progress: {fileID: 3046063682908544921}
   _playButton: {fileID: 3046063682204662336}
   _pauseButton: {fileID: 3046063682183310920}
   _stopButton: {fileID: 3046063682315909042}

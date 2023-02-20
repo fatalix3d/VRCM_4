@@ -167,6 +167,8 @@ namespace VRCM.Network.Client
                     var resp = new NetMessage(_status);
                     resp.mediaName = MediaPlayer.MediaName;
                     resp.mediaDuration = MediaPlayer.MediaDuration;
+                    resp.curTime = MediaPlayer.CurrentTime;
+                    resp.totalTime = MediaPlayer.TotalTime;
                     SendMessage(resp);
                 }
                 yield return new WaitForSeconds(1.0f);

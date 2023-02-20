@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using VRCM.Network.Messages;
 
 namespace VRCM.Media.Remote.UI
 {
@@ -15,6 +16,7 @@ namespace VRCM.Media.Remote.UI
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private RawImage _prevImage;
         [SerializeField] private Outline _outline;
+        [SerializeField] private Image _progress;
 
         [SerializeField] private Button _playButton;
         [SerializeField] private Button _pauseButton;
@@ -32,6 +34,27 @@ namespace VRCM.Media.Remote.UI
             _playButton.onClick.AddListener(PlayVideoEvent);
             _pauseButton.onClick.AddListener(PauseVideoEvent);
             _stopButton.onClick.AddListener(StopVideoEvent);
+        }
+
+        public void Select(NetMessage message)
+        {
+            _outline.enabled = true;
+
+            if (message == null)
+                return;
+
+            if(message.totalTime > 0)
+            {
+                var t = message.curTime / message.totalTime;
+                _progress.fillAmount = (float)t;
+            }
+
+        }
+
+        public void Deselect()
+        {
+            _outline.enabled = false;
+
         }
 
         private void PlayVideoEvent()
