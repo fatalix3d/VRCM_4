@@ -142,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0:45 / 12:25
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f72745c3b5776846bd4a3c7ddd25278, type: 2}
   m_sharedMaterial: {fileID: 6296330615811514733, guid: 9f72745c3b5776846bd4a3c7ddd25278, type: 2}
@@ -1181,6 +1181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: {fileID: 3743103196218393128}
+  _mediaDuration: {fileID: 3046063681360484940}
   _prevImage: {fileID: 3743103196325760215}
   _outline: {fileID: 573494459614029278}
   _progress: {fileID: 3046063682908544921}

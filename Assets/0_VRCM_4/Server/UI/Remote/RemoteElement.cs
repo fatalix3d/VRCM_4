@@ -14,6 +14,7 @@ namespace VRCM.Media.Remote.UI
         private GameObject _gameObject;
 
         [SerializeField] private TextMeshProUGUI _name;
+        [SerializeField] private TextMeshProUGUI _mediaDuration;
         [SerializeField] private RawImage _prevImage;
         [SerializeField] private Outline _outline;
         [SerializeField] private Image _progress;
@@ -42,8 +43,8 @@ namespace VRCM.Media.Remote.UI
 
             if (message == null)
                 return;
-
-            if(message.totalTime > 0)
+            _mediaDuration.text = message.mediaDuration;
+            if (message.totalTime > 0)
             {
                 var t = message.curTime / message.totalTime;
                 _progress.fillAmount = (float)t;
@@ -54,7 +55,8 @@ namespace VRCM.Media.Remote.UI
         public void Deselect()
         {
             _outline.enabled = false;
-
+            _progress.fillAmount = 0f;
+            _mediaDuration.text = string.Empty;
         }
 
         private void PlayVideoEvent()
