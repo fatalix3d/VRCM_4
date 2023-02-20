@@ -49,7 +49,7 @@ namespace VRCM.Media.Remote.UI
         private void StopVideoEvent()
         {
             Debug.Log("[Remote element] - Stop");
-            _remoteUI.RemoteStopVideo();
+            _remoteUI.RemoteStopVideo(_mediaFile.name);
         }
 
         private void OnDisable()

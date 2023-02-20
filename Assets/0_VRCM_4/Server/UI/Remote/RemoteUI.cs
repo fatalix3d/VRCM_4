@@ -90,7 +90,7 @@ namespace VRCM.Media.Remote.UI
             }
         }
 
-        public void RemoteStopVideo()
+        public void RemoteStopVideo(string videoID)
         {
             if (_lobby.CurrentPlayer != null && !string.IsNullOrEmpty(_lobby.CurrentPlayer.UniqueId))
             {
