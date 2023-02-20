@@ -1113,7 +1113,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 250}
+  m_SizeDelta: {x: 700.15, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4722519695976998310
 CanvasRenderer:
@@ -1183,3 +1183,6 @@ MonoBehaviour:
   _name: {fileID: 3743103196218393128}
   _prevImage: {fileID: 3743103196325760215}
   _outline: {fileID: 573494459614029278}
+  _playButton: {fileID: 3046063682204662336}
+  _pauseButton: {fileID: 3046063682183310920}
+  _stopButton: {fileID: 3046063682315909042}

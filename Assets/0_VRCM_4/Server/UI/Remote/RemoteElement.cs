@@ -16,6 +16,10 @@ namespace VRCM.Media.Remote.UI
         [SerializeField] private RawImage _prevImage;
         [SerializeField] private Outline _outline;
 
+        [SerializeField] private Button _playButton;
+        [SerializeField] private Button _pauseButton;
+        [SerializeField] private Button _stopButton;
+
         public void CreateElement(RemoteUI remoteUI, MediaFile media)
         {
             _remoteUI = remoteUI;
@@ -24,6 +28,35 @@ namespace VRCM.Media.Remote.UI
             _name.text = media.name;
             _prevImage.texture = media.videoPrev;
             _gameObject = gameObject;
+
+            _playButton.onClick.AddListener(PlayVideoEvent);
+            _pauseButton.onClick.AddListener(PauseVideoEvent);
+            _stopButton.onClick.AddListener(StopVideoEvent);
+        }
+
+        private void PlayVideoEvent()
+        {
+            Debug.Log("[Remote element] - Play");
+            _remoteUI.RemotePlayVideo(_mediaFile.name);
+        }
+
+        private void PauseVideoEvent()
+        {
+            Debug.Log("[Remote element] - Pause");
+            _remoteUI.RemotePauseVideo(_mediaFile.name);
+        }
+
+        private void StopVideoEvent()
+        {
+            Debug.Log("[Remote element] - Stop");
+            _remoteUI.RemoteStopVideo();
+        }
+
+        private void OnDisable()
+        {
+            _playButton.onClick.RemoveAllListeners();
+            _pauseButton.onClick.RemoveAllListeners();
+            _stopButton.onClick.RemoveAllListeners();
         }
     }
 }

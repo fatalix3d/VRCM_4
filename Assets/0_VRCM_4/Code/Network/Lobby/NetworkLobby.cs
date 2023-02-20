@@ -13,6 +13,7 @@ namespace VRCM.Network.Lobby
 
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
+        public NetPlayer CurrentPlayer => _currentPlayer;
         private LobbyUI _lobbyUI;
 
         public Dictionary<string, NetPlayer> Players => _players;
@@ -35,10 +36,10 @@ namespace VRCM.Network.Lobby
             Debug.Log($"[Lobby] - Created");
 
             // dev
-            for (int i = 0; i < 12; i++)
-            {
-                AddPlayer($"1254{i}", $"Pico Emul-{i}");
-            }
+            //for (int i = 0; i < 12; i++)
+            //{
+            //    AddPlayer($"1254{i}", $"Pico Emul-{i}");
+            //}
         }
 
         public bool IsAuthorized(string uid)
