@@ -26,6 +26,7 @@ namespace VRCM.Network.Lobby
         public event Action NoActivePlayerEvent;
 
         private bool _remoteMode = false;
+        public bool RemoteMode => _remoteMode;
         public event Action<bool> RemoteModeChangeEvent;
 
         public NetworkLobby()

@@ -39,6 +39,7 @@ namespace VRCM.Lobby.UI
             var netPlayerUI = playerGo.GetComponent<NetPlayerUI>();
             netPlayerUI.GO = playerGo;
             netPlayerUI.UniqueId = player.UniqueId;
+            netPlayerUI.SetRemoteMode(_networkLobby.RemoteMode);
             _players.Add(player.UniqueId, netPlayerUI);
         }
 
