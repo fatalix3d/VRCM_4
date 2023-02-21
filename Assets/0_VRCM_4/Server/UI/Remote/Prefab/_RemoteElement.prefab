@@ -1188,3 +1188,7 @@ MonoBehaviour:
   _playButton: {fileID: 3046063682204662336}
   _pauseButton: {fileID: 3046063682183310920}
   _stopButton: {fileID: 3046063682315909042}
+  _baseClr: {r: 1, g: 1, b: 1, a: 0.2}
+  _playClr: {r: 0.003921569, g: 0.6745098, b: 0.50980395, a: 1}
+  _pauseClr: {r: 1, g: 0.7791244, b: 0, a: 1}
+  _stopClr: {r: 1, g: 0.38431376, b: 0.37254903, a: 1}

@@ -7,6 +7,7 @@ using VRCM.Network.Player;
 using VRCM.Network.Messages;
 using System;
 using DG.Tweening;
+using System.Globalization;
 
 namespace VRCM.Lobby.UI
 {
@@ -28,8 +29,13 @@ namespace VRCM.Lobby.UI
         [SerializeField] private GameObject _selectionGo;
         [SerializeField] private Image _selectionIcon;
 
-        private GameObject _gameObject;
+        [SerializeField] private Image _batteryIndicator;
+        [SerializeField] private TextMeshProUGUI _batteryLabel;
 
+        [SerializeField] private Image _tempIndicator;
+        [SerializeField] private TextMeshProUGUI _tempLabel;
+
+        private GameObject _gameObject;
         public GameObject GO { get => _gameObject; set => _gameObject = value; }
 
         public void Select(bool val)
@@ -56,23 +62,39 @@ namespace VRCM.Lobby.UI
                 _mediaName.text = $"{message.mediaName} ({message.mediaDuration})";
             }
 
+            try
+            {
+                string[] split = message.battery.Split(new char[0]);
+                float bat = float.Parse(split[0], CultureInfo.InvariantCulture.NumberFormat);
+                float temp = float.Parse(split[1], CultureInfo.InvariantCulture.NumberFormat);
+
+                _batteryIndicator.fillAmount = bat / 100;
+                _tempIndicator.fillAmount = temp / 100;
+                _batteryLabel.text = $"{bat}%";
+                _tempLabel.text = $"{temp}°";
+            }
+            catch(Exception e)
+            {
+                Debug.Log("[NetPlayer UI] Error can't parse data [battery]");
+            }
+
             switch (message.command)
             {
                 case NetMessage.Command.AutorizeError:
-                    _outline.effectColor = _outlineColors[3];
+                    //_outline.effectColor = _outlineColors[3];
                     break;
                 case NetMessage.Command.AutorizeRequest:
                 case NetMessage.Command.AutorizeSucces:
-                    _outline.effectColor = _outlineColors[1];
+                    //_outline.effectColor = _outlineColors[1];
                     break;
                 case NetMessage.Command.Play:
-                    _outline.effectColor = _outlineColors[1];
+                    //_outline.effectColor = _outlineColors[1];
                     break;
                 case NetMessage.Command.Pause:
-                    _outline.effectColor = _outlineColors[2];
+                    //_outline.effectColor = _outlineColors[2];
                     break;
                 case NetMessage.Command.Resume:
-                    _outline.effectColor = _outlineColors[1];
+                    //_outline.effectColor = _outlineColors[1];
                     break;
                 case NetMessage.Command.Stop:
                     break;

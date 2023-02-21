@@ -7,6 +7,7 @@ using UnityEngine;
 using VRCM.Network.Messages;
 using VRCM.Network.Client.VideoPlayer; 
 
+
 namespace VRCM.Network.Client
 {
     public class NetworkClient : MonoBehaviour
@@ -169,6 +170,7 @@ namespace VRCM.Network.Client
                     resp.mediaDuration = MediaPlayer.MediaDuration;
                     resp.curTime = MediaPlayer.CurrentTime;
                     resp.totalTime = MediaPlayer.TotalTime;
+                    resp.battery = BatterySensors.GetBatteryLevel();
                     SendMessage(resp);
                 }
                 yield return new WaitForSeconds(1.0f);

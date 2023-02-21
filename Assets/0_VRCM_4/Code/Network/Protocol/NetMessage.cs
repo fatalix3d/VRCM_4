@@ -38,6 +38,10 @@ namespace VRCM.Network.Messages
         public double curTime;
         public double totalTime;
 
+        public string cpuTemp = "30";
+        public string battery = string.Empty;
+        
+
         public NetMessage(Command _command)
         {
             this.command = _command;

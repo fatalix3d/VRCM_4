@@ -15,6 +15,7 @@ namespace VRCM.Media.Theater.UI
     public class TheaterUI : MonoBehaviour
     {
         private Dictionary<string, TheaterElement> _elements;
+        private bool _remote = false;
 
         [SerializeField] private CanvasGroup _window;
         [SerializeField] private RectTransform _root;
@@ -22,6 +23,7 @@ namespace VRCM.Media.Theater.UI
         [SerializeField] private Button _forceStopButton;
 
         // video preview player
+        [SerializeField] private CanvasGroup _timeLineCnv;
         private string _curVideoId = string.Empty;
         private bool _isHoveringOverTimeline;
         private bool _wasPlayingBeforeTimelineDrag;
@@ -156,6 +158,9 @@ namespace VRCM.Media.Theater.UI
 
         private void Update()
         {
+            if (_remote)
+                return;
+
             if (_previewPlayer.Info != null)
             {
                 TimeRange timelineRange = GetTimelineRange();
@@ -198,6 +203,7 @@ namespace VRCM.Media.Theater.UI
         private void CreateTimelineDragEvents()
         {
             EventTrigger trigger = _sliderTime.gameObject.GetComponent<EventTrigger>();
+
             if (trigger != null)
             {
                 EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -229,6 +235,9 @@ namespace VRCM.Media.Theater.UI
 
         private void OnTimelineBeginHover(PointerEventData eventData)
         {
+            if (_remote)
+                return;
+
             if (eventData.pointerCurrentRaycast.gameObject != null)
             {
                 _isHoveringOverTimeline = true;
@@ -238,12 +247,18 @@ namespace VRCM.Media.Theater.UI
 
         private void OnTimelineEndHover(PointerEventData eventData)
         {
+            if (_remote)
+                return;
+
             _isHoveringOverTimeline = false;
             _sliderTime.transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
         private void OnTimeSliderBeginDrag()
         {
+            if (_remote)
+                return;
+
             if (_previewPlayer && _previewPlayer.Control != null)
             {
                 _wasPlayingBeforeTimelineDrag = _previewPlayer.Control.IsPlaying();
@@ -257,6 +272,9 @@ namespace VRCM.Media.Theater.UI
 
         private void OnTimeSliderDrag()
         {
+            if (_remote)
+                return;
+
             if (_previewPlayer && _previewPlayer.Control != null)
             {
                 TimeRange timelineRange = GetTimelineRange();
@@ -268,6 +286,9 @@ namespace VRCM.Media.Theater.UI
 
         private void OnTimeSliderEndDrag()
         {
+            if (_remote)
+                return;
+
             if (_previewPlayer && _previewPlayer.Control != null)
             {
                 if (_wasPlayingBeforeTimelineDrag)
@@ -290,6 +311,9 @@ namespace VRCM.Media.Theater.UI
 
         void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
         {
+            if (_remote)
+                return;
+
             if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
             {
                 StopPreviewPlayer();
@@ -307,13 +331,18 @@ namespace VRCM.Media.Theater.UI
 
         private void OnRemoteModeChangeEvent(bool remote)
         {
+            _remote = remote;
+            _sliderTime.interactable = !remote;
+
             if (remote)
             {
+                _timeLineCnv.alpha = 0;
                 _window.alpha = 0;
                 _window.blocksRaycasts = false;
             }
             else
             {
+                _timeLineCnv.alpha = 1;
                 _window.alpha = 1;
                 _window.blocksRaycasts = true;
             }

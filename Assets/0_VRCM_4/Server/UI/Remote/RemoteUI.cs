@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VRCM.Network.Lobby;
+using VRCM.Network.Messages;
 
 namespace VRCM.Media.Remote.UI
 {
@@ -160,6 +161,16 @@ namespace VRCM.Media.Remote.UI
             {
                 Debug.Log("[Remote UI] Player not selected");
             }
+        }
+
+        public void RemoteSeek(float seekTime, string videoID)
+        {
+            // send to server play command.
+            //...
+            NetMessage netMessage = new NetMessage(NetMessage.Command.Seek);
+            netMessage.seekTime = seekTime;
+            netMessage.mediaName = videoID;
+            Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, netMessage);
         }
     }
 }
