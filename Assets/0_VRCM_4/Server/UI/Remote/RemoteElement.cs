@@ -105,6 +105,9 @@ namespace VRCM.Media.Remote.UI
         {
             Debug.Log("[Remote element] - Play");
             _remoteUI.RemotePlayVideo(_mediaFile.name);
+
+            // optional
+            Bootstrapper.Instance.Theater.StopPreviewPlayer();
         }
 
         private void PauseVideoEvent()

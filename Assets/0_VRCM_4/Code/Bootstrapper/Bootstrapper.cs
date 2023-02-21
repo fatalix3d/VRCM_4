@@ -22,12 +22,15 @@ public class Bootstrapper : MonoBehaviour
     private BroadcastService _broadcastService;
     private NetworkServer _networkServer;
     private NetworkLobby _networkLobby;
+
     [SerializeField] private TheaterUI _theaterUI;
     [SerializeField] private RemoteUI _remoteUI;
 
     public NetworkServer Server => _networkServer;
     public NetworkLobby Lobby => _networkLobby;
     public NetConfiguration NetConfig => _config;
+    public TheaterUI Theater => _theaterUI;
+    public RemoteUI Remote => _remoteUI;
 
     private void Awake()
     {
@@ -40,7 +43,15 @@ public class Bootstrapper : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Application.targetFrameRate = 72;
+        if (isServer)
+        {
+            Application.targetFrameRate = 60;
+        }
+        else
+        {
+            Application.targetFrameRate = 72;
+        }
+
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 

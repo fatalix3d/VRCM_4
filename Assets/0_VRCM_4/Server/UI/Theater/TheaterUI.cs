@@ -139,7 +139,7 @@ namespace VRCM.Media.Theater.UI
             StopPreviewPlayer();
         }
 
-        private void StopPreviewPlayer()
+        public void StopPreviewPlayer()
         {
             _curVideoId = string.Empty;
 
