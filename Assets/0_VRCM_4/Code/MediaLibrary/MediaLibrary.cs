@@ -62,8 +62,15 @@ namespace VRCM.Media
         {
             if (!isEditor)
             {
-                //_localContentPath = Path.Combine("/storage/emulated/0", "360Content");
-                _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
+                if (_server)
+                {
+                    _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
+
+                }
+                else
+                {
+                    _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+                }
             }
             else
             {

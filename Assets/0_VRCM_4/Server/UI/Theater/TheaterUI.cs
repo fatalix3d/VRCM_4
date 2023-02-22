@@ -14,7 +14,7 @@ namespace VRCM.Media.Theater.UI
 {
     public class TheaterUI : MonoBehaviour
     {
-        private Dictionary<string, TheaterElement> _elements;
+        private Dictionary<string, TheaterElement> _elements = new Dictionary<string, TheaterElement>();
         private bool _remote = false;
 
         [SerializeField] private CanvasGroup _window;
@@ -62,7 +62,7 @@ namespace VRCM.Media.Theater.UI
         {
             Bootstrapper.Instance.Lobby.NoActivePlayerEvent += StopPreviewPlayer;
 
-            _elements = new Dictionary<string, TheaterElement>();
+            //_elements = new Dictionary<string, TheaterElement>();
 
             foreach (KeyValuePair<string, MediaFile> video in videos)
             {

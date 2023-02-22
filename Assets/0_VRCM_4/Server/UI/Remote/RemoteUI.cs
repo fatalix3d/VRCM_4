@@ -10,7 +10,7 @@ namespace VRCM.Media.Remote.UI
 {
     public class RemoteUI : MonoBehaviour
     {
-        private Dictionary<string, RemoteElement> _elements;
+        private Dictionary<string, RemoteElement> _elements = new Dictionary<string, RemoteElement>();
         private NetworkLobby _lobby;
         private Coroutine _linkRoutine = null;
 
@@ -80,7 +80,7 @@ namespace VRCM.Media.Remote.UI
 
         private void OnMediaLibraryLoaded(Dictionary<string, MediaFile> videos)
         {
-            _elements = new Dictionary<string, RemoteElement>();
+            //_elements = new Dictionary<string, RemoteElement>();
 
             foreach (KeyValuePair<string, MediaFile> video in videos)
             {

@@ -8,7 +8,7 @@ using VRCM.Network.Messages;
 
 namespace VRCM.Media.Remote.UI
 {
-    public class RemoteElement : MonoBehaviour, IDragHandler, IPointerDownHandler
+    public class RemoteElement : MonoBehaviour, IPointerDownHandler
     {
         private RemoteUI _remoteUI = null;
         private MediaFile _mediaFile;
