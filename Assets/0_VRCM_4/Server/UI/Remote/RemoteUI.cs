@@ -93,31 +93,34 @@ namespace VRCM.Media.Remote.UI
 
         public void RemotePlayVideo(string videoID)
         {
-            if (_lobby.CurrentPlayer != null && !string.IsNullOrEmpty(_lobby.CurrentPlayer.UniqueId))
+            if (_lobby.CurrentPlayer == null && string.IsNullOrEmpty(_lobby.CurrentPlayer.UniqueId))
             {
-                if (_lobby.CurrentPlayer._state != null)
+                Debug.Log("[Remote UI] Player not selected");
+                return;
+            }
+
+            if (_lobby.CurrentPlayer._state != null)
+            {
+                if (_lobby.CurrentPlayer._state.command == NetMessage.Command.Play)
+                    return;
+
+                if (_lobby.CurrentPlayer._state.command == NetMessage.Command.Pause && _lobby.CurrentPlayer._state.mediaName == videoID)
                 {
-                    if(_lobby.CurrentPlayer._state.command == Network.Messages.NetMessage.Command.Pause && _lobby.CurrentPlayer._state.mediaName == videoID)
-                    {
-                        Debug.Log($"[Remote UI] Send (Resume), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
-                        Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Resume, videoID);
-                    }
-                    else
-                    {
-                        Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
-                        Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Play, videoID);
-                    }
+                    Debug.Log($"[Remote UI] Send (Resume), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
+                    Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, NetMessage.Command.Resume, videoID);
                 }
                 else
                 {
                     Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
-                    Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Play, videoID);
+                    Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, NetMessage.Command.Play, videoID);
                 }
             }
             else
             {
-                Debug.Log("[Remote UI] Player not selected");
+                Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
+                Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, NetMessage.Command.Play, videoID);
             }
+
         }
 
         public void RemotePauseVideo(string videoID)
