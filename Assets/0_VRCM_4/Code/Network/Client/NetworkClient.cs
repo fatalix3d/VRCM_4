@@ -46,11 +46,11 @@ namespace VRCM.Network.Client
         }
         private void Start()
         {
-#if UNITY_EDITOR
-            Debug.unityLogger.logEnabled = true;
-#else
-  Debug.unityLogger.logEnabled = false;
-#endif
+//#if UNITY_EDITOR
+//            Debug.unityLogger.logEnabled = true;
+//#else
+//  Debug.unityLogger.logEnabled = false;
+//#endif
             StartSendData();
         }
         public void Setup(ServerParams sp)
@@ -120,6 +120,7 @@ namespace VRCM.Network.Client
             }
             catch (Exception e)
             {
+                Debug.Log($"[Network Client] Error {e.ToString()}");
             }
         }
 

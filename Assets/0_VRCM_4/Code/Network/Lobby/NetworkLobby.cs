@@ -66,6 +66,7 @@ namespace VRCM.Network.Lobby
                 _players.Add(uniqueId, lb);
                 res = true;
 
+                Debug.Log($"[Lobby] Add => {_players[uniqueId].Id} - added");
                 AddPlayerEvent?.Invoke(lb);
             }
 
@@ -78,7 +79,7 @@ namespace VRCM.Network.Lobby
 
             if (_players.ContainsKey(uniqueId))
             {
-                Debug.Log("[Remove player] playerId - removed");
+                Debug.Log($"[Lobby] Remove => {_players[uniqueId].Id} - removed");
                 _players.Remove(uniqueId);
                 res = true;
 
@@ -124,8 +125,6 @@ namespace VRCM.Network.Lobby
 
             if (_currentPlayer.UniqueId == uniqueId)
                 _currentPlayer._state = message;
-
-            
         }
 
 

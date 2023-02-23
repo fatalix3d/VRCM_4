@@ -64,14 +64,17 @@ namespace VRCM.Lobby.UI
 
             try
             {
-                string[] split = message.battery.Split(new char[0]);
-                float bat = float.Parse(split[0], CultureInfo.InvariantCulture.NumberFormat);
-                float temp = float.Parse(split[1], CultureInfo.InvariantCulture.NumberFormat);
+                if (!string.IsNullOrEmpty(message.battery))
+                {
+                    string[] split = message.battery.Split(new char[0]);
+                    float bat = float.Parse(split[0], CultureInfo.InvariantCulture.NumberFormat);
+                    float temp = float.Parse(split[1], CultureInfo.InvariantCulture.NumberFormat);
 
-                _batteryIndicator.fillAmount = bat / 100;
-                _tempIndicator.fillAmount = temp / 100;
-                _batteryLabel.text = $"{bat}%";
-                _tempLabel.text = $"{temp}°";
+                    _batteryIndicator.fillAmount = bat / 100;
+                    _tempIndicator.fillAmount = temp / 100;
+                    _batteryLabel.text = $"{bat}%";
+                    _tempLabel.text = $"{temp}°";
+                }
             }
             catch(Exception e)
             {
