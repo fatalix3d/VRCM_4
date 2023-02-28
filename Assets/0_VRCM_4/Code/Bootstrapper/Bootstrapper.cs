@@ -53,6 +53,7 @@ public class Bootstrapper : MonoBehaviour
         }
 
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Debug.unityLogger.logEnabled = false;
     }
 
     void Start()

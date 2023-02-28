@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Demo-360
-  m_Shader: {fileID: 4800000, guid: 46b84ca7ab6291e4fb6c57ac48d01e8f, type: 3}
+  m_Shader: {fileID: 4800000, guid: a22a9f37cda6a3b48be178ec57376024, type: 3}
   m_ValidKeywords:
   - FORCEEYE_NONE
   - HIGH_QUALITY

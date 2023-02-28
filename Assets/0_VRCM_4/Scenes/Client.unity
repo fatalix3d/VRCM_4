@@ -298,6 +298,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isServer: 0
   _serverParams: {fileID: 0}
+  _theaterUI: {fileID: 0}
+  _remoteUI: {fileID: 0}
 --- !u!4 &2009741974
 Transform:
   m_ObjectHideFlags: 0
@@ -836,7 +838,7 @@ MonoBehaviour:
   mrcRenderTexture: {fileID: 0}
   foregroundMrcRenderTexture: {fileID: 0}
   appCheckResult: 100
-  useRecommendedAntiAliasingLevel: 1
+  useRecommendedAntiAliasingLevel: 0
 --- !u!1001 &3519057685650681255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1375,7 +1377,7 @@ MonoBehaviour:
     _preferredPeakBitRate: 0
     _preferredPeakBitRateUnits: 1
     videoApi: 2
-    useFastOesPath: 0
+    useFastOesPath: 1
     showPosterFrame: 0
     audioOutput: 2
     audio360ChannelMode: 0
