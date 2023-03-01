@@ -63,10 +63,11 @@ namespace VRCM.Network.Messages
                     break;
             }
 
-            if (!_lobby.IsAuthorized(uniqueId))
-                return;
 
             _lobby.UpdatePlayer(uniqueId, message);
+
+            if (!_lobby.IsAuthorized(uniqueId))
+                return;
 
             switch (message.command)
             {

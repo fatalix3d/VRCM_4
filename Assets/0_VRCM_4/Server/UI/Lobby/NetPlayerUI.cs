@@ -70,10 +70,13 @@ namespace VRCM.Lobby.UI
                     float bat = float.Parse(split[0], CultureInfo.InvariantCulture.NumberFormat);
                     float temp = float.Parse(split[1], CultureInfo.InvariantCulture.NumberFormat);
 
-                    _batteryIndicator.fillAmount = bat / 100;
-                    _tempIndicator.fillAmount = temp / 100;
-                    _batteryLabel.text = $"{bat}%";
-                    _tempLabel.text = $"{temp}°";
+                    if (bat > 0)
+                    {
+                        _batteryIndicator.fillAmount = bat / 100;
+                        _tempIndicator.fillAmount = temp / 100;
+                        _batteryLabel.text = $"{bat}%";
+                        _tempLabel.text = $"{temp}°";
+                    }
                 }
             }
             catch(Exception e)

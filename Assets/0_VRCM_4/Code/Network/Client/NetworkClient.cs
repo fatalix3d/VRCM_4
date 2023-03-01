@@ -90,7 +90,7 @@ namespace VRCM.Network.Client
             _websocket.OnError += (e) =>
             {
                 Debug.Log("[NetworkClient] - Error! : " + e);
-                _isConnected = false;
+                //_isConnected = false;
             };
 
             _websocket.OnClose += (e) =>
