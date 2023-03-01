@@ -61,6 +61,10 @@ namespace VRCM.Lobby.UI
             {
                 _mediaName.text = $"{message.mediaName} ({message.mediaDuration})";
             }
+            else
+            {
+                _mediaName.text = "";
+            }
 
             try
             {

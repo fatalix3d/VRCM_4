@@ -2,46 +2,40 @@
     "m_SelectedDeviceId": "PA81X0MGGB111787G",
     "m_SelectedPackage": {
         "deviceId": "PA81X0MGGB111787G",
-        "name": "com.GreatGonzo.VRCM4PicoClient",
-        "processId": 6892,
+        "name": "com.GreatGonzo.VRCM4PicoClient2chsnd",
+        "processId": 32565,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "PA81X0MGGB111787G",
-            "name": "com.fatalix3d.VRCM_4_DEMO_TOP_BOTTOM",
-            "processId": 23570,
+            "name": "com.GreatGonzo.VRCM4PicoClient2chsnd",
+            "processId": 28933,
             "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
-            "name": "com.fatalix3d.VRCM_4_DEMO_TOP_BOTTOM",
-            "processId": 25057,
+            "name": "com.GreatGonzo.VRCM4PicoClient2chsnd",
+            "processId": 29906,
             "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
-            "name": "com.fatalix3d.VRCM_4_DEMO_TOP_BOTTOM",
-            "processId": 7194,
+            "name": "com.GreatGonzo.VRCM4PicoClient2chsnd",
+            "processId": 31322,
             "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 8037,
+            "name": "com.GreatGonzo.VRCM4PicoClient2chsnd",
+            "processId": 32544,
             "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 11148,
-            "exited": false
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 6892,
+            "name": "com.GreatGonzo.VRCM4PicoClient2chsnd",
+            "processId": 32565,
             "exited": false
         },
         {

@@ -46,12 +46,12 @@ namespace VRCM.Network.Client
         }
         private void Start()
         {
-//#if UNITY_EDITOR
-//            Debug.unityLogger.logEnabled = true;
-//#else
-//  Debug.unityLogger.logEnabled = false;
-//#endif
-            StartSendData();
+            //#if UNITY_EDITOR
+            //            Debug.unityLogger.logEnabled = true;
+            //#else
+            //  Debug.unityLogger.logEnabled = false;
+            //#endif
+            InvokeRepeating("ClientAutoPing", 2.0f, 1.0f);
         }
         public void Setup(ServerParams sp)
         {
@@ -98,7 +98,6 @@ namespace VRCM.Network.Client
                 Debug.Log("[NetworkClient] - Connection closed!");
                 _isConnected = false;
                 _mediaPlayer.StopVideo();
-                _status = NetMessage.Command.Setup;
             };
 
             _websocket.OnMessage += (bytes) =>
@@ -129,42 +128,32 @@ namespace VRCM.Network.Client
             if (netMessage == null)
                 return;
 
-            byte[] bytes = BinarySerializer.Serialize(netMessage);
-
-            if (bytes != null)
+            try
             {
-                string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                Debug.Log($"[NetworkClient] - Sending msg : {msg}");
+                byte[] bytes = BinarySerializer.Serialize(netMessage);
 
-                _websocket.Send(bytes);
-                OnSendMessage?.Invoke(bytes);
+                if (bytes != null)
+                {
+                    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                    Debug.Log($"[NetworkClient] - Sending msg : {msg}");
+
+                    _websocket.Send(bytes);
+                    OnSendMessage?.Invoke(bytes);
+                }
+            }
+            catch(Exception e)
+            {
+                Debug.Log($"[NetworkClient] - Sending error : {e}");
             }
         }
 
         // Auto sender
         // to do remove to server side
-        private void StartSendData()
+        
+        private void ClientAutoPing()
         {
-            if (_autoPingRoutine != null)
-            {
-                StopCoroutine(_autoPingRoutine);
-            }
-            _autoPingRoutine = StartCoroutine(ClientAutoPing());
-        }
-
-        private void StopSendData()
-        {
-            if (_autoPingRoutine != null)
-            {
-                StopCoroutine(_autoPingRoutine);
-            }
-        }
-
-        private IEnumerator ClientAutoPing()
-        {
-            while (true)
-            {
-                if (IsConnected)
+            Debug.Log($"========IS CONNECTED {_isConnected}=========");
+                if (_isConnected)
                 {
                     var resp = new NetMessage(_status);
                     resp.mediaName = MediaPlayer.MediaName;
@@ -174,8 +163,6 @@ namespace VRCM.Network.Client
                     resp.battery = BatterySensors.GetBatteryLevel();
                     SendMessage(resp);
                 }
-                yield return new WaitForSeconds(1.0f);
-            }
         }
 
         private void Update()
@@ -190,21 +177,25 @@ namespace VRCM.Network.Client
 
         private void OnApplicationPause(bool pause)
         {
-            if (_serverAdress == null)
-                return; 
+            //if (_serverAdress == null)
+            //    return; 
 
             if (pause)
             {
-                if (_websocket != null)
-                {
-                    _websocket.Close();
-                    _isConnected = false;
-                }
+                _mediaPlayer.StopVideo();
             }
-            else
-            {
-                Connect();
-            }
+            //if (pause)
+            //{
+            //    if (_websocket != null)
+            //    {
+            //        _websocket.Close();
+            //        _isConnected = false;
+            //    }
+            //}
+            //else
+            //{
+            //    Connect();
+            //}
         }
 
         private async void OnDisable()
