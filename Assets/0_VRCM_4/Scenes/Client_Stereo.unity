@@ -1238,7 +1238,7 @@ MonoBehaviour:
   _fallbackMediaHints:
     transparency: 0
     alphaPacking: 0
-    stereoPacking: 0
+    stereoPacking: 1
   _autoOpen: 0
   _autoPlayOnStart: 0
   _loop: 0
