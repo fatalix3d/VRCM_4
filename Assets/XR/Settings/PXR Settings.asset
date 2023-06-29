@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PXR Settings
   m_EditorClassIdentifier: 
   stereoRenderingModeAndroid: 0
-  systemDisplayFrequency: 0
+  systemDisplayFrequency: 1
   optimizeBufferDiscards: 0

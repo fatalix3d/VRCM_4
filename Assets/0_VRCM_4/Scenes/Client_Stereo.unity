@@ -1249,7 +1249,7 @@ MonoBehaviour:
   _useResampler: 0
   _resampleMode: 0
   _resampleBufferSize: 5
-  _videoMapping: 0
+  _videoMapping: 2
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
@@ -1377,7 +1377,7 @@ MonoBehaviour:
     _preferredPeakBitRate: 0
     _preferredPeakBitRateUnits: 1
     videoApi: 2
-    useFastOesPath: 1
+    useFastOesPath: 0
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
@@ -1463,8 +1463,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _media: {fileID: 3809990589091986739}
-  _automaticStereoPacking: 1
-  _overrideStereoPacking: 0
+  _automaticStereoPacking: 0
+  _overrideStereoPacking: 1
   _stereoRedGreenTint: 0
   _defaultTexture: {fileID: 0}
   _renderer: {fileID: 4186625737647106618}
@@ -2795,6 +2795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8090788469381585628}
   - component: {fileID: 8630250628391410526}
+  - component: {fileID: 8630250628391410527}
   m_Layer: 2
   m_Name: XR Origin
   m_TagString: Untagged
@@ -2819,6 +2820,19 @@ MonoBehaviour:
   m_CameraFloorOffsetObject: {fileID: 7466730330992664480}
   m_RequestedTrackingOriginMode: 2
   m_CameraYOffset: 1.36144
+--- !u!114 &8630250628391410527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8090788469381585631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b2366b5575fcba46a0f97038fb6c5fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 7466730331069776773}
 --- !u!1001 &8814882997736537408
 PrefabInstance:
   m_ObjectHideFlags: 0

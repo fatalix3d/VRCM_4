@@ -58,6 +58,17 @@ namespace VRCM.Network.Client.VideoPlayer {
 
             _videoSphereRenderer.enabled = true;
             _mediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
+            MediaHints hints = _mediaPlayer.FallbackMediaHints;
+            hints.stereoPacking = StereoPacking.TopBottom;
+            _mediaPlayer.FallbackMediaHints = hints;
+
+            Debug.Log("=================================");
+            // Get the stereo packing mode that is used
+            StereoPacking videoStereoPacking = _mediaPlayer.TextureProducer.GetTextureStereoPacking();
+            Debug.Log($"videoStereoPacking = {videoStereoPacking}");
+            //VideoRender.SetupStereoEyeModeMaterial(_videoSphereRenderer.material, StereoEye.Left);
+            Debug.Log("=================================");
+
             _client.Status = NetMessage.Command.Play;
             return true;
         }
