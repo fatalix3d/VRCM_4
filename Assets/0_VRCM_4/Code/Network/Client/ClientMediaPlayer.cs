@@ -11,7 +11,9 @@ namespace VRCM.Network.Client.VideoPlayer {
         // Media player
         [SerializeField] private MediaPlayer _mediaPlayer;
         [SerializeField] private NetworkClient _client;
+        [SerializeField] private Material _videoMaterial;
         [SerializeField] private MeshRenderer _videoSphereRenderer;
+        [SerializeField] private ApplyToMesh _applyToMesh;
 
         private string _mediaName;
         private string _mediaDuration;
@@ -58,19 +60,45 @@ namespace VRCM.Network.Client.VideoPlayer {
 
             _videoSphereRenderer.enabled = true;
             _mediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
-            MediaHints hints = _mediaPlayer.FallbackMediaHints;
-            hints.stereoPacking = StereoPacking.TopBottom;
-            _mediaPlayer.FallbackMediaHints = hints;
-
-            Debug.Log("=================================");
-            // Get the stereo packing mode that is used
-            StereoPacking videoStereoPacking = _mediaPlayer.TextureProducer.GetTextureStereoPacking();
-            Debug.Log($"videoStereoPacking = {videoStereoPacking}");
-            //VideoRender.SetupStereoEyeModeMaterial(_videoSphereRenderer.material, StereoEye.Left);
-            Debug.Log("=================================");
+            
+            SetMapping(_mediaName);
 
             _client.Status = NetMessage.Command.Play;
             return true;
+        }
+
+        private void SetMapping(string mediaName)
+        {
+            if (string.IsNullOrEmpty(mediaName))
+                return;
+
+            if (mediaName.Contains("_TB"))
+            {
+                _applyToMesh.OverrideStereoPacking = StereoPacking.TopBottom;
+                _videoMaterial.SetInt("Stereo", 1);
+
+                MediaHints hints = _mediaPlayer.FallbackMediaHints;
+                hints.stereoPacking = StereoPacking.TopBottom;
+                _mediaPlayer.FallbackMediaHints = hints;
+            }
+            else if(mediaName.Contains("_SBS"))
+            {
+                _applyToMesh.OverrideStereoPacking = StereoPacking.LeftRight;
+                _videoMaterial.SetInt("Stereo", 2);
+
+                MediaHints hints = _mediaPlayer.FallbackMediaHints;
+                hints.stereoPacking = StereoPacking.LeftRight;
+                _mediaPlayer.FallbackMediaHints = hints;
+            }
+            else
+            {
+                _applyToMesh.OverrideStereoPacking = StereoPacking.None;
+                _videoMaterial.SetInt("Stereo", 0);
+
+                MediaHints hints = _mediaPlayer.FallbackMediaHints;
+                hints.stereoPacking = StereoPacking.None;
+                _mediaPlayer.FallbackMediaHints = hints;
+            }
         }
 
         public bool PauseVideo(string mediaName)

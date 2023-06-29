@@ -184,7 +184,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mediaPlayer: {fileID: 3809990589091986739}
   _client: {fileID: 152795700}
+  _videoMaterial: {fileID: 2100000, guid: db39bb6249db0924bb87d6e0bb294ed3, type: 2}
   _videoSphereRenderer: {fileID: 4186625737647106618}
+  _applyToMesh: {fileID: 4186625737647106613}
 --- !u!1 &1588882633
 GameObject:
   m_ObjectHideFlags: 0

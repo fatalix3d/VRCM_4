@@ -11,7 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 46b84ca7ab6291e4fb6c57ac48d01e8f, type: 3}
   m_ValidKeywords:
   - FORCEEYE_NONE
-  - STEREO_TOP_BOTTOM
+  - STEREO_LEFT_RIGHT
   m_InvalidKeywords:
   - LAYOUT_NONE
   m_LightmapFlags: 4
@@ -67,7 +67,7 @@ Material:
     m_Floats:
     - ForceEye: 0
     - Layout: 0
-    - Stereo: 1
+    - Stereo: 2
     - _ApplyGamma: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
