@@ -10,7 +10,7 @@ namespace VRCM.Network.Lobby
 {
     public class NetworkLobby
     {
-
+        private int _maxPlayers = 1;
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
         public NetPlayer CurrentPlayer => _currentPlayer;
@@ -56,7 +56,9 @@ namespace VRCM.Network.Lobby
 
         public bool AddPlayer(string uniqueId, string playerId)
         {
-            bool res = false;
+            if (_players.Count >= _maxPlayers)
+                return false;
+
             if (!_players.ContainsKey(uniqueId))
             {
                 NetPlayer lb = new NetPlayer();
@@ -64,13 +66,13 @@ namespace VRCM.Network.Lobby
                 lb.UniqueId = uniqueId;
                 lb.Authorized = true;
                 _players.Add(uniqueId, lb);
-                res = true;
 
                 Debug.Log($"[Lobby] Add => {_players[uniqueId].Id} - added");
                 AddPlayerEvent?.Invoke(lb);
+                return true;
             }
 
-            return res;
+            return false;
         }
 
         public bool RemovePlayer(string uniqueId)
