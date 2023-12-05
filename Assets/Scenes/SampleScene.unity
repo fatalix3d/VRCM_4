@@ -258,8 +258,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a04385169a82f8b489cb6de1ce0d8b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _window: {fileID: 0}
   _root: {fileID: 2028464989}
   _elementPrefab: {fileID: 4722519695976998306, guid: 4170e53b8bbde094f8a83abe31ac8173, type: 3}
+  _forceStopButton: {fileID: 0}
+  _timeLineCnv: {fileID: 0}
+  _previewPlayer: {fileID: 0}
+  _sliderTime: {fileID: 0}
+  _textTimeDuration: {fileID: 0}
+  _mediaNameLabel: {fileID: 0}
+  _segmentsProgress: {fileID: 0}
 --- !u!1 &187605615
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,6 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b650ddf45e543864c9572c831fa52d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _server: 0
   ptvp: {fileID: 1125701196}
 --- !u!328 &1125701196
 VideoPlayer:
@@ -756,6 +765,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isServer: 1
+  _serverParams: {fileID: 0}
+  _theaterUI: {fileID: 0}
+  _remoteUI: {fileID: 0}
 --- !u!4 &1299132358
 Transform:
   m_ObjectHideFlags: 0
@@ -910,6 +922,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _root: {fileID: 452507124}
   _playerPrefab: {fileID: 4722519695976998306, guid: 761fd18299cd14242b7ba00cf928799d, type: 3}
+  _theaterIcon: {fileID: 0}
+  _remoteIcon: {fileID: 0}
 --- !u!1 &2028464988
 GameObject:
   m_ObjectHideFlags: 0
