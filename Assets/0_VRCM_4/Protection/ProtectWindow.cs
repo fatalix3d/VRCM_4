@@ -11,7 +11,7 @@ public class ProtectWindow : MonoBehaviour
 
     private void Awake()
     {
-        Debug.unityLogger.logEnabled = false;
+        Debug.unityLogger.logEnabled = true;
     }
 
     private void Start()
