@@ -11,7 +11,7 @@ public class ProtectWindow : MonoBehaviour
 
     private void Awake()
     {
-        Debug.unityLogger.logEnabled = true;
+        Debug.unityLogger.logEnabled = false;
     }
 
     private void Start()
@@ -54,7 +54,7 @@ public class ProtectWindow : MonoBehaviour
 
         Debug.Log($"Текущее время Алматы: {dateTimeOffset.ToString("yyyy-MM-dd HH:mm:ss")}");
 
-        DateTimeOffset targetDate = new DateTimeOffset(2023, 12, 4, 18, 07, 0, TimeSpan.FromHours(6));
+        DateTimeOffset targetDate = new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.FromHours(6));
 
         if (dateTimeOffset > targetDate)
         {
