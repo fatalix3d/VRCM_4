@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/0_VRCM_4/Scenes/Protection.unity
-    guid: 867f7a468553ffa41b15d9f6b7a55af6
-  - enabled: 1
     path: Assets/0_VRCM_4/Scenes/Client.unity
     guid: 152f6eda8aca3704ea710f7e3d0395bb
   m_configObjects:

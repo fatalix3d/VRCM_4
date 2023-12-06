@@ -3,15 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
 
 public class ProtectWindow : MonoBehaviour
 {
-    private string apiUrl = "https://worldtimeapi.org/api/timezone/Asia/Almaty";
+    private string apiUrl = "http://worldtimeapi.org/api/timezone/Asia/Almaty";
 
     private void Awake()
     {
-        Debug.unityLogger.logEnabled = true;
+        Debug.unityLogger.logEnabled = false;
     }
 
     private void Start()
@@ -26,6 +25,8 @@ public class ProtectWindow : MonoBehaviour
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
         {
+            webRequest.certificateHandler = new CertificateWhore();
+
             yield return webRequest.SendWebRequest();
 
             if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
@@ -65,8 +66,7 @@ public class ProtectWindow : MonoBehaviour
         {
             Debug.Log($"Текущее время: {dateTimeOffset.ToString("yyyy-MM-dd HH:mm:ss")}");
             Debug.Log($"Время еще не вышло. Целевая дата: {targetDate.ToString("yyyy-MM-dd HH:mm:ss")}");
-            SceneManager.LoadScene(1);
-
+            Application.LoadLevel(1);
         }
     }
 }
@@ -75,4 +75,12 @@ public class ProtectWindow : MonoBehaviour
 public class TimeApiResponse
 {
     public string datetime;
+}
+
+public class CertificateWhore : CertificateHandler
+{
+    protected override bool ValidateCertificate(byte[] certificateData)
+    {
+        return true;
+    }
 }
