@@ -19,8 +19,9 @@ public class Echo : WebSocketBehavior
     protected override void OnClose(CloseEventArgs e)
     {
         string uniqueId = this.ID;
-        Debug.Log($"/Echo - Close connection [{uniqueId}]");
-        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Lobby.RemovePlayer(uniqueId));
+        string closeArgs = $"Code {e.Code}, Reason {e.Reason}";
+        Debug.Log($"/Echo - Close connection [{uniqueId}], Code {e.Code}, Reason {e.Reason}");
+        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Lobby.RemovePlayer(uniqueId, closeArgs));
     }
 
     protected override void OnMessage(MessageEventArgs e)

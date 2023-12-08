@@ -56,8 +56,8 @@ namespace VRCM.Network.Lobby
 
         public bool AddPlayer(string uniqueId, string playerId)
         {
-            if (_players.Count >= _maxPlayers)
-                return false;
+            //if (_players.Count >= _maxPlayers)
+            //    return false;
 
             if (!_players.ContainsKey(uniqueId))
             {
@@ -75,12 +75,13 @@ namespace VRCM.Network.Lobby
             return false;
         }
 
-        public bool RemovePlayer(string uniqueId)
+        public bool RemovePlayer(string uniqueId, string closeMsg)
         {
             bool res = false;
-
+            Debug.Log($"[Lobby] Close Arg => {closeMsg}");
             if (_players.ContainsKey(uniqueId))
             {
+                
                 Debug.Log($"[Lobby] Remove => {_players[uniqueId].Id} - removed");
                 _players.Remove(uniqueId);
                 res = true;
