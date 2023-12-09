@@ -14,7 +14,7 @@ namespace VRCM.Network.Messages
     {
         private NetworkServer _server;
         private NetworkClient _client;
-        private NetworkLobby _lobby;
+        private NetworkLobby _lobby; 
 
         public NetMessageDispatcher(NetworkServer server)
         {

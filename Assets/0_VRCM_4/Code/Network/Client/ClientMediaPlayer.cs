@@ -61,7 +61,7 @@ namespace VRCM.Network.Client.VideoPlayer {
             _videoSphereRenderer.enabled = true;
             _mediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
             
-            SetMapping(_mediaName);
+            //SetMapping(_mediaName);
 
             _client.Status = NetMessage.Command.Play;
             return true;

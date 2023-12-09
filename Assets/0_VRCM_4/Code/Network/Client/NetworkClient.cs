@@ -51,7 +51,7 @@ namespace VRCM.Network.Client
             //#else
             //  Debug.unityLogger.logEnabled = false;
             //#endif
-            InvokeRepeating("ClientAutoPing", 2.0f, 1.0f);
+            //InvokeRepeating("ClientAutoPing", 2.0f, 1.0f);
         }
         public void Setup(ServerParams sp)
         {
@@ -95,13 +95,14 @@ namespace VRCM.Network.Client
 
             _websocket.OnClose += (e) =>
             {
-                Debug.Log("[NetworkClient] - Connection closed!");
+                Debug.Log($"[NetworkClient] - Connection closed! {e}");
                 _isConnected = false;
                 _mediaPlayer.StopVideo();
             };
 
             _websocket.OnMessage += (bytes) =>
             {
+                Debug.Log($"[NetworkClient] - Recieved message");
                 OnMessageIn(bytes);
             };
             
@@ -149,20 +150,20 @@ namespace VRCM.Network.Client
 
         // Auto sender
         // to do remove to server side
-        
+
         private void ClientAutoPing()
         {
             Debug.Log($"========IS CONNECTED {_isConnected}=========");
-                if (_isConnected)
-                {
-                    var resp = new NetMessage(_status);
-                    resp.mediaName = MediaPlayer.MediaName;
-                    resp.mediaDuration = MediaPlayer.MediaDuration;
-                    resp.curTime = MediaPlayer.CurrentTime;
-                    resp.totalTime = MediaPlayer.TotalTime;
-                    resp.battery = BatterySensors.GetBatteryLevel();
-                    SendMessage(resp);
-                }
+            if (_isConnected)
+            {
+                var resp = new NetMessage(_status);
+                resp.mediaName = MediaPlayer.MediaName;
+                resp.mediaDuration = MediaPlayer.MediaDuration;
+                resp.curTime = MediaPlayer.CurrentTime;
+                resp.totalTime = MediaPlayer.TotalTime;
+                resp.battery = BatterySensors.GetBatteryLevel();
+                SendMessage(resp);
+            }
         }
 
         private void Update()
