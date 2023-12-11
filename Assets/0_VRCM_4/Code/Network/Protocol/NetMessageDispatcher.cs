@@ -29,11 +29,18 @@ namespace VRCM.Network.Messages
             _client.OnRecieveMessage += Client_MessageIn;
         }
 
-        public void Server_MessageIn(string uniqueId, byte[] bytes)
+        public void Server_MessageIn(string uniqueId, string bytes)
         {
-            NetMessage message = BinarySerializer.Deserialize(bytes);
+            //NetMessage message = BinarySerializer.Deserialize(bytes);
+            NetMessage message = JsonUtility.FromJson<NetMessage>(bytes);
 
-            if (message == null)
+            //if (message == null)
+            //{
+            //    Debug.Log($"[Message Dispatcher] - Income cmd parse error / null");
+            //    return;
+            //}
+
+            if (string.IsNullOrEmpty(bytes))
             {
                 Debug.Log($"[Message Dispatcher] - Income cmd parse error / null");
                 return;
@@ -109,14 +116,21 @@ namespace VRCM.Network.Messages
             }
         }
 
-        public void Client_MessageIn(byte[] bytes)
+        public void Client_MessageIn(string bytes)
         {
             try
             {
-                NetMessage message = BinarySerializer.Deserialize(bytes);
+                //NetMessage message = BinarySerializer.Deserialize(bytes);
+                NetMessage message = JsonUtility.FromJson<NetMessage>(bytes);
 
-                if (message == null)
+                //if (message == null)
+                //    return;
+
+                if (string.IsNullOrEmpty(bytes))
+                {
+                    Debug.Log($"[Message Dispatcher] - Income cmd parse error / null");
                     return;
+                }
 
                 NetMessage resp;
 

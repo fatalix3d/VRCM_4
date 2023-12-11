@@ -27,6 +27,7 @@ public class Echo : WebSocketBehavior
     protected override void OnMessage(MessageEventArgs e)
     {
         string uniqueId = this.ID;
-        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Server.RecieveMessage(uniqueId, e.RawData));
+        //Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Server.RecieveMessage(uniqueId, e.RawData));
+        Dispatcher.InvokeAsync(() => Bootstrapper.Instance.Server.RecieveMessage(uniqueId, e.Data));
     }
 }

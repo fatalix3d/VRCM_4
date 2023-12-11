@@ -18,8 +18,11 @@ namespace VRCM.Network.Server
         private NetMessageDispatcher _networkMessageDispatcher;
         private NetworkLobby _lobby;
 
-        public event Action<string, byte[]> OnRecieveMessage;
-        public event Action<string, byte[]> OnSendMessage;
+        //public event Action<string, byte[]> OnRecieveMessage;
+        //public event Action<string, byte[]> OnSendMessage;
+        
+        public event Action<string, string> OnRecieveMessage;
+        public event Action<string, string> OnSendMessage;
 
         public NetworkServer(string ip, int port)
         {
@@ -29,6 +32,7 @@ namespace VRCM.Network.Server
             _ws = new WebSocketServer($"ws://{ip}:{port}");
             _ws.AddWebSocketService<Echo>("/Echo");
             _ws.Start();
+
             Debug.Log($"[NetworkServer] - Started at : ws://{ip}:{port}/Echo");
         }
 
@@ -41,17 +45,24 @@ namespace VRCM.Network.Server
 
                 if (!string.IsNullOrEmpty(mediaId))
                     netMessage.mediaName = mediaId;
+                
+                // byte message
+                //byte[] bytes = BinarySerializer.Serialize(netMessage);
+                //if (bytes != null)
+                //{
+                //    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
+                //    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                //    Debug.Log($"[NetworkServer] - Sended to [{id}]: message [byte] {msg}");
+                //    OnSendMessage?.Invoke(id, bytes);
+                //}
 
-                byte[] bytes = BinarySerializer.Serialize(netMessage);
-
-                if (bytes != null)
+                // json message
+                string messageJson = JsonUtility.ToJson(netMessage);
+                if (!string.IsNullOrEmpty(messageJson))
                 {
-                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
-                    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                    Debug.Log($"[NetworkServer] - Sended to [{id}]: message {msg}");
-                    OnSendMessage?.Invoke(id, bytes);
+                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(messageJson);
+                    Debug.Log($"[NetworkServer] - Sended to [{id}]: message [json] {messageJson}");
                 }
-
             }
             catch (Exception e)
             {
@@ -70,14 +81,23 @@ namespace VRCM.Network.Server
                 //if (!string.IsNullOrEmpty(message.me))
                 //    netMessage.mediaName = mediaId;
 
-                byte[] bytes = BinarySerializer.Serialize(netMessage);
 
-                if (bytes != null)
+                // byte message
+                //byte[] bytes = BinarySerializer.Serialize(netMessage);
+                //if (bytes != null)
+                //{
+                //    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
+                //    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                //    Debug.Log($"[NetworkServer] - Sended to [{id}]: message {msg}");
+                //    OnSendMessage?.Invoke(id, bytes);
+                //}
+
+                // json message
+                string messageJson = JsonUtility.ToJson(netMessage);
+                if (!string.IsNullOrEmpty(messageJson))
                 {
-                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(bytes);
-                    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                    Debug.Log($"[NetworkServer] - Sended to [{id}]: message {msg}");
-                    OnSendMessage?.Invoke(id, bytes);
+                    _ws.WebSocketServices["/Echo"].Sessions[id].Context.WebSocket.Send(messageJson);
+                    Debug.Log($"[NetworkServer] - Sended to [{id}]: message [json] {messageJson}");
                 }
 
             }
@@ -110,16 +130,32 @@ namespace VRCM.Network.Server
             }
         }
 
-        public void RecieveMessage(string id, byte[] bytes)
+        //public void RecieveMessage(string id, byte[] bytes)
+        //{
+        //    try
+        //    {
+        //        if (bytes != null)
+        //        {
+        //            string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+        //            Debug.Log($"[NetworkServer] - Recieve message : {msg}");
+        //            OnRecieveMessage?.Invoke(id, bytes);
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Debug.Log($"[NetworkServer] - Error on recieve : {e}");
+        //    }
+        //}
+
+        public void RecieveMessage(string id, string data)
         {
             try
             {
-                if (bytes != null)
-                {
-                    string msg = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
-                    Debug.Log($"[NetworkServer] - Recieve message : {msg}");
-                    OnRecieveMessage?.Invoke(id, bytes);
-                }
+                if (string.IsNullOrEmpty(data))
+                    return;
+
+                Debug.Log($"[NetworkServer] - Recieve message : {data}");
+                OnRecieveMessage?.Invoke(id, data);
             }
             catch (Exception e)
             {

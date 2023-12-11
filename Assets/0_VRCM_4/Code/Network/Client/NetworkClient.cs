@@ -19,8 +19,8 @@ namespace VRCM.Network.Client
         private WebSocket _websocket;
         private ServerParams _serverAdress;
 
-        public event Action<byte[]> OnRecieveMessage;
-        public event Action<byte[]> OnSendMessage;
+        public event Action<string> OnRecieveMessage;
+        public event Action<string> OnSendMessage;
 
         [SerializeField] private NetMessage.Command _status = NetMessage.Command.VideoNotFound;
         public NetMessage.Command Status { get => _status; set => _status = value; }
@@ -116,7 +116,7 @@ namespace VRCM.Network.Client
                 string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
                 Debug.Log($"[NetworkClient] - Incoming msg : {msg}");
 
-                OnRecieveMessage?.Invoke(bytes);
+                OnRecieveMessage?.Invoke(msg);
             }
             catch (Exception e)
             {
@@ -131,15 +131,24 @@ namespace VRCM.Network.Client
 
             try
             {
-                byte[] bytes = BinarySerializer.Serialize(netMessage);
+                //byte[] bytes = BinarySerializer.Serialize(netMessage);
+                string message = JsonUtility.ToJson(netMessage);
 
-                if (bytes != null)
+                //if (bytes != null)
+                //{
+                //    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                //    Debug.Log($"[NetworkClient] - Sending msg : {msg}");
+
+                //    _websocket.Send(bytes);
+                //    OnSendMessage?.Invoke(bytes);
+                //}
+
+                if (!string.IsNullOrEmpty(message))
                 {
-                    string msg = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                    Debug.Log($"[NetworkClient] - Sending msg : {msg}");
+                    Debug.Log($"[NetworkClient] - Sending msg : {message}");
 
-                    _websocket.Send(bytes);
-                    OnSendMessage?.Invoke(bytes);
+                    _websocket.SendText(message);
+                    OnSendMessage?.Invoke(message);
                 }
             }
             catch(Exception e)
