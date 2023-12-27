@@ -1237,7 +1237,7 @@ MonoBehaviour:
     videoApi: 2
     useFastOesPath: 1
     showPosterFrame: 0
-    audioOutput: 2
+    audioOutput: 0
     audio360ChannelMode: 0
     preferSoftwareDecoder: 0
     blitTextureFiltering: 0

@@ -77,10 +77,3 @@ public class TimeApiResponse
     public string datetime;
 }
 
-public class CertificateWhore : CertificateHandler
-{
-    protected override bool ValidateCertificate(byte[] certificateData)
-    {
-        return true;
-    }
-}
