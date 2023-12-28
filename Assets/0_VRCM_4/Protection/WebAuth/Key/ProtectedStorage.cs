@@ -20,13 +20,20 @@ namespace VRCM.Services.Protect
             Debug.Log($"[ProtectedStorage] Device ID : {_deviceId}");
         }
 
+        public void Setup()
+        {
+#if UNITY_EDITOR
+            _dataPath = Application.dataPath;
+#else
+            _dataPath = Application.persistentDataPath;
+#endif
+            _keyFilePath = Path.Combine(_dataPath, "data.key");
+        }
+
         public void CreateKey(TokenInfo token)
         {
-
-            Debug.Log($"[ProtectedStorage] [Create] Processing...");
-
-            ReadKey();
-
+            Debug.Log($"[ProtectedStorage] [Create] ... {token.Token}, {token.IsValid}");
+            
             if (Key == null)
             {
                 Key = new StorageKey(token);
@@ -39,19 +46,14 @@ namespace VRCM.Services.Protect
             }
 
             if (Key != null)
+            {
                 SaveKey();
+            }
         }
 
         public void ReadKey()
         {
-            Debug.Log($"[ProtectedStorage] [Read] Processing...");
-
-#if UNITY_EDITOR
-            _dataPath = Application.dataPath;
-#else
-            _dataPath = Application.persistentDataPath;
-#endif
-            _keyFilePath = Path.Combine(_dataPath, "data.key");
+            Debug.Log($"[ProtectedStorage] [Read] ...");
 
             FileInfo key = new FileInfo(_keyFilePath);
 
@@ -61,7 +63,6 @@ namespace VRCM.Services.Protect
                 {
                     string json = string.Empty;
                     //json = File.ReadAllText(key.FullName);
-
                     byte[] cryptedJson = File.ReadAllBytes(key.FullName);
                     json = CryptSys.DecryptJson(cryptedJson);
 
@@ -110,6 +111,7 @@ namespace VRCM.Services.Protect
                 byte[] encryptedJson = CryptSys.EncryptJson(json);
                 File.WriteAllBytes(_keyFilePath, encryptedJson);
                 //File.WriteAllText(_keyFilePath, json);
+
                 Debug.Log($"[ProtectedStorage][Save] Key saved. {_keyFilePath}");
             }
             catch (Exception e)
@@ -120,6 +122,7 @@ namespace VRCM.Services.Protect
 
         public bool ValidateKey()
         {
+            Debug.Log($"[ProtectedStorage][Validate] ...");
             try
             {
                 Open = false;

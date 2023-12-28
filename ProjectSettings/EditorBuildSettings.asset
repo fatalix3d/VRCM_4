@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/0_VRCM_4/Scenes/Auth.unity
+    guid: b603fdc2f6a90014781758db63e046ba
+  - enabled: 1
     path: Assets/0_VRCM_4/LocalPlayer/localPlayer.unity
     guid: 2aca1079a26e94a43bf4588830d2d4d7
   m_configObjects:

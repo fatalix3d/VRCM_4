@@ -23,10 +23,6 @@ namespace VRCM.Services.Protect
 
             _webManager.InfoTextEvent += UpdateInfoText;
             _webManager.UILockEvent += OnUILockEvent;
-
-            if (PlayerPrefs.HasKey("token"))
-                _tokenInput.text = PlayerPrefs.GetString("token");
-
         }
 
         private void OnDisable()
@@ -59,7 +55,7 @@ namespace VRCM.Services.Protect
             }
             else
             {
-                _infoText.text = "Токен не может быть пустым";
+                _infoText.text = "Значение не может быть пустым";
             }
         }
     }

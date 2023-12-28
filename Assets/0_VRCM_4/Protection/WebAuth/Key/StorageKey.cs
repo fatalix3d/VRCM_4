@@ -15,12 +15,12 @@ namespace VRCM.Services.Protect
 
         public StorageKey(TokenInfo tokenInfo)
         {
-            Token = tokenInfo.token;
-            Expiry = tokenInfo.expiry;
-            IsValid = tokenInfo.isValid;
-            DeviceId = SystemInfo.deviceUniqueIdentifier;
+            this.Token = tokenInfo.Token;
+            this.Expiry = tokenInfo.Expiry;
+            this.IsValid = tokenInfo.IsValid;
+            this.DeviceId = SystemInfo.deviceUniqueIdentifier;
 
-            Debug.Log($"[Key][Create] {this.Token} / DeviceId : {this.DeviceId}");
+            Debug.Log($"[Key][Create] {this.IsValid} / DeviceId : {this.DeviceId}");
         }
 
         public void UpdateKey(TokenInfo tokenInfo)
@@ -28,9 +28,9 @@ namespace VRCM.Services.Protect
             string prevKey = JsonUtility.ToJson(this);
             string newKey = JsonUtility.ToJson(tokenInfo);
 
-            Token = tokenInfo.token;
-            Expiry = tokenInfo.expiry;
-            IsValid = tokenInfo.isValid;
+            Token = tokenInfo.Token;
+            Expiry = tokenInfo.Expiry;
+            IsValid = tokenInfo.IsValid;
             DeviceId = SystemInfo.deviceUniqueIdentifier;
 
             Debug.Log($"[Key][Update] old key {prevKey} / new key {newKey}");

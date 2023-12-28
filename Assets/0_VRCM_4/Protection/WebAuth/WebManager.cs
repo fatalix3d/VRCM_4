@@ -9,36 +9,22 @@ namespace VRCM.Services.Protect
     {
         [SerializeField] private AuthService _authService;
         private string _token = string.Empty;
-        private string _apiUrl = "https://rtstat.ru/api/get_user_info/";
-        private string _apiPingUrl = "https://rtstat.ru/api/ping";
+        private string _deviceId = string.Empty;
+
+        private string _apiUrl = "http://localhost:3000/api/token";
+        private string _apiPingUrl = "https://rtstat.ru/api/ping1";
 
         public event Action<string> InfoTextEvent;
         public event Action<bool> UILockEvent;
 
-        private void Update()
+        private void Awake()
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                Debug.Log("Send login cmd");
-                StartCoroutine(LoginRoutine(_token));
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                Debug.Log("Send ping cmd");
-                StartCoroutine(Ping());
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                Debug.Log("Send stats cmd");
-                //StartCoroutine(SendPostRequest());
-            }
+            _deviceId = SystemInfo.deviceUniqueIdentifier;
         }
 
-        public void LockUI(bool flag)
+        public void LockUI(bool state)
         {
-            UILockEvent?.Invoke(flag);
+            UILockEvent?.Invoke(state);
         }
 
         public void Login(string token)
@@ -50,10 +36,12 @@ namespace VRCM.Services.Protect
         public IEnumerator LoginRoutine(string tokenText)
         {
             _token = tokenText;
-            string _tokenUrl = _apiUrl + _token;
+            string url = $"{_apiUrl}?token={_token}&deviceID={_deviceId}";
+            //string url = $"{_apiUrl}?token={_token}&deviceID=00002";
+
             Debug.Log($"[WebManager] [Login] Token {_token}]");
 
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(_tokenUrl))
+            using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
                 webRequest.certificateHandler = new CertificateWhore();
 
@@ -64,8 +52,8 @@ namespace VRCM.Services.Protect
                 if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
                     webRequest.result == UnityWebRequest.Result.ProtocolError)
                 {
-                    Debug.Log($"[WebManager] [Login] Error, {webRequest.error}");
-                    InfoTextEvent?.Invoke("Ошибка, такого токена нет");
+                    Debug.Log($"[WebManager] [Login] Error, {webRequest.error} {webRequest.downloadHandler.text}");
+                    InfoTextEvent?.Invoke("Ошибка авторизации");
                 }
                 else
                 {
@@ -76,7 +64,7 @@ namespace VRCM.Services.Protect
                         var token = JsonUtility.FromJson<TokenInfo>(jsonResult);
                         if(token != null)
                         {
-                            Debug.Log(jsonResult);
+                            Debug.Log($"Incoming data : {jsonResult}");
                             _authService.Login(token);
                         }
                         else

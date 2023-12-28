@@ -8,9 +8,7 @@ namespace VRCM.Services.Protect
     public class AuthService : MonoBehaviour
     {
         [SerializeField] private WebManager _webManager;
-
         private ProtectedStorage _storage;
-        public ProtectedStorage Storage => _storage;
 
         private void Awake()
         {
@@ -24,47 +22,38 @@ namespace VRCM.Services.Protect
         private IEnumerator Start()
         {
             _webManager.LockUI(true);
+
             _storage = new ProtectedStorage();
-
-            // silent start with sync
-            if (PlayerPrefs.HasKey("token"))
-            {
-                string t = PlayerPrefs.GetString("token");
-                _webManager.Login(t);
-                yield return StartCoroutine(_webManager.LoginRoutine(t));
-            }
-
+            _storage.Setup();
             _storage.ReadKey();
+
+            if (_storage.Key != null)
+                yield return StartCoroutine(_webManager.LoginRoutine(_storage.Key.Token));
+
+            _storage.ValidateKey();
 
             Debug.Log($"Storage open : {_storage.Open}");
 
             if (_storage.Open)
-            {
                 Application.LoadLevel(1);
-            }
             else
-            {
                 _webManager.LockUI(false);
-            }
 
             yield return null;
         }
 
         public void Login(TokenInfo token)
         {
-            _webManager.LockUI(true);
-
             _storage.CreateKey(token);
-            
+            _storage.ValidateKey();
+
             Debug.Log($"Storage open : {_storage.Open}");
+
+
             if (_storage.Open)
-            {
                 Application.LoadLevel(1);
-            }
             else
-            {
                 _webManager.LockUI(false);
-            }
         }
     }
 }
