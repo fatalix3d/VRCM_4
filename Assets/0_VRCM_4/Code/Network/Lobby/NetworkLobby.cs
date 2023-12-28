@@ -10,7 +10,7 @@ namespace VRCM.Network.Lobby
 {
     public class NetworkLobby
     {
-        private int _maxPlayers = 1;
+        private int _maxPlayers = 15;
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
         public NetPlayer CurrentPlayer => _currentPlayer;

@@ -11,7 +11,7 @@ namespace VRCM.Services.Protect
         private string _token = string.Empty;
         private string _deviceId = string.Empty;
 
-        private string _apiUrl = "http://localhost:3000/api/token";
+        private string _apiUrl = "http://5.188.76.227:3000/api/token";
         private string _apiPingUrl = "https://rtstat.ru/api/ping1";
 
         public event Action<string> InfoTextEvent;
