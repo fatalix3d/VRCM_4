@@ -43,6 +43,7 @@ namespace VRCM.Services.Protect
 
             using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
             {
+                webRequest.timeout = 5;
                 webRequest.certificateHandler = new CertificateWhore();
 
                 // Ожидаем завершения запроса

@@ -58,5 +58,11 @@ namespace VRCM.Services.Protect
                 _infoText.text = "Значение не может быть пустым";
             }
         }
+
+        public void PasteKeyFromClipboard()
+        {
+            string clipboardText = GUIUtility.systemCopyBuffer;
+            _tokenInput.text = clipboardText;
+        }
     }
 }
