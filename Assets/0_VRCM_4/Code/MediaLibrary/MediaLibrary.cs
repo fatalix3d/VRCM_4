@@ -13,6 +13,8 @@ namespace VRCM.Media
     public class MediaLibrary : MonoBehaviour
     {
         [SerializeField] private bool _server = false;
+        [SerializeField] private bool _oculusQuest = false;
+
         public static MediaLibrary Instance { get; private set; }
 
         private Dictionary<string, MediaFile> _videos = new Dictionary<string, MediaFile>();
@@ -69,7 +71,10 @@ namespace VRCM.Media
                 }
                 else
                 {
-                    _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
+                    if (_oculusQuest)
+                        _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
+                    else
+                        _localContentPath = Path.Combine("/storage/emulated/0", "360Content");
                 }
             }
             else
