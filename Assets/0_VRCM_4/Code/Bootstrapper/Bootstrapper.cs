@@ -15,6 +15,7 @@ using TMPro;
 public class Bootstrapper : MonoBehaviour
 {
     [SerializeField] private bool isServer;
+    [SerializeField] private bool isQuest;
     [SerializeField] private TextMeshProUGUI _serverParams;
     public static Bootstrapper Instance { get; private set; } = null;
 
@@ -58,7 +59,7 @@ public class Bootstrapper : MonoBehaviour
 
     void Start()
     {
-        _config = new NetConfiguration(isServer);
+        _config = new NetConfiguration(isServer, isQuest);
 
         if (_config.AllOk)
         {

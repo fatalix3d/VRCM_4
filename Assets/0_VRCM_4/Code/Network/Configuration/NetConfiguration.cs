@@ -27,7 +27,7 @@ namespace VRCM.Network.Configuration
         private Texture2D _bgTexture;
         public Texture2D BackgroundTexture;
 
-        public NetConfiguration(bool isServer)
+        public NetConfiguration(bool isServer, bool isQuest)
         {
 
             Debug.Log("[Configuration] Checking permissions ...");
@@ -59,7 +59,10 @@ namespace VRCM.Network.Configuration
                 }
                 else
                 {
-                    _dataPath = Path.Combine("/storage/emulated/0", "360Content");
+                    if (isQuest)
+                        _dataPath = Path.Combine(Application.dataPath, "360Content");
+                    else
+                        _dataPath = Path.Combine("/storage/emulated/0", "360Content");
                 }
                 Debug.Log($"[Configuration] DEVICE -> {_dataPath}");
             }

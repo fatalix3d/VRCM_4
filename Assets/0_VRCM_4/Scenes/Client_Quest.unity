@@ -300,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isServer: 0
+  isQuest: 1
   _serverParams: {fileID: 0}
   _theaterUI: {fileID: 0}
   _remoteUI: {fileID: 0}
