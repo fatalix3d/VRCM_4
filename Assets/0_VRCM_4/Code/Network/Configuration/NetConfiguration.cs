@@ -60,7 +60,7 @@ namespace VRCM.Network.Configuration
                 else
                 {
                     if (isQuest)
-                        _dataPath = Path.Combine(Application.dataPath, "360Content");
+                        _dataPath = Path.Combine(Application.persistentDataPath, "360Content");
                     else
                         _dataPath = Path.Combine("/storage/emulated/0", "360Content");
                 }
