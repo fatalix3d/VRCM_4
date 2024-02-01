@@ -46,12 +46,12 @@ namespace VRCM.Network.Client
         }
         private void Start()
         {
-            //#if UNITY_EDITOR
-            //            Debug.unityLogger.logEnabled = true;
-            //#else
-            //  Debug.unityLogger.logEnabled = false;
-            //#endif
-            //InvokeRepeating("ClientAutoPing", 2.0f, 1.0f);
+#if UNITY_EDITOR
+            Debug.unityLogger.logEnabled = true;
+#else
+              Debug.unityLogger.logEnabled = false;
+#endif
+            InvokeRepeating("ClientAutoPing", 2.0f, 1.0f);
         }
         public void Setup(ServerParams sp)
         {
@@ -97,7 +97,7 @@ namespace VRCM.Network.Client
             {
                 Debug.Log($"[NetworkClient] - Connection closed! {e}");
                 _isConnected = false;
-                _mediaPlayer.StopVideo();
+                //_mediaPlayer.StopVideo();
             };
 
             _websocket.OnMessage += (bytes) =>

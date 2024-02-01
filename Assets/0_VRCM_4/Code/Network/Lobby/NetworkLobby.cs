@@ -10,7 +10,7 @@ namespace VRCM.Network.Lobby
 {
     public class NetworkLobby
     {
-        private int _maxPlayers = 15;
+        private int _maxPlayers = 18;
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
         public NetPlayer CurrentPlayer => _currentPlayer;
@@ -56,8 +56,8 @@ namespace VRCM.Network.Lobby
 
         public bool AddPlayer(string uniqueId, string playerId)
         {
-            //if (_players.Count >= _maxPlayers)
-            //    return false;
+            if (_players.Count >= _maxPlayers)
+                return false;
 
             if (!_players.ContainsKey(uniqueId))
             {
