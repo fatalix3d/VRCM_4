@@ -161,6 +161,11 @@ namespace VRCM.Services.Protect
                     return Open;
                 }
 
+                Debug.Log($"[ProtectedStorage] [ValidateKey] Max users is {Key.MaxUsers}");
+                
+                PlayerPrefs.SetInt("maxUsers", Key.MaxUsers);
+                PlayerPrefs.Save();
+
                 Open = true;
                 return Open;
             }

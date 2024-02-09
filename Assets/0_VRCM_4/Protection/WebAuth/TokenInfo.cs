@@ -9,5 +9,6 @@ namespace VRCM.Services.Protect
         public string Expiry;
         public bool IsValid;
         public string DeviceId;
+        public int MaxUsers = 0;
     }
 }

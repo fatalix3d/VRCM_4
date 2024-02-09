@@ -114,13 +114,16 @@ namespace VRCM.Lobby.UI
 
         private void OnDisable()
         {
-            _networkLobby.AddPlayerEvent -= AddPlayer;
-            _networkLobby.SelectPlayerEvent -= SelectPlayer;
-            _networkLobby.DeselectPlayerEvent -= DeselectPlayer;
-            _networkLobby.UpdatePlayerEvent -= UpdatePlayer;
-            _networkLobby.RemovePlayerEvent -= RemovePlayer;
+            if (_networkLobby != null)
+            {
+                _networkLobby.AddPlayerEvent -= AddPlayer;
+                _networkLobby.SelectPlayerEvent -= SelectPlayer;
+                _networkLobby.DeselectPlayerEvent -= DeselectPlayer;
+                _networkLobby.UpdatePlayerEvent -= UpdatePlayer;
+                _networkLobby.RemovePlayerEvent -= RemovePlayer;
 
-            _networkLobby.RemoteModeChangeEvent -= RemoteModeUpdate;
+                _networkLobby.RemoteModeChangeEvent -= RemoteModeUpdate;
+            }
         }
     }
 }

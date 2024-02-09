@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace VRCM.Services.Protect
 {
@@ -35,9 +36,13 @@ namespace VRCM.Services.Protect
             Debug.Log($"Storage open : {_storage.Open}");
 
             if (_storage.Open)
-                Application.LoadLevel(1);
+                //Application.LoadLevel(1);
+                SceneManager.LoadScene(1);
             else
+            {
                 _webManager.LockUI(false);
+                _webManager.InfoMessage("Ошибка авторизации");
+            }
 
             yield return null;
         }
@@ -51,7 +56,8 @@ namespace VRCM.Services.Protect
 
 
             if (_storage.Open)
-                Application.LoadLevel(1);
+                //Application.LoadLevel(1);
+                SceneManager.LoadScene(1);
             else
                 _webManager.LockUI(false);
         }

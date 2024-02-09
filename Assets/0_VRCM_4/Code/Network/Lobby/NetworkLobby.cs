@@ -10,7 +10,7 @@ namespace VRCM.Network.Lobby
 {
     public class NetworkLobby
     {
-        private int _maxPlayers = 18;
+        private int _maxPlayers = 1;
         private Dictionary<string, NetPlayer> _players;
         private NetPlayer _currentPlayer = null;
         public NetPlayer CurrentPlayer => _currentPlayer;
@@ -34,7 +34,15 @@ namespace VRCM.Network.Lobby
             _players = new Dictionary<string, NetPlayer>();
             _lobbyUI = GameObject.FindObjectOfType<LobbyUI>();
             _lobbyUI.Init(this);
-            Debug.Log($"[Lobby] - Created");
+
+            int maxPlayers = 0;
+            if (PlayerPrefs.HasKey("maxUsers"))
+                maxPlayers = PlayerPrefs.GetInt("maxUsers");
+
+            if (maxPlayers > 0)
+                _maxPlayers = maxPlayers;
+
+            Debug.Log($"[Lobby] - Created for [{_maxPlayers}] players");
 
             // dev
             //for (int i = 0; i < 12; i++)

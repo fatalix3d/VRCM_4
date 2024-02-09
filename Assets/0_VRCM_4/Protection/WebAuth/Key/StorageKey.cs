@@ -12,6 +12,7 @@ namespace VRCM.Services.Protect
         public string Expiry;
         public bool IsValid;
         public string DeviceId;
+        public int MaxUsers;
 
         public StorageKey(TokenInfo tokenInfo)
         {
@@ -19,8 +20,9 @@ namespace VRCM.Services.Protect
             this.Expiry = tokenInfo.Expiry;
             this.IsValid = tokenInfo.IsValid;
             this.DeviceId = SystemInfo.deviceUniqueIdentifier;
+            this.MaxUsers = tokenInfo.MaxUsers;
 
-            Debug.Log($"[Key][Create] {this.IsValid} / DeviceId : {this.DeviceId}");
+            Debug.Log($"[Key][Create] {this.IsValid} / DeviceId : {this.DeviceId} / MaxUsers : {this.MaxUsers}");
         }
 
         public void UpdateKey(TokenInfo tokenInfo)
@@ -32,6 +34,7 @@ namespace VRCM.Services.Protect
             Expiry = tokenInfo.Expiry;
             IsValid = tokenInfo.IsValid;
             DeviceId = SystemInfo.deviceUniqueIdentifier;
+            MaxUsers = tokenInfo.MaxUsers;
 
             Debug.Log($"[Key][Update] old key {prevKey} / new key {newKey}");
         }

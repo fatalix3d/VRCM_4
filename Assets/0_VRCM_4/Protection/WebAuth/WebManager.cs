@@ -12,7 +12,8 @@ namespace VRCM.Services.Protect
         private string _deviceId = string.Empty;
 
         private string _apiUrl = "http://5.188.76.227:3000/api/token";
-        private string _apiPingUrl = "https://rtstat.ru/api/ping1";
+        //private string _apiUrl = "http://localhost:3000/api/token";
+        //private string _apiPingUrl = "http://5.188.76.227:3000/api/ping";
 
         public event Action<string> InfoTextEvent;
         public event Action<bool> UILockEvent;
@@ -81,34 +82,39 @@ namespace VRCM.Services.Protect
             }
         }
 
-        IEnumerator Ping()
+        public void InfoMessage(string msg)
         {
-            using (UnityWebRequest webRequest = UnityWebRequest.Get(_apiPingUrl))
-            {
-                webRequest.certificateHandler = new CertificateWhore();
-
-                // Ожидаем завершения запроса
-                yield return webRequest.SendWebRequest();
-
-                // Проверяем наличие ошибок
-                if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
-                    webRequest.result == UnityWebRequest.Result.ProtocolError)
-                {
-                    Debug.LogError("Error: " + webRequest.error);
-                }
-                else
-                {
-                    // Получаем JSON данные
-                    string jsonResult = webRequest.downloadHandler.text;
-
-                    // Далее вы можете обработать jsonResult, например, с помощью JsonUtility
-                    // Например, если у вас есть класс Data, представляющий структуру данных JSON
-                    // Data data = JsonUtility.FromJson<Data>(jsonResult);
-
-                    // Выводим полученные данные в консоль
-                    Debug.Log(jsonResult);
-                }
-            }
+            InfoTextEvent?.Invoke(msg);
         }
+
+        //IEnumerator Ping()
+        //{
+        //    using (UnityWebRequest webRequest = UnityWebRequest.Get(_apiPingUrl))
+        //    {
+        //        webRequest.certificateHandler = new CertificateWhore();
+
+        //        // Ожидаем завершения запроса
+        //        yield return webRequest.SendWebRequest();
+
+        //        // Проверяем наличие ошибок
+        //        if (webRequest.result == UnityWebRequest.Result.ConnectionError ||
+        //            webRequest.result == UnityWebRequest.Result.ProtocolError)
+        //        {
+        //            Debug.LogError("Error: " + webRequest.error);
+        //        }
+        //        else
+        //        {
+        //            // Получаем JSON данные
+        //            string jsonResult = webRequest.downloadHandler.text;
+
+        //            // Далее вы можете обработать jsonResult, например, с помощью JsonUtility
+        //            // Например, если у вас есть класс Data, представляющий структуру данных JSON
+        //            // Data data = JsonUtility.FromJson<Data>(jsonResult);
+
+        //            // Выводим полученные данные в консоль
+        //            Debug.Log(jsonResult);
+        //        }
+        //    }
+        //}
     }
 }

@@ -33,7 +33,9 @@ namespace VRCM.Media.Remote.UI
         private void OnDisable()
         {
             MediaLibrary.MediaLibraryLoaded -= OnMediaLibraryLoaded;
-            _lobby.RemoteModeChangeEvent -= OnRemoteModeChangeEvent;
+
+            if (_lobby != null)
+                _lobby.RemoteModeChangeEvent -= OnRemoteModeChangeEvent;
         }
 
         private IEnumerator Link()

@@ -51,8 +51,15 @@ namespace VRCM.Media.Theater.UI
         private void OnDisable()
         {
             MediaLibrary.MediaLibraryLoaded -= OnMediaLibraryLoaded;
-            Bootstrapper.Instance.Lobby.NoActivePlayerEvent -= StopPreviewPlayer;
-            Bootstrapper.Instance.Lobby.RemoteModeChangeEvent -= OnRemoteModeChangeEvent;
+
+            if (Bootstrapper.Instance != null)
+            {
+                if (Bootstrapper.Instance.Lobby != null)
+                {
+                    Bootstrapper.Instance.Lobby.NoActivePlayerEvent -= StopPreviewPlayer;
+                    Bootstrapper.Instance.Lobby.RemoteModeChangeEvent -= OnRemoteModeChangeEvent;
+                }
+            }
 
             _previewPlayer.Events.RemoveAllListeners();
             _forceStopButton.onClick.RemoveAllListeners();
