@@ -1434,7 +1434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _media: {fileID: 3809990589091986739}
   _automaticStereoPacking: 0
-  _overrideStereoPacking: 1
+  _overrideStereoPacking: 0
   _stereoRedGreenTint: 0
   _defaultTexture: {fileID: 0}
   _renderer: {fileID: 4186625737647106618}
@@ -1952,7 +1952,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!33 &7375599677812530649
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2512,7 +2512,6 @@ GameObject:
   - component: {fileID: 7466730331069776772}
   - component: {fileID: 7466730331069776775}
   - component: {fileID: 3593889369904748641}
-  - component: {fileID: 7466730331069776776}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2537,8 +2536,8 @@ Camera:
   m_GameObject: {fileID: 7466730331069776771}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2579,19 +2578,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7466730331069776771}
   m_Enabled: 1
---- !u!114 &7466730331069776776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7466730331069776771}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b2366b5575fcba46a0f97038fb6c5fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 7466730331069776773}
 --- !u!1001 &7658819386005266824
 PrefabInstance:
   m_ObjectHideFlags: 0

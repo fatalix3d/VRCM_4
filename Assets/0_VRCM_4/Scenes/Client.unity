@@ -268,6 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _server: 0
+  _oculusQuest: 0
   ptvp: {fileID: 1588882635}
 --- !u!1 &2009741972
 GameObject:
@@ -299,6 +300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isServer: 0
+  isQuest: 0
   _serverParams: {fileID: 0}
   _theaterUI: {fileID: 0}
   _remoteUI: {fileID: 0}
@@ -1466,7 +1468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _media: {fileID: 3809990589091986739}
   _automaticStereoPacking: 0
-  _overrideStereoPacking: 1
+  _overrideStereoPacking: 0
   _stereoRedGreenTint: 0
   _defaultTexture: {fileID: 0}
   _renderer: {fileID: 4186625737647106618}
@@ -1984,7 +1986,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!33 &7375599677812530649
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2618,7 +2620,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7466730331069776771}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b2366b5575fcba46a0f97038fb6c5fb, type: 3}
   m_Name: 
