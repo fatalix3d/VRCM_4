@@ -1,72 +1,36 @@
 {
     "m_SelectedDeviceId": "PA81X0MGGB111787G",
     "m_SelectedPackage": {
-        "deviceId": "PA81X0MGGB111787G",
-        "name": "com.GreatGonzo.VRCM4PicoPlayer",
-        "processId": 10846,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 25848,
-            "exited": true
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 27340,
-            "exited": true
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 29284,
-            "exited": true
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 31399,
-            "exited": true
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 31416,
-            "exited": false
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
-            "name": "com.GreatGonzo.VRCM4PicoClient",
-            "processId": 1160,
-            "exited": false
-        },
-        {
-            "deviceId": "PA81X0MGGB111787G",
             "name": "com.GreatGonzo.VRCM4PicoPlayer",
             "processId": 8039,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
             "name": "com.GreatGonzo.VRCM4PicoPlayer",
             "processId": 8818,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
             "name": "com.GreatGonzo.VRCM4PicoPlayer",
             "processId": 9603,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "PA81X0MGGB111787G",
             "name": "com.GreatGonzo.VRCM4PicoPlayer",
             "processId": 10846,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "c4602572",
