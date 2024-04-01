@@ -95,14 +95,21 @@ namespace VRCM.Media.Remote.UI
 
         public void RemotePlayVideo(string videoID)
         {
-            if (_lobby.CurrentPlayer == null && string.IsNullOrEmpty(_lobby.CurrentPlayer.UniqueId))
+            if (_lobby.CurrentPlayer == null)
             {
                 Debug.Log("[Remote UI] Player not selected");
                 return;
             }
 
+            if (string.IsNullOrEmpty(_lobby.CurrentPlayer.UniqueId))
+            {
+                Debug.Log("[Remote UI] Player not valid");
+                return;
+            }
+
             if (_lobby.CurrentPlayer._state != null)
             {
+
                 if (_lobby.CurrentPlayer._state.command == NetMessage.Command.Play)
                     return;
 

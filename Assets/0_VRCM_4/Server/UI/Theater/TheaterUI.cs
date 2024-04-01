@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using VRCM.Media;
 using VRCM.Media.Theater;
+using VRCM.Services.Protect;
 using VRCM.Network.Messages;
 using RenderHeads.Media.AVProVideo;
 using RenderHeads.Media.AVProVideo.Demos.UI;
@@ -82,6 +83,7 @@ namespace VRCM.Media.Theater.UI
 
         public void PlayVideo(string videoID)
         {
+            int clientCount = Bootstrapper.Instance.Lobby.Players.Count;
             if (!_elements.ContainsKey(videoID))
                 return;
 
@@ -93,8 +95,14 @@ namespace VRCM.Media.Theater.UI
 
                 _previewPlayer.Pause();
                 _elements[_curVideoId].PausePreview(true);
+
+                // Session record add .. 
+                AuthService.Instance.Storage.AddPauseRecord(videoID, clientCount);
                 return;
             }
+
+            // Session record add .. 
+            AuthService.Instance.Storage.AddPlayRecord(videoID, clientCount);
 
             if (_previewPlayer.Control.IsPaused() && videoID == _curVideoId)
             {
@@ -141,9 +149,13 @@ namespace VRCM.Media.Theater.UI
         public void StopVideo()
         {
             // send to server play command.
-            //...
+            //... 
             Bootstrapper.Instance.Server.SendMessageAll(NetMessage.Command.Stop);
             StopPreviewPlayer();
+
+            // Session record add .. 
+            int clientCount = Bootstrapper.Instance.Lobby.Players.Count;
+            AuthService.Instance.Storage.AddStopRecord(_curVideoId, clientCount);
         }
 
         public void StopPreviewPlayer()
@@ -324,6 +336,10 @@ namespace VRCM.Media.Theater.UI
             if (eventType == MediaPlayerEvent.EventType.FinishedPlaying)
             {
                 StopPreviewPlayer();
+
+                // Session record add .. 
+                int clientCount = Bootstrapper.Instance.Lobby.Players.Count;
+                AuthService.Instance.Storage.AddStopRecord(_curVideoId, clientCount);
             }
         }
 

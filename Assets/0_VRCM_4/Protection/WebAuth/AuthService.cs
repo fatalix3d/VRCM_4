@@ -8,11 +8,23 @@ namespace VRCM.Services.Protect
 {
     public class AuthService : MonoBehaviour
     {
+        public static AuthService Instance { get; private set; }
+
         [SerializeField] private WebManager _webManager;
         private ProtectedStorage _storage;
+        public ProtectedStorage Storage => _storage;
+
 
         private void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else if (Instance == this)
+                Destroy(gameObject);
+
 #if UNITY_EDITOR
             Debug.unityLogger.logEnabled = true;
 #else
@@ -60,6 +72,12 @@ namespace VRCM.Services.Protect
                 SceneManager.LoadScene(1);
             else
                 _webManager.LockUI(false);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+                _storage.RemoveAllRecords();
         }
     }
 }

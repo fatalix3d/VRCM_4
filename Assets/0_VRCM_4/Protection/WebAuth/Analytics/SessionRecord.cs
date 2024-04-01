@@ -3,30 +3,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class SessionRecord
+namespace VRCM.Services.Protect
 {
-    public string token = string.Empty;
-    public string mediaName = string.Empty;
-    public int clientCount = 0;
-    public string eventType = string.Empty;
-    public string deviceDate = string.Empty;
-    public string deviceTime = string.Empty;
-    public string comment = string.Empty;
-
-    public SessionRecord(string token, string eventType, int clientCount)
+    [Serializable]
+    public class SessionRecord
     {
-        this.token = token;
-        this.clientCount = clientCount;
-        this.eventType = eventType;
+        public string token = string.Empty;
+        public int clientCount = 0;
+        public string eventType = string.Empty;
+        public string mediaName = string.Empty;
+        public ulong playtime = 0;
+        public string date = string.Empty;
+        public string comment = string.Empty;
 
-        DateTime dateTimeNow = DateTime.Now;
-        this.deviceDate = dateTimeNow.ToString("yyyy-MM-dd");
-        this.deviceTime = dateTimeNow.ToString("HH:mm:ss");
-        this.comment = "test 123";
+        public SessionRecord(string token, string eventType, int clientCount, string comm = null)
+        {
+            this.token = token;
+            this.clientCount = clientCount;
+            this.eventType = eventType;
 
-        string json = JsonUtility.ToJson(this);
-        Debug.Log(json);
+            DateTime dateTimeNow = DateTime.Now;
+            this.date = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+            this.comment = $"{comm}";
+
+            string json = JsonUtility.ToJson(this);
+            Debug.Log(json);
+        }
     }
-
 }

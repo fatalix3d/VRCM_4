@@ -78,7 +78,8 @@ namespace VRCM.Services.Protect
                             return;
                         }
 
-                        Debug.Log($"[ProtectedStorage] [Read] Key data loaded [{json}]");
+                        Debug.Log($"[ProtectedStorage] [Read] Key data loaded");
+                        Debug.Log($"[ProtectedStorage] [KEY] => {json}");
                     }
                     else
                     {
@@ -174,6 +175,137 @@ namespace VRCM.Services.Protect
                 Debug.Log($"[ProtectedStorage] [ValidateKey] Error, {e}");
                 return Open;
             }
+        }
+        public void AddRecord(SessionRecord record)
+        {
+            if (Key == null)
+                return;
+
+            Key.sessions.Add(record);
+            SaveKey();
+        }
+
+        public void AddPlayRecord(string mediaName, int clientCount)
+        {
+            if (Key == null)
+                return;
+
+            var lastRecord = GetLastRecord();
+
+            if (lastRecord != null)
+            {
+                if (lastRecord.mediaName != mediaName)
+                {
+                    lastRecord.playtime = Timer.GetTime();
+
+                    Timer.StartTime();
+                    var record = new SessionRecord(Key.Token, "Play", clientCount);
+                    record.mediaName = mediaName;
+
+                    Key.sessions.Add(record);
+                }
+                else
+                {
+                    lastRecord.playtime = Timer.GetTime();
+
+                    Timer.StartTime();
+                    var record = new SessionRecord(Key.Token, "Play", clientCount);
+                    record.mediaName = mediaName;
+                    Key.sessions.Add(record);
+                }
+            }
+            else
+            {
+                Timer.StartTime();
+                var record = new SessionRecord(Key.Token, "Play", clientCount);
+                record.mediaName = mediaName;
+
+                Key.sessions.Add(record);
+            }
+
+            SaveKey();
+        }
+
+        public void AddPauseRecord(string mediaName, int clientCount)
+        {
+            if (Key == null)
+                return;
+
+            //var lastRecord = GetLastRecord();
+            //if (lastRecord != null)
+            //{
+            //    if (lastRecord.eventType == "Play")
+            //    {
+            //        lastRecord.playtime = Timer.GetTime();
+            //        SaveKey();
+            //    }
+            //}
+            Timer.PauseTime();
+            //var record = new SessionRecord(Key.Token, "Pause", clientCount);
+            //record.mediaName = mediaName;
+
+            //Key.sessions.Add(record);
+            //SaveKey();
+        }
+
+        public void AddStopRecord(string mediaName, int clientCount)
+        {
+            if (Key == null)
+                return;
+
+            var lastRecord = GetLastRecord();
+
+            if (lastRecord != null)
+            {
+                if (lastRecord.eventType != "Stop")
+                    lastRecord.playtime = Timer.GetTime();
+                Timer.StopTime();
+
+            }
+
+            var record = new SessionRecord(Key.Token, "Stop", clientCount);
+            record.mediaName = mediaName;
+
+            Key.sessions.Add(record);
+            SaveKey();
+        }
+
+        public SessionRecord GetLastRecord()
+        {
+            if (Key == null)
+                return null;
+
+            SessionRecord s = null;
+
+            if (Key.sessions.Count > 0)
+            {
+                int lastId = Key.sessions.Count - 1;
+                s = Key.sessions[lastId];
+            }
+
+            return s;
+        }
+
+        public bool RemoveRecord()
+        {
+            if (Key == null)
+                return false;
+
+            if (Key.sessions.Count < 1)
+                return false;
+
+            Key.sessions.RemoveAt(0);
+            SaveKey();
+            return true;
+        }
+
+        public void RemoveAllRecords()
+        {
+            if (Key == null)
+                return;
+
+            Key.sessions.Clear();
+            SaveKey();
         }
     }
 }
