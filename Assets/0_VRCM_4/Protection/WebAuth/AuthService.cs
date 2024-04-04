@@ -78,6 +78,9 @@ namespace VRCM.Services.Protect
         {
             if (Input.GetKeyDown(KeyCode.R))
                 _storage.RemoveAllRecords();
+
+            if (Input.GetKeyDown(KeyCode.T))
+                Debug.Log(_storage.ExportSessionsInfo());
         }
     }
 }

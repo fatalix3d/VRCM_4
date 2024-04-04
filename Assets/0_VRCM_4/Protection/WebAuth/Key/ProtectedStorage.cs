@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System.Linq;
 
 namespace VRCM.Services.Protect
 {
@@ -8,11 +10,9 @@ namespace VRCM.Services.Protect
     {
         public bool Open { get; private set; } = false;
         public StorageKey Key { get; private set; } = null;
-
         private string _dataPath = string.Empty;
         private string _keyFilePath = string.Empty;
         private string _deviceId = string.Empty;
-
 
         public ProtectedStorage()
         {
@@ -33,7 +33,7 @@ namespace VRCM.Services.Protect
         public void CreateKey(TokenInfo token)
         {
             Debug.Log($"[ProtectedStorage] [Create] ... {token.Token}, {token.IsValid}");
-            
+
             if (Key == null)
             {
                 Key = new StorageKey(token);
@@ -163,7 +163,7 @@ namespace VRCM.Services.Protect
                 }
 
                 Debug.Log($"[ProtectedStorage] [ValidateKey] Max users is {Key.MaxUsers}");
-                
+
                 PlayerPrefs.SetInt("maxUsers", Key.MaxUsers);
                 PlayerPrefs.Save();
 
@@ -176,6 +176,7 @@ namespace VRCM.Services.Protect
                 return Open;
             }
         }
+
         public void AddRecord(SessionRecord record)
         {
             if (Key == null)
@@ -306,6 +307,19 @@ namespace VRCM.Services.Protect
 
             Key.sessions.Clear();
             SaveKey();
+        }
+
+        public string ExportSessionsInfo()
+        {
+            string json = string.Empty;
+
+            if (Key == null)
+                return null;
+
+            if (Key.sessions.Count == 0)
+                return null;
+
+            return json;
         }
     }
 }

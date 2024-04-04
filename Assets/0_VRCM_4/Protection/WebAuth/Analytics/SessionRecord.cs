@@ -23,7 +23,7 @@ namespace VRCM.Services.Protect
             this.eventType = eventType;
 
             DateTime dateTimeNow = DateTime.Now;
-            this.date = dateTimeNow.ToString("yyyy-MM-dd HH:mm:ss");
+            this.date = dateTimeNow.ToString("yyyy-MM-dd");
             this.comment = $"{comm}";
 
             string json = JsonUtility.ToJson(this);

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VRCM.Network.Lobby;
 using VRCM.Network.Messages;
+using VRCM.Services.Protect;
 
 namespace VRCM.Media.Remote.UI
 {
@@ -112,22 +113,35 @@ namespace VRCM.Media.Remote.UI
 
                 if (_lobby.CurrentPlayer._state.command == NetMessage.Command.Play)
                     return;
+                
 
                 if (_lobby.CurrentPlayer._state.command == NetMessage.Command.Pause && _lobby.CurrentPlayer._state.mediaName == videoID)
                 {
                     Debug.Log($"[Remote UI] Send (Resume), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, NetMessage.Command.Resume, videoID);
+
+                    // Session record add .. 
+                    Debug.Log("aaa");
+                    AuthService.Instance.Storage.AddPlayRecord(videoID, 1);
                 }
                 else
                 {
                     Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, NetMessage.Command.Play, videoID);
+
+                    // Session record add .. 
+                    Debug.Log("bbb");
+                    AuthService.Instance.Storage.AddPlayRecord(videoID, 1);
                 }
             }
             else
             {
                 Debug.Log($"[Remote UI] Send (Play), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
                 Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, NetMessage.Command.Play, videoID);
+
+                // Session record add .. 
+                Debug.Log("ccc");
+                AuthService.Instance.Storage.AddPauseRecord(videoID, 1);
             }
 
         }
@@ -146,6 +160,9 @@ namespace VRCM.Media.Remote.UI
 
                     Debug.Log($"[Remote UI] Send (Pause), file [{videoID}] to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Pause, videoID);
+
+                    // Session record add .. 
+                    AuthService.Instance.Storage.AddPauseRecord(videoID, 1);
                 }
             }
             else
@@ -167,6 +184,9 @@ namespace VRCM.Media.Remote.UI
 
                     Debug.Log($"[Remote UI] Send (Stop) to [{_lobby.CurrentPlayer.Id}]");
                     Bootstrapper.Instance.Server.SendMessage(_lobby.CurrentPlayer.UniqueId, Network.Messages.NetMessage.Command.Stop);
+
+                    // Session record add .. 
+                    AuthService.Instance.Storage.AddStopRecord(videoID, 1);
                 }
             }
             else
