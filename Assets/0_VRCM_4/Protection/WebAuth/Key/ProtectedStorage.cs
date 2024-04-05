@@ -319,6 +319,92 @@ namespace VRCM.Services.Protect
             if (Key.sessions.Count == 0)
                 return null;
 
+            var groupByDates = new Dictionary<string, List<SessionRecord>>();
+            Debug.Log($"Key.sessions.Count  {Key.sessions.Count}");
+
+            for (int i = 0; i < Key.sessions.Count; i++)
+            {
+                string date = Key.sessions[i].date;
+                SessionRecord sessionRecord = Key.sessions[i];
+
+                if (!groupByDates.ContainsKey(date))
+                {
+                    groupByDates.Add(date, new List<SessionRecord>());
+                    groupByDates[date].Add(sessionRecord);
+                    Debug.Log($"not found {date}");
+                }
+                else
+                {
+                    groupByDates[date].Add(sessionRecord);
+                    Debug.Log($"found {date}");
+                }
+            }
+
+            Debug.Log($"groupByDates size {groupByDates.Count}");
+
+            var uniqueMediaNamesByDate = new Dictionary<string, List<string>>();
+
+            foreach (var entry in groupByDates)
+            {
+                string date = entry.Key;
+                List<SessionRecord> sessionRecords = entry.Value;
+
+                // Используем LINQ для выбора уникальных mediaName для каждой даты
+                List<string> uniqueMediaNames = sessionRecords
+                    .Where(sr => !string.IsNullOrEmpty(sr.mediaName)) // Фильтруем пустые значения mediaName
+                    .Select(sr => sr.mediaName)
+                    .Distinct()
+                    .ToList();
+
+                // Добавляем уникальные mediaName в словарь uniqueMediaNamesByDate, только если они не пустые
+                if (uniqueMediaNames.Any())
+                {
+                    uniqueMediaNamesByDate[date] = uniqueMediaNames;
+                    Debug.Log($"uniqueMediaNamesByDate size {uniqueMediaNamesByDate[date].Count}");
+                }
+            }
+
+
+            var dataExport = new SessionsExport();
+            dataExport.Token = Key.Token;
+
+            foreach (KeyValuePair<string, List<SessionRecord>> sessionDate in groupByDates)
+            {
+                SessionInfo session = new SessionInfo();
+
+                // date
+                string date = sessionDate.Key;
+                session.Date = date;
+
+                // uniqueMedia
+                var mediaNames = uniqueMediaNamesByDate[sessionDate.Key];
+                for (int i = 0; i < mediaNames.Count; i++)
+                    session.MediaList.Add(new MediaInfo(mediaNames[i]));
+
+                // total clients
+                int totalClients = 0;
+                for (int i = 0; i < sessionDate.Value.Count; i++)
+                    totalClients += sessionDate.Value[i].clientCount;
+
+                session.TotalClients = totalClients;
+
+                for (int i = 0; i < sessionDate.Value.Count; i++)
+                {
+                    for (int j = 0; j < session.MediaList.Count; j++)
+                    {
+                        if (sessionDate.Value[i].mediaName == session.MediaList[j].MediaName)
+                        {
+                            session.MediaList[j].PlayTime += sessionDate.Value[i].playtime;
+                            session.MediaList[j].Clients += sessionDate.Value[i].clientCount;
+                        }
+                    }
+                }
+
+                dataExport.Sessions.Add(session);
+            }
+
+            json = JsonUtility.ToJson(dataExport);
+            Debug.Log(json);
             return json;
         }
     }
