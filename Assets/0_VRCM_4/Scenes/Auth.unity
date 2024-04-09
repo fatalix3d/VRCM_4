@@ -189,52 +189,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &535203178
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 535203180}
-  - component: {fileID: 535203179}
-  m_Layer: 0
-  m_Name: WebManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &535203179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535203178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad70c6cfa6e576b48b54de61fa47607f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _authService: {fileID: 1831160002}
---- !u!4 &535203180
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535203178}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -146.90604, y: 208.60611, z: -16.369698}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &905472814
 GameObject:
@@ -398,6 +353,7 @@ GameObject:
   - component: {fileID: 1831160003}
   - component: {fileID: 1831160002}
   - component: {fileID: 1831160004}
+  - component: {fileID: 1831160005}
   m_Layer: 0
   m_Name: Auth Service
   m_TagString: Untagged
@@ -417,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f4d34844c44fc49a50ebdbb05f9016, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _webManager: {fileID: 535203179}
+  _webManager: {fileID: 1831160005}
 --- !u!4 &1831160003
 Transform:
   m_ObjectHideFlags: 0
@@ -431,7 +387,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1831160004
 MonoBehaviour:
@@ -445,6 +401,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc73d8d80039b244a1b843f648b548b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1831160005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831160001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad70c6cfa6e576b48b54de61fa47607f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _authService: {fileID: 1831160002}
 --- !u!1 &1952725758
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +964,7 @@ RectTransform:
   - {fileID: 2197491617760274803}
   - {fileID: 1952725759}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1808,7 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad367e8c133e8cf4392c64188c847745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _webManager: {fileID: 535203179}
+  _webManager: {fileID: 0}
   _loginButton: {fileID: 6899004211729762998}
   _tokenInput: {fileID: 5252311373635133843}
   _infoText: {fileID: 5789254463633524821}

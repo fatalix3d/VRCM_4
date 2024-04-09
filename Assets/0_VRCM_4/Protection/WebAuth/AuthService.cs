@@ -11,6 +11,8 @@ namespace VRCM.Services.Protect
         public static AuthService Instance { get; private set; }
 
         [SerializeField] private WebManager _webManager;
+
+        public WebManager WebManager => _webManager;
         private ProtectedStorage _storage;
         public ProtectedStorage Storage => _storage;
 
@@ -73,6 +75,14 @@ namespace VRCM.Services.Protect
             else
                 _webManager.LockUI(false);
         }
+        public void SendStats()
+        {
+            string statsJson = _storage.ExportSessionsInfo();
+            if (!string.IsNullOrEmpty(statsJson))
+            {
+                AuthService.Instance._webManager.SendStats(statsJson);
+            }
+        }
 
         private void Update()
         {
@@ -80,7 +90,13 @@ namespace VRCM.Services.Protect
                 _storage.RemoveAllRecords();
 
             if (Input.GetKeyDown(KeyCode.T))
-                Debug.Log(_storage.ExportSessionsInfo());
+            {
+                string statsJson = _storage.ExportSessionsInfo();
+                if (!string.IsNullOrEmpty(statsJson))
+                {
+                    AuthService.Instance._webManager.SendStats(statsJson);
+                }
+            }
         }
     }
 }
