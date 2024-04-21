@@ -1777,7 +1777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad367e8c133e8cf4392c64188c847745, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _webManager: {fileID: 0}
+  _webManager: {fileID: 1831160005}
   _loginButton: {fileID: 6899004211729762998}
   _tokenInput: {fileID: 5252311373635133843}
   _infoText: {fileID: 5789254463633524821}
