@@ -10,13 +10,16 @@ namespace VRCM.Services.Protect
     {
         public bool Open { get; private set; } = false;
         public StorageKey Key { get; private set; } = null;
+        private WebManager _webManager = null;
+
         private string _dataPath = string.Empty;
         private string _keyFilePath = string.Empty;
         private string _deviceId = string.Empty;
 
-        public ProtectedStorage()
+        public ProtectedStorage(WebManager webManager)
         {
             _deviceId = SystemInfo.deviceUniqueIdentifier;
+            _webManager = webManager;
             Debug.Log($"[ProtectedStorage] Device ID : {_deviceId}");
         }
 
@@ -131,24 +134,28 @@ namespace VRCM.Services.Protect
                 if (Key == null)
                 {
                     Debug.Log($"[ProtectedStorage] [ValidateKey] Error, key is null");
+                    _webManager.InfoMessage("Ошибка авторизации : Нет ключа");
                     return Open;
                 }
 
                 if (string.IsNullOrEmpty(_deviceId) || string.IsNullOrEmpty(Key.DeviceId))
                 {
                     Debug.Log($"[ProtectedStorage] [ValidateKey] Error, deviceId is null, device [{_deviceId}] / [{Key.DeviceId}]");
+                    _webManager.InfoMessage("Ошибка авторизации : Нет данных об устройстве");
                     return Open;
                 }
 
                 if (!string.Equals(_deviceId, Key.DeviceId))
                 {
                     Debug.Log($"[ProtectedStorage] [ValidateKey] Error, deviceId not equals [{_deviceId} / {Key.DeviceId}]");
+                    _webManager.InfoMessage("Ошибка авторизации : Устройство не совпадает");
                     return Open;
                 }
 
                 if (!Key.IsValid)
                 {
                     Debug.Log($"[ProtectedStorage] [ValidateKey] Info, key is not valid");
+                    _webManager.InfoMessage("Ошибка авторизации : Ключ не совместим с этим устройством");
                     return Open;
                 }
 
@@ -159,6 +166,7 @@ namespace VRCM.Services.Protect
                 if (result > 0)
                 {
                     Debug.Log($"[ProtectedStorage] [ValidateKey] Info, key expired");
+                    _webManager.InfoMessage("Ошибка авторизации : Срок годности ключа истек");
                     return Open;
                 }
 

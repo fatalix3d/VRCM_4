@@ -38,7 +38,7 @@ namespace VRCM.Services.Protect
         {
             _webManager.LockUI(true);
 
-            _storage = new ProtectedStorage();
+            _storage = new ProtectedStorage(_webManager);
             _storage.Setup();
             _storage.ReadKey();
 
