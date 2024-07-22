@@ -13,6 +13,7 @@ namespace VRCM.Services.Protect
         public bool IsValid;
         public string DeviceId;
         public int MaxUsers;
+
         public List<SessionRecord> sessions = new List<SessionRecord>();
 
 

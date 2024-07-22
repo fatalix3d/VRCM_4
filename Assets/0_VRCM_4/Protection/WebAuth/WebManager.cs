@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using VRCM.Services.ContentDelivery;
 
 namespace VRCM.Services.Protect
 {
     public class WebManager : MonoBehaviour
     {
         [SerializeField] private AuthService _authService;
+        [SerializeField] MediaDownloader _mediaDownloader;
+
+
         private string _token = string.Empty;
         private string _deviceId = string.Empty;
 
@@ -17,7 +21,8 @@ namespace VRCM.Services.Protect
         private bool _serviceAvailable = false;
         private string _authToken = "1|yebBBajnZyydOY33nUMXPd0EdCDmo5Aw10w54qpmaec9249b";
 
-        private string _apiUrl = "http://5.188.76.227:3000/api/token";
+        private string _apiUrl = "http://localhost:3000/api/token";
+        //private string _apiUrl = "http://5.188.76.227:3000/api/token";
         private string _apiPingUrl = "https://vrcm.ru/api/ping";
         private string _apiStatUrl = "https://vrcm.ru/api/stat";
 
@@ -74,6 +79,12 @@ namespace VRCM.Services.Protect
                         if(token != null)
                         {
                             Debug.Log($"Incoming data : {jsonResult}");
+
+
+                            yield return StartCoroutine(_mediaDownloader.DownloadRoutine(token));
+                               
+
+
                             _authService.Login(token);
                         }
                         else

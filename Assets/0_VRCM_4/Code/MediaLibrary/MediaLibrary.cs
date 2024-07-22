@@ -14,6 +14,7 @@ namespace VRCM.Media
     {
         [SerializeField] private bool _server = false;
         [SerializeField] private bool _oculusQuest = false;
+        [SerializeField] private bool _iOS = false;
 
         public static MediaLibrary Instance { get; private set; }
 
@@ -65,10 +66,7 @@ namespace VRCM.Media
             if (!isEditor)
             {
                 if (_server)
-                {
                     _localContentPath = Path.Combine(Application.persistentDataPath, "360Content");
-
-                }
                 else
                 {
                     if (_oculusQuest)
@@ -78,23 +76,26 @@ namespace VRCM.Media
                 }
             }
             else
-            {
                 _localContentPath = Path.Combine("C:/", "360Content");
-
-            }
 
             Debug.Log($"[MediaLibrary] data path : {_localContentPath}");
 
-            DirectoryInfo di = new DirectoryInfo(_localContentPath);
-
-            if (!di.Exists)
+            if (!Directory.Exists(_localContentPath))
             {
                 Debug.Log($"[MediaLibrary] Error : directory not found");
                 yield break;
             }
 
-            string[] extensions = new string[] { ".avi", ".mp4", ".webm", ".mkv" };
-            FileInfo[] files = di.GetFiles("*.*", SearchOption.AllDirectories).Where(f => extensions.Contains(f.Extension.ToLower())).ToArray();
+            string[] extensions = null;
+
+            if(!_iOS)
+                extensions = new string[] { ".avi", ".mp4", ".webm", ".mkv" };
+            else
+                extensions = new string[] { ".mp4", ".mov", ".m4v" };
+
+            string[] files = Directory.GetFiles(_localContentPath, "*.*", SearchOption.AllDirectories)
+                .Where(f => extensions.Contains(Path.GetExtension(f).ToLower())).ToArray();
+
             int filesLength = files.Length;
 
             if (filesLength == 0)
@@ -102,19 +103,22 @@ namespace VRCM.Media
 
             for (int i = 0; i < filesLength; i++)
             {
-                if (File.Exists(files[i].FullName))
+                string filePath = files[i];
+
+                if (File.Exists(filePath))
                 {
-                    if (files[i].Extension == ".avi" || files[i].Extension == ".mp4" || files[i].Extension == ".webm" || files[i].Extension == ".mkv")
+                    string extension = Path.GetExtension(filePath).ToLower();
+                    if (extensions.Contains(extension))
                     {
                         MediaFile mediaFile = new MediaFile();
-                        string nameNoExt = Path.GetFileNameWithoutExtension(files[i].FullName);
+                        string nameNoExt = Path.GetFileNameWithoutExtension(filePath);
                         mediaFile.name = nameNoExt;
-                        mediaFile.path = files[i].FullName;
+                        mediaFile.path = _iOS ? "file://" + filePath : filePath;
 
                         if (_server)
                         {
                             ThumbnailReady = false;
-                            ptvp.url = files[i].FullName;
+                            ptvp.url = filePath;
                             ptvp.Prepare();
                             yield return new WaitUntil(CheckThumbnail);
                             mediaFile.videoPrev = Resize(ptvp.texture, 256, 256);
@@ -125,6 +129,7 @@ namespace VRCM.Media
                     }
                 }
             }
+
             Debug.Log($"[MediaLibrary] : Load complete");
             MediaLibraryLoaded?.Invoke(Videos);
             yield return null;

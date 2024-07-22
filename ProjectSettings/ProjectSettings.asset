@@ -917,11 +917,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 2e571181-bd08-4eb4-9a19-9d2c50061ad4
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: VRCM 4 Server Dev
+  organizationId: tima-shana
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

@@ -16,7 +16,6 @@ namespace VRCM.Services.Protect
         private ProtectedStorage _storage;
         public ProtectedStorage Storage => _storage;
 
-
         private void Awake()
         {
             if (Instance == null)
@@ -50,7 +49,6 @@ namespace VRCM.Services.Protect
             Debug.Log($"Storage open : {_storage.Open}");
 
             if (_storage.Open)
-                //Application.LoadLevel(1);
                 SceneManager.LoadScene(1);
             else
             {

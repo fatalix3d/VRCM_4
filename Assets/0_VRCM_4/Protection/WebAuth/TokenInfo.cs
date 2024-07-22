@@ -10,5 +10,6 @@ namespace VRCM.Services.Protect
         public bool IsValid;
         public string DeviceId;
         public int MaxUsers = 0;
+        public VideoInfo[] VideoInfo;
     }
 }

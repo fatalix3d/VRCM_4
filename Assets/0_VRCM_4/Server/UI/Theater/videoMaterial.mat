@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: f32079bbb2560394abb63e40e1d53da7, type: 3}
   m_ValidKeywords:
   - ALPHAPACK_NONE
+  - APPLY_GAMMA
   - FORCEEYE_NONE
   - MONOSCOPIC
   m_InvalidKeywords:
@@ -93,7 +94,7 @@ Material:
     - _StereoDebug: 0
     - _UVSec: 0
     - _UseYpCbCr: 0
-    - _VertScale: 1
+    - _VertScale: -1
     - _ZWrite: 1
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
