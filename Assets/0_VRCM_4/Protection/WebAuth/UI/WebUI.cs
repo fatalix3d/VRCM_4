@@ -11,6 +11,7 @@ namespace VRCM.Services.Protect
         [SerializeField] private WebManager _webManager;
         [Space(5)]
         [SerializeField] private Button _loginButton;
+        [SerializeField] private Button _clipboardButton;
         [SerializeField] private TMP_InputField _tokenInput;
         [SerializeField] private TextMeshProUGUI _infoText;
 
@@ -43,6 +44,7 @@ namespace VRCM.Services.Protect
         {
             _loginButton.interactable = !flag;
             _tokenInput.interactable = !flag;
+            _clipboardButton.interactable = !flag;
         }
 
         public void Login()

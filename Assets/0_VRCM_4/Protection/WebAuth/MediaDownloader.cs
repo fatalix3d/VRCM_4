@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using VRCM.Services.Protect;
 
@@ -13,8 +14,14 @@ namespace VRCM.Services.ContentDelivery
         private bool isEditor = false;
         private string _localContentPath;
 
+        [SerializeField] private Slider _progressBar;
+        private float _currentProgress = 0f;
+
+
         private void Awake()
         {
+            _progressBar.gameObject.SetActive(false);
+            _progressBar.value = 0f;
 #if UNITY_EDITOR
             isEditor = true;
 #endif
@@ -37,6 +44,13 @@ namespace VRCM.Services.ContentDelivery
             if (token.VideoInfo.Length <= 0)
                 yield return null;
 
+            _currentProgress = 0f;
+            _progressBar.value = _currentProgress;
+            _progressBar.gameObject.SetActive(true);
+
+            float completeProgress = 1f / token.VideoInfo.Length;
+
+
             foreach (VideoInfo videoInfo in token.VideoInfo)
             {
                 string fileName = videoInfo.fileName;
@@ -52,6 +66,9 @@ namespace VRCM.Services.ContentDelivery
                         {
                             File.WriteAllBytes(filePath, www.downloadHandler.data);
                             Debug.Log($"Файл {fileName} успешно скачан");
+
+                            _currentProgress += completeProgress;
+                            _progressBar.value = _currentProgress;
                         }
                         else
                         {
@@ -62,8 +79,12 @@ namespace VRCM.Services.ContentDelivery
                 else
                 {
                     Debug.Log($"Файл {fileName} уже существует, пропускаем");
+                    _currentProgress += completeProgress;
+                    _progressBar.value = _currentProgress;
                 }
             }
+
+            _progressBar.value = 1f;
 
             Debug.Log("[MediaDownloader] Start media complete");
 
